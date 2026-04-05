@@ -1,6 +1,6 @@
-import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "motion/react";
-import { useRef } from "react";
+import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight, ChevronDown, X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useRef, useState, useEffect } from "react";
 
 // Reusable Components
 const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
@@ -89,9 +89,54 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
 };
 
 export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchCategoryOpen, setIsSearchCategoryOpen] = useState(false);
+  const [searchCategory, setSearchCategory] = useState("All");
+
+  const categories = [
+    "All Departments",
+    "Arts & Crafts",
+    "Automotive",
+    "Baby",
+    "Beauty & Personal Care",
+    "Books",
+    "Computers",
+    "Digital Music",
+    "Electronics",
+    "Health & Household",
+    "Home & Kitchen",
+    "Industrial & Scientific",
+    "Kindle Store",
+    "Luggage",
+    "Movies & TV",
+    "Music, CDs & Vinyl",
+    "Pet Supplies",
+    "Software",
+    "Sports & Outdoors",
+    "Tools & Home Improvement",
+    "Toys & Games",
+    "Video Games",
+    "Women's Fashion",
+    "Men's Fashion",
+    "Girls' Fashion",
+    "Boys' Fashion"
+  ];
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Close menus on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.dropdown-trigger')) {
+        setIsSearchCategoryOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
@@ -110,10 +155,40 @@ export default function App() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow">
-            <div className="hidden sm:flex items-center px-3 bg-gray-100 text-gray-600 border-r border-gray-300 cursor-pointer hover:bg-gray-200 text-xs text-nowrap">
-              All
+          <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
+            <div 
+              onClick={() => setIsSearchCategoryOpen(!isSearchCategoryOpen)}
+              className="dropdown-trigger hidden sm:flex items-center px-3 bg-gray-100 text-gray-600 border-r border-gray-300 cursor-pointer hover:bg-gray-200 text-xs text-nowrap gap-1"
+            >
+              {searchCategory}
+              <ChevronDown size={14} />
             </div>
+
+            {/* Search Category Dropdown */}
+            <AnimatePresence>
+              {isSearchCategoryOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-300 shadow-xl rounded-sm z-[60] py-2 max-h-[400px] overflow-y-auto"
+                >
+                  {categories.map((cat) => (
+                    <div
+                      key={cat}
+                      onClick={() => {
+                        setSearchCategory(cat);
+                        setIsSearchCategoryOpen(false);
+                      }}
+                      className="px-4 py-2 text-black hover:bg-blue-600 hover:text-white cursor-pointer text-sm"
+                    >
+                      {cat}
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <input
               type="text"
               placeholder="Search Ir-Shop"
@@ -137,9 +212,12 @@ export default function App() {
         </div>
 
         {/* Main Nav */}
-        <div className="bg-irshop-teal-light">
+        <div className="bg-irshop-teal-light relative">
           <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors">
+            <div 
+              onClick={() => setIsMenuOpen(true)}
+              className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
+            >
               <Menu size={20} />
               All
             </div>
@@ -154,6 +232,73 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Sidebar Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 bg-black/70 z-[100]"
+            />
+            <motion.div 
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 left-0 bottom-0 w-[350px] bg-white z-[101] overflow-y-auto"
+            >
+              <div className="bg-irshop-teal text-white p-4 flex items-center gap-3 sticky top-0 z-10">
+                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-irshop-teal">
+                  <Facebook size={20} />
+                </div>
+                <span className="font-bold text-lg">Hello, Sign in</span>
+                <button 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="ml-auto text-white hover:text-gray-300"
+                >
+                  <X size={28} />
+                </button>
+              </div>
+
+              <div className="py-4">
+                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 mb-2">Trending</div>
+                <ul className="text-gray-700">
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Best Sellers</li>
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">New Releases</li>
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Movers & Shakers</li>
+                </ul>
+
+                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-2">Digital Content & Devices</div>
+                <ul className="text-gray-700">
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+                    Prime Video <ChevronRight size={18} />
+                  </li>
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+                    Amazon Music <ChevronRight size={18} />
+                  </li>
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+                    Echo & Alexa <ChevronRight size={18} />
+                  </li>
+                </ul>
+
+                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-2">Shop By Department</div>
+                <ul className="text-gray-700">
+                  {categories.slice(0, 8).map(cat => (
+                    <li key={cat} className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+                      {cat} <ChevronRight size={18} />
+                    </li>
+                  ))}
+                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer text-blue-600 font-medium">See All</li>
+                </ul>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Main Content */}
       <main className="flex-1">
