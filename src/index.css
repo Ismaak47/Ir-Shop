@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  --color-irshop-teal: #1a5c5c;
+  --color-irshop-teal-dark: #145454;
+  --color-irshop-teal-light: #237070;
+  --color-irshop-accent: #febd69;
+  --color-irshop-accent-hover: #f3a847;
+}
+
+body {
+  background-color: #e3e6e6;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Custom Footer Styles from User */
+.irshop-footer {
+  --footer-bg: #1a5c5c;
+  --footer-text: #ffffff;
+  --footer-link: #dceeff;
+  --footer-link-hover: #ffffff;
+  --footer-accent: #237070;
+  --footer-border: #2d6b6b;
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+}
+
+.irshop-footer-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.irshop-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.irshop-footer-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.irshop-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.irshop-footer-col li {
+  margin-bottom: 10px;
+}
+
+.irshop-footer-col a {
+  color: var(--footer-link);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.irshop-footer-col a:hover {
+  color: var(--footer-link-hover);
+  text-decoration: underline;
+}
+
+.irshop-footer-middle {
+  border-top: 1px solid #2d6b6b;
+  border-bottom: 1px solid #2d6b6b;
+  padding: 25px 0;
+  margin-bottom: 20px;
+}
+
+.irshop-footer-middle-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.irshop-footer-social {
+  display: flex;
+  gap: 15px;
+}
+
+.irshop-footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid #ffd700;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.irshop-footer-social a:hover {
+  background-color: #ffd700;
+}
+
+.irshop-footer-social svg {
+  width: 16px;
+  height: 16px;
+  color: #ffd700;
+  transition: color 0.2s ease;
+}
+
+.irshop-footer-social a:hover svg {
+  color: #1a5c5c;
+}
+
+.irshop-footer-newsletter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.irshop-footer-newsletter input {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  width: 250px;
+  font-size: 13px;
+  color: #333;
+}
+
+.irshop-footer-newsletter button {
+  background-color: #237070;
+  color: var(--footer-text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.irshop-footer-newsletter button:hover {
+  background-color: #1d5c5c;
+}
+
+.irshop-footer-payment {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.irshop-footer-payment span {
+  font-size: 12px;
+  color: var(--footer-link);
+}
+
+.irshop-footer-payment-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.irshop-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 11px;
+  color: var(--footer-link);
+}
+
+.irshop-footer-bottom-left {
+  display: flex;
+  gap: 20px;
+}
+
+.irshop-footer-bottom-left a {
+  color: var(--footer-link);
+  text-decoration: none;
+}
+
+.irshop-footer-bottom-left a:hover {
+  text-decoration: underline;
+}
+
+.irshop-footer-bottom-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.irshop-footer-bottom-right select {
+  background-color: transparent;
+  color: var(--footer-link);
+  border: 1px solid #2d6b6b;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .irshop-footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .irshop-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .irshop-footer-middle-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .irshop-footer-newsletter {
+    flex-direction: column;
+    width: 100%;
+  }
+  .irshop-footer-newsletter input {
+    width: 100%;
+  }
+  .irshop-footer-newsletter button {
+    width: 100%;
+  }
+  .irshop-footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .irshop-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
