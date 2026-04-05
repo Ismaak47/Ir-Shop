@@ -126,13 +126,6 @@ export default function App() {
 
           {/* Tools */}
           <div className="flex items-center gap-1">
-            <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
-              <div className="flex flex-col">
-                <span className="text-[11px] text-gray-300 leading-none">Hello, sign in</span>
-                <span className="font-bold leading-none flex items-center whitespace-nowrap">Account & Lists</span>
-              </div>
-            </div>
-
             <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
               <div className="relative">
                 <ShoppingCart size={32} />
