@@ -102,9 +102,9 @@ export default function App() {
           {/* Logo */}
           <div className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
             <img 
-              src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/4a337181-432d-4589-948f-6f2963321588.png" 
+              src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/76e88bfc-c779-40a9-9237-c8521f5e1209.png" 
               alt="Ir-Shop Logo" 
-              className="h-8 md:h-10 w-auto object-contain"
+              className="h-10 md:h-12 w-auto object-contain drop-shadow-sm"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -452,19 +452,22 @@ export default function App() {
             </div>
 
             {/* Shoveler 7: Best Sellers in Books */}
-            <Shoveler 
-              title="Best Sellers in Books" 
-              items={[
-                "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY200_.jpg",
-                "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY200_.jpg",
-              ]} 
-            />          </div>
+            <div className="mt-2">
+              <Shoveler 
+                title="Best Sellers in Books" 
+                items={[
+                  "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY200_.jpg",
+                  "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY200_.jpg",
+                ]} 
+              />
+            </div>
+          </div>
         </div>
       </main>
 
@@ -537,11 +540,11 @@ export default function App() {
 
           <div className="irshop-footer-middle">
             <div className="irshop-footer-middle-content">
-              <div className="mb-6 flex justify-center">
+              <div className="mb-4 flex justify-center">
                 <img 
-                  src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/4a337181-432d-4589-948f-6f2963321588.png" 
+                  src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/76e88bfc-c779-40a9-9237-c8521f5e1209.png" 
                   alt="Ir-Shop Logo" 
-                  className="h-10 md:h-12 w-auto object-contain"
+                  className="h-12 md:h-16 w-auto object-contain drop-shadow-md"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -572,10 +575,6 @@ export default function App() {
           </div>
 
           <div className="irshop-footer-bottom">
-            <div className="irshop-footer-bottom-left">
-              <a href="#">Conditions of Use</a>
-              <a href="#">Privacy Notice</a>
-            </div>
             <div className="irshop-footer-bottom-right">
               <span>© 2026 Ir-Shop. All rights reserved.</span>
             </div>
