@@ -1,4 +1,4 @@
-import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight, ChevronDown, X } from "lucide-react";
+import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight, ChevronDown, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 
@@ -228,9 +228,9 @@ export default function App() {
             >
               <div className="bg-irshop-teal text-white p-4 flex items-center gap-3 sticky top-0 z-10">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-irshop-teal">
-                  <Facebook size={20} />
+                  <User size={20} />
                 </div>
-                <span className="font-bold text-lg">Hello, Sign in</span>
+                <span className="font-bold text-lg">Account</span>
                 <button 
                   onClick={() => setIsMenuOpen(false)}
                   className="ml-auto text-white hover:text-gray-300"
