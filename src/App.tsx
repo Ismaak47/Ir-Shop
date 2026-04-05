@@ -118,6 +118,19 @@ const Logo = () => (
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  const heroImages = [
+    "https://m.media-amazon.com/images/I/61Yx5-N155L._SX3000_.jpg",
+    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
 
   const categories = [
     "All Departments",
@@ -308,12 +321,19 @@ export default function App() {
         {/* Hero Section */}
         <div className="relative max-w-[1500px] mx-auto">
           <div className="w-full h-[300px] md:h-[600px] overflow-hidden relative">
-            <img
-              src="https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg"
-              alt="Shop Mother's Day gifts"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={heroIndex}
+                src={heroImages[heroIndex]}
+                alt={`Hero banner ${heroIndex + 1}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </AnimatePresence>
             {/* Gradient overlay to blend with background */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#e3e6e6]"></div>
           </div>
