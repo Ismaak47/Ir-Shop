@@ -561,7 +561,6 @@ export default function App() {
               </div>
 
               <div className="irshop-footer-payment">
-                <span>Payment Methods:</span>
                 <div className="irshop-footer-payment-icons flex gap-2">
                   <div className="w-10 h-6 bg-[#1A1F71] rounded flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
                   <div className="w-10 h-6 bg-white rounded flex items-center justify-center overflow-hidden">
