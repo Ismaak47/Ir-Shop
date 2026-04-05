@@ -540,14 +540,6 @@ export default function App() {
 
           <div className="irshop-footer-middle">
             <div className="irshop-footer-middle-content">
-              <div className="mb-4 flex justify-center">
-                <img 
-                  src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/76e88bfc-c779-40a9-9237-c8521f5e1209.png" 
-                  alt="Ir-Shop Logo" 
-                  className="h-12 md:h-16 w-auto object-contain drop-shadow-md"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
               <div className="irshop-footer-social">
                 <a href="#" aria-label="Facebook">
                   <Facebook size={18} />
