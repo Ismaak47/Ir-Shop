@@ -88,6 +88,33 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
   );
 };
 
+const Logo = () => (
+  <div className="flex flex-col items-start justify-center px-1 group">
+    <div className="flex items-baseline leading-none">
+      <span className="text-xl md:text-2xl font-black tracking-tighter text-[#FFD700] drop-shadow-sm">Ir-Shop</span>
+    </div>
+    <div className="relative w-full h-3 -mt-1.5">
+      <svg 
+        viewBox="0 0 100 20" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full transform group-hover:scale-105 transition-transform duration-300"
+      >
+        <path 
+          d="M10 5C30 15 70 15 90 5" 
+          stroke="#FFD700" 
+          strokeWidth="4" 
+          strokeLinecap="round"
+        />
+        <path 
+          d="M85 3L94 6L87 11" 
+          fill="#FFD700"
+        />
+      </svg>
+    </div>
+  </div>
+);
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -132,12 +159,7 @@ export default function App() {
         <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
           {/* Logo */}
           <div className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
-            <img 
-              src="https://storage.googleapis.com/static.antigravity.ai/user_uploads/76e88bfc-c779-40a9-9237-c8521f5e1209/76e88bfc-c779-40a9-9237-c8521f5e1209.png" 
-              alt="Ir-Shop Logo" 
-              className="h-10 md:h-12 w-auto object-contain drop-shadow-sm"
-              referrerPolicy="no-referrer"
-            />
+            <Logo />
           </div>
 
           {/* Search Bar */}
