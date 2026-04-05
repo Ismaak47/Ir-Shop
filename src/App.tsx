@@ -117,6 +117,7 @@ const Logo = () => (
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
 
   const categories = [
     "All Departments",
@@ -226,17 +227,44 @@ export default function App() {
               transition={{ type: "tween", duration: 0.3 }}
               className="fixed top-0 left-0 bottom-0 w-[350px] bg-white z-[101] overflow-y-auto"
             >
-              <div className="bg-irshop-teal text-white p-4 flex items-center gap-3 sticky top-0 z-10">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-irshop-teal">
-                  <User size={20} />
-                </div>
-                <span className="font-bold text-lg">Account</span>
-                <button 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="ml-auto text-white hover:text-gray-300"
+              <div className="bg-irshop-teal text-white p-4 flex flex-col sticky top-0 z-10">
+                <div 
+                  className="flex items-center gap-3 cursor-pointer group"
+                  onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
                 >
-                  <X size={28} />
-                </button>
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <User size={20} className="text-[#FFD700]" />
+                  </div>
+                  <span className="font-bold text-lg text-[#FFD700] flex items-center gap-1">
+                    Account
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
+                  </span>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMenuOpen(false);
+                    }}
+                    className="ml-auto text-white hover:text-gray-300"
+                  >
+                    <X size={28} />
+                  </button>
+                </div>
+
+                <AnimatePresence>
+                  {isAccountDropdownOpen && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-3 flex flex-col gap-1 bg-white/10 p-2 rounded">
+                        <button className="text-left px-3 py-2 hover:bg-white/20 rounded font-medium transition-colors">Sign in</button>
+                        <button className="text-left px-3 py-2 hover:bg-white/20 rounded font-medium transition-colors">Sign up</button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="py-4">
