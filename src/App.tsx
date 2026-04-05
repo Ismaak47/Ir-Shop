@@ -90,8 +90,6 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchCategoryOpen, setIsSearchCategoryOpen] = useState(false);
-  const [searchCategory, setSearchCategory] = useState("All");
 
   const categories = [
     "All Departments",
@@ -126,18 +124,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Close menus on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.dropdown-trigger')) {
-        setIsSearchCategoryOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
       {/* Header */}
@@ -156,39 +142,6 @@ export default function App() {
 
           {/* Search Bar */}
           <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
-            <div 
-              onClick={() => setIsSearchCategoryOpen(!isSearchCategoryOpen)}
-              className="dropdown-trigger hidden sm:flex items-center px-3 bg-gray-100 text-gray-600 border-r border-gray-300 cursor-pointer hover:bg-gray-200 text-xs text-nowrap gap-1"
-            >
-              {searchCategory}
-              <ChevronDown size={14} />
-            </div>
-
-            {/* Search Category Dropdown */}
-            <AnimatePresence>
-              {isSearchCategoryOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-300 shadow-xl rounded-sm z-[60] py-2 max-h-[400px] overflow-y-auto"
-                >
-                  {categories.map((cat) => (
-                    <div
-                      key={cat}
-                      onClick={() => {
-                        setSearchCategory(cat);
-                        setIsSearchCategoryOpen(false);
-                      }}
-                      className="px-4 py-2 text-black hover:bg-blue-600 hover:text-white cursor-pointer text-sm"
-                    >
-                      {cat}
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
             <input
               type="text"
               placeholder="Search Ir-Shop"
