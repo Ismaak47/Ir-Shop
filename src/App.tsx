@@ -122,7 +122,10 @@ export default function App() {
 
   const heroImages = [
     "https://m.media-amazon.com/images/I/61Yx5-N155L._SX3000_.jpg",
-    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg"
+    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg",
+    "https://i.ebayimg.com/images/g/9nwAAOSwfX5n1EXY/s-l2400.jpg",
+    "https://i.ebayimg.com/images/g/t1cAAeSwjwRpusMM/s-l1600.webp",
+    "https://ke.jumia.is/cms/2026/W03/KE_ONS_FlashSales_Generic_1225_S.jpg"
   ];
 
   useEffect(() => {
