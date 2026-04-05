@@ -163,12 +163,13 @@ body {
 
 .irshop-footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
   font-size: 11px;
   color: var(--footer-link);
+  padding: 10px 0 40px 0;
 }
 
 .irshop-footer-bottom-left {
