@@ -109,15 +109,6 @@ export default function App() {
             />
           </div>
 
-          {/* Location */}
-          <div className="hidden md:flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer gap-1 transition-colors">
-            <MapPin size={18} className="mt-2" />
-            <div className="flex flex-col">
-              <span className="text-[11px] text-gray-300 leading-none">Deliver to</span>
-              <span className="font-bold leading-none">Tanzania</span>
-            </div>
-          </div>
-
           {/* Search Bar */}
           <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow">
             <div className="hidden sm:flex items-center px-3 bg-gray-100 text-gray-600 border-r border-gray-300 cursor-pointer hover:bg-gray-200 text-xs text-nowrap">
