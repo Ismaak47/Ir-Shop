@@ -88,8 +88,6 @@ export const Footer = () => {
                 </a>
               </div>
 
-              <!-- App download removed per user request -->
-
               <div className="irshop-footer-payment">
                 <div className="irshop-footer-payment-icons flex gap-2">
                   <div className="w-10 h-6 bg-[#1A1F71] rounded flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
