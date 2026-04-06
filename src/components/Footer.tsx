@@ -103,7 +103,7 @@ export const Footer = () => {
 
           <div className="irshop-footer-bottom">
             <div className="irshop-footer-bottom-right">
-              <span>© 2026 Ir-Shop. All rights reserved.</span>
+              <span className="text-[#FFD700] text-sm font-bold">© 2026 Ir-Shop. All rights reserved.</span>
             </div>
           </div>
         </div>

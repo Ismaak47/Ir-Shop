@@ -36,6 +36,16 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
+  const [isAllDropdownOpen, setIsAllDropdownOpen] = useState(false);
+
+  const categories = [
+    "All Departments", "Arts & Crafts", "Automotive", "Baby", "Beauty & Personal Care", "Books",
+    "Computers", "Digital Music", "Electronics", "Health & Household", "Home & Kitchen",
+    "Industrial & Scientific", "Kindle Store", "Luggage", "Movies & TV", "Music, CDs & Vinyl",
+    "Pet Supplies", "Software", "Sports & Outdoors", "Tools & Home Improvement", "Toys & Games",
+    "Video Games", "Women's Fashion", "Men's Fashion", "Girls' Fashion", "Boys' Fashion"
+  ];
+
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -73,13 +83,60 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
       {/* Main Nav */}
       <div className="bg-irshop-teal-light relative">
         <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-          <div 
-            onClick={onMenuOpen}
-            className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
-          >
-            <Menu size={20} />
-            All
+          {/* All Button with Dropdown */}
+          <div className="relative">
+            <div 
+              onClick={() => {
+                if (window.innerWidth < 768) {
+                  setIsAllDropdownOpen(!isAllDropdownOpen);
+                } else {
+                  onMenuOpen();
+                }
+              }}
+              className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
+            >
+              <Menu size={20} />
+              All
+              <ChevronDown size={14} className={`md:hidden transition-transform duration-200 ${isAllDropdownOpen ? 'rotate-180' : ''}`} />
+            </div>
+
+            <AnimatePresence>
+              {isAllDropdownOpen && (
+                <>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsAllDropdownOpen(false)}
+                    className="fixed inset-0 bg-black/50 z-[60] md:hidden"
+                  />
+                  <motion.div 
+                    initial={{ y: -10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -10, opacity: 0 }}
+                    className="absolute top-full left-0 w-64 bg-white shadow-xl border border-gray-200 rounded-md mt-1 z-[70] py-2 md:hidden max-h-[70vh] overflow-y-auto"
+                  >
+                    <div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between">
+                      <span className="font-bold text-gray-900 text-sm">Categories</span>
+                      <button onClick={() => setIsAllDropdownOpen(false)} className="text-gray-500">
+                        <X size={16} />
+                      </button>
+                    </div>
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setIsAllDropdownOpen(false)}
+                        className="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-irshop-teal transition-colors"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
+
           <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
             <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Today's Deals</li>
             <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Gift Cards</li>
