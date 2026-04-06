@@ -260,45 +260,47 @@ export const CartSidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 bottom-0 w-[300px] sm:w-[400px] bg-white z-[101] flex flex-col shadow-xl"
+            className="fixed top-0 right-0 bottom-0 w-[280px] sm:w-[340px] bg-white z-[101] flex flex-col shadow-2xl"
           >
-            <div className="bg-irshop-teal text-white p-4 flex items-center justify-between shadow-md">
-              <span className="font-bold text-xl flex items-center gap-2">
-                <ShoppingCart size={24} />
+            <div className="bg-irshop-teal text-white p-3 sm:p-4 flex items-center justify-between shadow-sm">
+              <span className="font-bold text-base sm:text-lg flex items-center gap-2">
+                <ShoppingCart size={20} />
                 Your Cart ({cartCount})
               </span>
-              <button onClick={() => setIsCartOpen(false)} className="text-white hover:text-gray-200">
-                <X size={28} />
+              <button onClick={() => setIsCartOpen(false)} className="text-white hover:text-gray-200 transition-colors">
+                <X size={24} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 bg-gray-50">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 flex flex-col gap-3 bg-gray-50">
               {cartItems.length === 0 ? (
-                <div className="text-center text-gray-500 py-10 flex flex-col items-center">
-                  <ShoppingCart size={48} className="text-gray-300 mb-4" />
-                  <p>Your Ir-Shop Cart is empty.</p>
+                <div className="text-center text-gray-500 py-8 flex flex-col items-center">
+                  <ShoppingCart size={36} className="text-gray-300 mb-3" />
+                  <p className="text-sm">Your Ir-Shop Cart is empty.</p>
                 </div>
               ) : (
                 cartItems.map((item) => (
-                  <div key={item.id} className="flex gap-4 bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                    <img src={item.img} alt={item.title} className="w-20 h-20 object-contain" referrerPolicy="no-referrer" />
-                    <div className="flex-1 flex flex-col">
-                      <h4 className="font-medium text-sm line-clamp-2 text-gray-800 mb-1">{item.title}</h4>
-                      <span className="font-bold text-lg mb-2 text-gray-900">
+                  <div key={item.id} className="flex gap-3 bg-white p-2.5 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 items-start">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-gray-50 rounded-lg flex items-center justify-center p-1 border border-gray-100">
+                      <img src={item.img} alt={item.title} className="max-w-full max-h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
+                    </div>
+                    <div className="flex-1 flex flex-col h-full min-h-[56px] sm:min-h-[64px]">
+                      <h4 className="font-semibold text-[11px] sm:text-[12px] leading-snug line-clamp-2 text-gray-800 mb-1">{item.title}</h4>
+                      <span className="font-bold text-[13px] sm:text-sm text-gray-900 mb-2">
                         TZS {(parseFloat(item.price.replace(/,/g, '')) * item.quantity).toLocaleString()}
                       </span>
                       <div className="mt-auto flex items-center justify-between">
-                        <div className="flex items-center border border-gray-300 rounded-md overflow-hidden bg-gray-50">
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 py-1 hover:bg-gray-200 transition-colors text-gray-600">
-                            <Minus size={14} />
+                        <div className="flex items-center border border-gray-200 rounded-md overflow-hidden bg-gray-50 shadow-sm">
+                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 py-1 flex items-center justify-center hover:bg-gray-200 transition-colors text-gray-600">
+                            <Minus size={12} />
                           </button>
-                          <span className="px-3 text-sm font-medium w-8 text-center">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 py-1 hover:bg-gray-200 transition-colors text-gray-600">
-                            <Plus size={14} />
+                          <span className="px-2 text-[11px] font-bold w-6 text-center">{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 py-1 flex items-center justify-center hover:bg-gray-200 transition-colors text-gray-600">
+                            <Plus size={12} />
                           </button>
                         </div>
-                        <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 transition-colors p-1">
-                          <Trash2 size={16} />
+                        <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition-colors p-1">
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </div>
@@ -308,17 +310,17 @@ export const CartSidebar = () => {
             </div>
 
             {cartItems.length > 0 && (
-              <div className="p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="font-medium text-gray-600">Subtotal:</span>
-                  <span className="font-bold text-xl text-gray-900">TZS {totalAmount.toLocaleString()}</span>
+              <div className="p-3 sm:p-4 bg-white border-t border-gray-100 shadow-[0_-4px_15px_-3px_rgba(0,0,0,0.05)]">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="font-bold text-[10px] text-gray-500 uppercase tracking-widest">Subtotal</span>
+                  <span className="font-bold text-lg text-gray-900">TZS {totalAmount.toLocaleString()}</span>
                 </div>
                 <button
                   onClick={() => {
                     setIsCartOpen(false);
                     navigate("/checkout");
                   }}
-                  className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black py-3 rounded-xl font-bold transition-colors shadow-sm"
+                  className="w-full bg-[#FFD700] hover:bg-[#FACC15] text-black py-2.5 rounded-lg text-sm font-bold transition-all shadow-[0_2px_8px_rgba(255,215,0,0.3)] hover:shadow-[0_4px_12px_rgba(255,215,0,0.4)] transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center"
                 >
                   Proceed to Checkout
                 </button>
