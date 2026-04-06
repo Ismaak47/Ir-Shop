@@ -31,7 +31,9 @@ const GameProductCard = ({
   const navigate = useNavigate();
 
   const handleProductClick = () => {
-    navigate(`/product/${encodeURIComponent(title)}`, {
+    // Safely encode a short version of the title to avoid massive URL strings that might block routing
+    const shortSlug = encodeURIComponent(title.substring(0, 30).replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase());
+    navigate(`/product/${shortSlug}`, {
       state: {
         product: { title, img, rating, reviews, price, delivery, isBestSeller, isOverallPick }
       }
@@ -39,7 +41,10 @@ const GameProductCard = ({
   };
 
   return (
-    <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 rounded-[10px] hover:shadow-md transition-all relative" key={key}>
+    <div
+      className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 rounded-[10px] hover:shadow-md transition-all relative cursor-pointer"
+      onClick={handleProductClick}
+    >
       {isBestSeller && (
         <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-[10px] z-10">
           Best Seller
@@ -51,18 +56,14 @@ const GameProductCard = ({
         </div>
       )}
 
-      <div
-        className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center cursor-pointer"
-        onClick={handleProductClick}
-      >
+      <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
         <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
       </div>
 
       <div className="flex-1 flex flex-col">
-        <h3
-          className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal"
-          onClick={handleProductClick}
-        >{title}</h3>
+        <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 leading-tight sm:leading-normal">
+          {title}
+        </h3>
 
         <div className="flex items-center gap-1 mb-1">
           <div className="flex text-orange-400">
@@ -82,8 +83,9 @@ const GameProductCard = ({
           <p className="text-[10px] sm:text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-1">{delivery}</p>
 
           <button
-            onClick={() => {
-              addToCart({ id: key?.toString() || title, title, img, price });
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart({ id: title, title, img, price });
               setIsCartOpen(true);
             }}
             className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm"
