@@ -626,10 +626,7 @@ export default function GamesPage() {
         {/* Product Grid and Results */}
         <div className="flex-1">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-              <h1 className="text-lg font-bold">
-                1-48 of over 100,000 results for <span className="text-irshop-teal">"gaming"</span>
-              </h1>
+            <div className="flex items-center justify-end border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-600">Sort by:</span>
                 <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
