@@ -72,8 +72,6 @@ const GameProductCard = ({
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-  const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
-  const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
@@ -687,7 +685,7 @@ export default function GamesPage() {
                     className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors"
                   >
                     <Menu size={14} />
-                    <span>Sort by: {sortBy}</span>
+                    <span>Sort</span>
                     <ChevronDown size={14} className={`transition-transform duration-200 ${isMobileSortOpen ? 'rotate-180' : ''}`} />
                   </button>
 
@@ -714,20 +712,16 @@ export default function GamesPage() {
                             </button>
                           </div>
 
-                          <div className="space-y-6">
-                            <div>
-                              <ul className="space-y-2 text-xs">
-                                {['Featured', 'Price: Low to High', 'Price: High to Low', 'Avg. Customer Review', 'Newest Arrivals'].map((option) => (
-                                  <li
-                                    key={option}
-                                    onClick={() => { setSortBy(option); setIsMobileSortOpen(false); }}
-                                    className={`hover:text-orange-600 cursor-pointer ${sortBy === option ? 'font-bold text-orange-600' : ''}`}
-                                  >
-                                    {option}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                          <div className="space-y-4">
+                            {['Featured', 'Price: Low to High', 'Price: High to Low', 'Avg. Customer Review', 'Newest Arrivals'].map((option) => (
+                              <div
+                                key={option}
+                                onClick={() => { setSortBy(option); setIsMobileSortOpen(false); }}
+                                className={`text-xs py-2 px-1 cursor-pointer transition-colors hover:text-orange-600 ${sortBy === option ? 'font-bold text-orange-600 bg-orange-50 rounded-sm px-2' : 'px-2'}`}
+                              >
+                                {option}
+                              </div>
+                            ))}
                           </div>
                         </motion.div>
                       </>

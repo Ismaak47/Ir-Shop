@@ -36,7 +36,6 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
-  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -66,11 +65,11 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
               onClick={() => setShowAccountDropdown(!showAccountDropdown)}
               className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors"
             >
-              <User size={24} className="text-[#FFD700]" />
-              <span className="font-bold text-[#FFD700] hidden md:inline">
-                Account
+              <User size={24} className="text-irshop-accent" />
+              <span className="font-bold text-irshop-accent hidden md:inline">
+                {showAccountDropdown ? "Account" : "Hello, Sign In"}
               </span>
-              <ChevronDown size={16} className="text-[#FFD700] hidden md:inline" />
+              <ChevronDown size={16} className="text-irshop-accent hidden md:inline" />
             </div>
             <AnimatePresence>
               {showAccountDropdown && (
