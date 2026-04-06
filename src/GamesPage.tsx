@@ -1,7 +1,8 @@
-import { Star } from "lucide-react";
+import { Star, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Header, Sidebar } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { motion, AnimatePresence } from "motion/react";
 
 const GameProductCard = ({ 
   title, 
@@ -70,6 +71,7 @@ const GameProductCard = ({
 
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   
@@ -578,7 +580,103 @@ export default function GamesPage() {
         {/* Product Grid and Results */}
         <div className="flex-1">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-end border-b border-gray-200 pb-2">
+            <div className="flex items-center justify-between border-b border-gray-200 pb-2 relative">
+              {/* Mobile Filters Button */}
+              <div className="md:hidden">
+                <button 
+                  onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+                  className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors"
+                >
+                  <Menu size={14} />
+                  <span>Filters</span>
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${isMobileFiltersOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                <AnimatePresence>
+                  {isMobileFiltersOpen && (
+                    <>
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsMobileFiltersOpen(false)}
+                        className="fixed inset-0 bg-black/50 z-[60]"
+                      />
+                      <motion.div 
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        className="absolute top-full left-0 w-64 bg-white shadow-xl border border-gray-200 rounded-md mt-1 z-[70] p-4 max-h-[80vh] overflow-y-auto"
+                      >
+                        <div className="flex items-center justify-between mb-4 border-b pb-2">
+                          <span className="font-bold text-sm">Filters</span>
+                          <button onClick={() => setIsMobileFiltersOpen(false)}>
+                            <X size={16} />
+                          </button>
+                        </div>
+                        
+                        <div className="space-y-6">
+                          <div>
+                            <h3 className="text-sm font-bold mb-2">Popular Shopping Ideas</h3>
+                            <ul className="space-y-2 text-xs">
+                              <li className="hover:text-orange-600 cursor-pointer">Chair</li>
+                              <li className="hover:text-orange-600 cursor-pointer">Headset</li>
+                              <li className="hover:text-orange-600 cursor-pointer">Keyboard & Mouse</li>
+                              <li className="hover:text-orange-600 cursor-pointer">PC Speakers</li>
+                            </ul>
+                          </div>
+
+                          <div>
+                            <h3 className="text-sm font-bold mb-2">Deals & Discounts</h3>
+                            <ul className="space-y-2 text-xs">
+                              <li className="hover:text-orange-600 cursor-pointer">All Discounts</li>
+                              <li className="hover:text-orange-600 cursor-pointer">Today's Deals</li>
+                            </ul>
+                          </div>
+
+                          <div>
+                            <h3 className="text-sm font-bold mb-2">Customer Reviews</h3>
+                            <div className="flex items-center gap-1 text-xs hover:text-orange-600 cursor-pointer">
+                              <div className="flex text-orange-400">
+                                <Star size={14} fill="currentColor" />
+                                <Star size={14} fill="currentColor" />
+                                <Star size={14} fill="currentColor" />
+                                <Star size={14} fill="currentColor" />
+                                <Star size={14} />
+                              </div>
+                              <span>& Up</span>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h3 className="text-sm font-bold mb-2">Brands</h3>
+                            <ul className="space-y-2 text-xs">
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Razer</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> ASUS</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Logitech</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> msi</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> SteelSeries</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Corsair</li>
+                              <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> acer</li>
+                            </ul>
+                            <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
+                          </div>
+
+                          <div>
+                            <h3 className="text-sm font-bold mb-2">Condition</h3>
+                            <ul className="space-y-2 text-xs">
+                              <li className="hover:text-orange-600 cursor-pointer">New</li>
+                              <li className="hover:text-orange-600 cursor-pointer">Renewed</li>
+                              <li className="hover:text-orange-600 cursor-pointer">Used</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-600">Sort by:</span>
                 <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
