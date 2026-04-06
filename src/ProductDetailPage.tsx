@@ -1,6 +1,6 @@
 import { Header, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, Star, ShieldCheck, RotateCcw, Heart, Share2, ShoppingCart } from "lucide-react";
 import { useCart } from "./CartContext";
@@ -11,6 +11,10 @@ export default function ProductDetailPage() {
     const location = useLocation();
     const navigate = useNavigate();
     const { addToCart, setIsCartOpen } = useCart();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     // Default fallback product if accessed directly without state
     const product = location.state?.product || {

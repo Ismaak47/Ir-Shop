@@ -7,6 +7,7 @@ import CheckoutPage from "./CheckoutPage";
 import ProductDetailPage from "./ProductDetailPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { CartProvider } from "./CartContext";
 
 // Reusable Components
 const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
@@ -123,14 +124,16 @@ const Logo = () => (
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/games" element={<GamesPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-      </Routes>
-    </Router>
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 
@@ -500,7 +503,8 @@ function HomePage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }
+
+export default App;
