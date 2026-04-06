@@ -1,7 +1,7 @@
 import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../CartContext";
 
 export const Logo = () => (
@@ -237,6 +237,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
 
 export const CartSidebar = () => {
   const { isCartOpen, setIsCartOpen, cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -301,7 +302,13 @@ export const CartSidebar = () => {
 
             {cartItems.length > 0 && (
               <div className="p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-                <button className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black py-3 rounded-xl font-bold transition-colors">
+                <button
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    navigate("/checkout");
+                  }}
+                  className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black py-3 rounded-xl font-bold transition-colors"
+                >
                   Proceed to Checkout
                 </button>
               </div>
