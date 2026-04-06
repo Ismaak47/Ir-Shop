@@ -1,6 +1,8 @@
 import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight, ChevronDown, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import GamesPage from "./GamesPage";
 
 // Reusable Components
 const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
@@ -116,6 +118,17 @@ const Logo = () => (
 );
 
 export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/games" element={<GamesPage />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
@@ -175,9 +188,9 @@ export default function App() {
         {/* Top Belt */}
         <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
           {/* Logo */}
-          <div className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
+          <Link to="/" className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
             <Logo />
-          </div>
+          </Link>
 
           {/* Search Bar */}
           <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
@@ -349,6 +362,7 @@ export default function App() {
                 title="Get your game on" 
                 img="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/Stores-Gaming/FinalGraphics/Fuji_Gaming_store_Dashboard_card_1x_EN._SY304_CB564799420_.jpg" 
                 linkText="Shop gaming" 
+                linkHref="/games"
               />
               <QuadCard 
                 title="New home arrivals under $50" 
