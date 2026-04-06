@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
-import { Header, Sidebar } from "./components/Header";
+import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 
 // Reusable Components
@@ -186,6 +186,7 @@ function HomePage() {
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
       <Header onMenuOpen={() => setIsMenuOpen(true)} />
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
       {/* Main Content */}
       <main className="flex-1">

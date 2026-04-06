@@ -1,6 +1,6 @@
 import { Star, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { Header, Sidebar } from "./components/Header";
+import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -12,7 +12,8 @@ const GameProductCard = ({
   price, 
   delivery, 
   isBestSeller = false,
-  isOverallPick = false
+  isOverallPick = false,
+  key
 }: { 
   title: string, 
   img: string, 
@@ -21,9 +22,10 @@ const GameProductCard = ({
   price: string, 
   delivery: string,
   isBestSeller?: boolean,
-  isOverallPick?: boolean
+  isOverallPick?: boolean,
+  key?: number
 }) => (
-  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative">
+  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
     {isBestSeller && (
       <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
         Best Seller
@@ -70,8 +72,6 @@ const GameProductCard = ({
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   
@@ -514,6 +514,7 @@ export default function GamesPage() {
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
       <Header onMenuOpen={() => setIsMenuOpen(true)} searchTerm="gaming" />
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
       {/* Main Content */}
       <main className="flex-1 max-w-[1500px] mx-auto w-full px-4 pt-4 pb-0 flex gap-6">
@@ -677,65 +678,15 @@ export default function GamesPage() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex items-center gap-2 relative">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-600">Sort by:</span>
-                
-                {/* Desktop Select (Hidden on Mobile) */}
-                <select 
-                  className="hidden sm:block bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
+                <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
                   <option>Featured</option>
                   <option>Price: Low to High</option>
                   <option>Price: High to Low</option>
                   <option>Avg. Customer Review</option>
                   <option>Newest Arrivals</option>
                 </select>
-
-                {/* Mobile Custom Dropdown */}
-                <div className="sm:hidden">
-                  <button 
-                    onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                    className="flex items-center gap-1 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors whitespace-nowrap"
-                  >
-                    <span>{sortBy}</span>
-                    <ChevronDown size={14} className={`transition-transform duration-200 ${isSortDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  <AnimatePresence>
-                    {isSortDropdownOpen && (
-                      <>
-                        <motion.div 
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          onClick={() => setIsSortDropdownOpen(false)}
-                          className="fixed inset-0 bg-black/20 z-[60]"
-                        />
-                        <motion.div 
-                          initial={{ y: -10, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{ y: -10, opacity: 0 }}
-                          className="absolute top-full right-0 w-48 bg-white shadow-xl border border-gray-200 rounded-md mt-1 z-[70] py-1"
-                        >
-                          {["Featured", "Price: Low to High", "Price: High to Low", "Avg. Customer Review", "Newest Arrivals"].map((option) => (
-                            <button
-                              key={option}
-                              onClick={() => {
-                                setSortBy(option);
-                                setIsSortDropdownOpen(false);
-                              }}
-                              className={`w-full text-left px-4 py-2 text-xs hover:bg-gray-100 transition-colors ${sortBy === option ? 'bg-gray-50 font-bold text-irshop-teal' : 'text-gray-700'}`}
-                            >
-                              {option}
-                            </button>
-                          ))}
-                        </motion.div>
-                      </>
-                    )}
-                  </AnimatePresence>
-                </div>
               </div>
             </div>
 
