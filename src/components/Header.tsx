@@ -163,13 +163,13 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           >
             <div className="bg-irshop-teal text-white p-3 flex flex-col sticky top-0 z-10 shadow-sm">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-base flex items-center gap-2 pl-2">
-                  <Menu size={18} className="text-white" />
+                <span className="font-bold text-base flex items-center gap-2 pl-2 text-[#FFD700]">
+                  <Menu size={18} className="text-[#FFD700]" />
                   Ir-Shop Menu
                 </span>
                 <button
                   onClick={onClose}
-                  className="text-white hover:text-gray-200 transition-colors p-1"
+                  className="text-white hover:text-[#FFD700] transition-colors p-1"
                 >
                   <X size={24} />
                 </button>
@@ -267,11 +267,11 @@ export const CartSidebar = () => {
             className="fixed top-0 right-0 bottom-0 w-[260px] sm:w-[320px] max-w-[85vw] bg-white z-[101] flex flex-col shadow-2xl"
           >
             <div className="bg-irshop-teal text-white p-3 flex items-center justify-between shadow-sm">
-              <span className="font-bold text-[15px] sm:text-base flex items-center gap-2 pl-1">
-                <ShoppingCart size={18} />
+              <span className="font-bold text-[15px] sm:text-base flex items-center gap-2 pl-1 text-[#FFD700]">
+                <ShoppingCart size={18} className="text-[#FFD700]" />
                 Your Cart ({cartCount})
               </span>
-              <button onClick={() => setIsCartOpen(false)} className="text-white hover:text-gray-200 transition-colors">
+              <button onClick={() => setIsCartOpen(false)} className="text-white hover:text-[#FFD700] transition-colors">
                 <X size={24} />
               </button>
             </div>
