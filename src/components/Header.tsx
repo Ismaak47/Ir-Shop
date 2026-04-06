@@ -2,6 +2,7 @@ import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home } 
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../CartContext";
 
 export const Logo = () => (
   <div className="flex flex-col items-start justify-center px-1 group">
@@ -37,6 +38,7 @@ interface HeaderProps {
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const { cartCount } = useCart();
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -93,7 +95,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
           <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
             <div className="relative">
               <ShoppingCart size={32} />
-              <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">0</span>
+              <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">{cartCount}</span>
             </div>
             <span className="font-bold mt-3 hidden md:inline">Cart</span>
           </div>
@@ -211,6 +213,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 };
 
 export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
+  const { cartCount } = useCart();
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around py-2 z-[60] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
       <Link to="/" className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
@@ -223,7 +226,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
       </div>
       <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer relative">
         <ShoppingCart size={22} />
-        <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-4 h-4 flex items-center justify-center font-bold text-[8px]">0</span>
+        <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-4 h-4 flex items-center justify-center font-bold text-[8px]">{cartCount}</span>
         <span className="text-[10px] font-medium">Cart</span>
       </div>
       <button onClick={onMenuOpen} className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">

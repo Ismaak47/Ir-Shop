@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
+import { useCart } from "./CartContext";
 
 const GameProductCard = ({
   title,
@@ -24,50 +25,56 @@ const GameProductCard = ({
   isBestSeller?: boolean,
   isOverallPick?: boolean,
   key?: number
-}) => (
-  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
-    {isBestSeller && (
-      <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
-        Best Seller
-      </div>
-    )}
-    {isOverallPick && (
-      <div className="absolute top-0 left-0 bg-[#232f3e] text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
-        Overall Pick
-      </div>
-    )}
-
-    <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
-      <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
-    </div>
-
-    <div className="flex-1 flex flex-col">
-      <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{title}</h3>
-
-      <div className="flex items-center gap-1 mb-1">
-        <div className="flex text-orange-400">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={10} className="sm:w-[14px] sm:h-[14px]" fill={i < Math.floor(rating) ? "currentColor" : "none"} />
-          ))}
+}) => {
+  const { addToCart } = useCart();
+  return (
+    <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
+      {isBestSeller && (
+        <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
+          Best Seller
         </div>
-        <span className="text-[10px] sm:text-xs text-blue-600 hover:text-orange-600 cursor-pointer">{reviews}</span>
+      )}
+      {isOverallPick && (
+        <div className="absolute top-0 left-0 bg-[#232f3e] text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
+          Overall Pick
+        </div>
+      )}
+
+      <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
+        <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
       </div>
 
-      <div className="mt-auto">
-        <div className="flex items-baseline gap-0.5 mb-1">
-          <span className="text-[10px] sm:text-xs font-bold self-start mt-0.5 sm:mt-1">TZS</span>
-          <span className="text-base sm:text-2xl font-bold">{price}</span>
+      <div className="flex-1 flex flex-col">
+        <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{title}</h3>
+
+        <div className="flex items-center gap-1 mb-1">
+          <div className="flex text-orange-400">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={10} className="sm:w-[14px] sm:h-[14px]" fill={i < Math.floor(rating) ? "currentColor" : "none"} />
+            ))}
+          </div>
+          <span className="text-[10px] sm:text-xs text-blue-600 hover:text-orange-600 cursor-pointer">{reviews}</span>
         </div>
 
-        <p className="text-[10px] sm:text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-1">{delivery}</p>
+        <div className="mt-auto">
+          <div className="flex items-baseline gap-0.5 mb-1">
+            <span className="text-[10px] sm:text-xs font-bold self-start mt-0.5 sm:mt-1">TZS</span>
+            <span className="text-base sm:text-2xl font-bold">{price}</span>
+          </div>
 
-        <button className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm">
-          Add to cart
-        </button>
+          <p className="text-[10px] sm:text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-1">{delivery}</p>
+
+          <button
+            onClick={addToCart}
+            className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm"
+          >
+            Add to cart
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
