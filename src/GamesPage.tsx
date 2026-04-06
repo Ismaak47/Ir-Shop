@@ -572,68 +572,6 @@ export default function GamesPage() {
                 <li className="hover:text-orange-600 cursor-pointer">Used</li>
               </ul>
             </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Seller</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Amazon.com</li>
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> OFFbb</li>
-              </ul>
-              <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">From Our Brands</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Amazon Brands</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">All Top Brands</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Top Brands</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Premium Brands</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Premium Brands</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Sustainability Features</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Any Feature</li>
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Carbon Impact</li>
-              </ul>
-              <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Amazon Certified</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Works with Alexa</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Customizable Products</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Customizable</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-2">Department</h3>
-              <ul className="space-y-1 text-xs">
-                <li className="hover:text-orange-600 cursor-pointer">Electronics</li>
-                <li className="hover:text-orange-600 cursor-pointer pl-2">Computers & Accessories</li>
-                <li className="hover:text-orange-600 cursor-pointer pl-4 font-bold">PC Games & Accessories</li>
-              </ul>
-            </div>
           </div>
         </aside>
 
