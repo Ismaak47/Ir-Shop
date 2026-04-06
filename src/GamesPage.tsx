@@ -509,15 +509,15 @@ export default function GamesPage() {
     };
 
   return (
-    <div className="min-h-screen flex flex-col text-sm font-sans bg-white">
+    <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
       <Header onMenuOpen={() => setIsMenuOpen(true)} searchTerm="gaming" />
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Main Content */}
-      <main className="flex-1 max-w-[1500px] mx-auto w-full p-4 flex gap-6">
+      <main className="flex-1 max-w-[1500px] mx-auto w-full px-4 pt-4 pb-0 flex gap-6">
         {/* Left Sidebar Filters */}
         <aside className="hidden md:block w-64 flex-shrink-0">
-          <div className="space-y-6">
+          <div className="bg-white p-4 shadow-sm space-y-6">
             <div>
               <h3 className="text-sm font-bold mb-2">Popular Shopping Ideas</h3>
               <ul className="space-y-1 text-xs">
@@ -608,7 +608,7 @@ export default function GamesPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-center gap-2 mt-8 mb-12 border-t border-gray-200 pt-8">
+            <div className="flex items-center justify-center gap-2 my-4">
               <button 
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
