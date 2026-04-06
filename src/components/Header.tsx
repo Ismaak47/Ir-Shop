@@ -83,12 +83,18 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                     exit={{ opacity: 0, y: -10 }}
                     className="absolute right-0 top-full mt-1 w-48 bg-white rounded-md shadow-lg p-3 z-50 flex flex-col gap-2"
                   >
-                    <button className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center">
+                    <Link 
+                      to="/login"
+                      className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
+                    >
                       Sign in
-                    </button>
-                    <button className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center">
+                    </Link>
+                    <Link 
+                      to="/signup"
+                      className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
+                    >
                       Sign up
-                    </button>
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>

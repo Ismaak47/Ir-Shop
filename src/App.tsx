@@ -2,6 +2,8 @@ import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tikt
 import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import SignupPage from "./SignupPage";
 import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
 import ProductDetailPage from "./ProductDetailPage";
@@ -128,6 +130,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
