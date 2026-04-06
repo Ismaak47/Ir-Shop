@@ -503,6 +503,7 @@ function HomePage() {
         </div>
       </main>
 
+      <Footer />
     </div>
   );
 }
