@@ -8,6 +8,8 @@ import { useCart } from "./CartContext";
 export default function ProductDetailPage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [quantity, setQuantity] = useState(1);
+    const [capacity, setCapacity] = useState("1TB SSD");
+    const [memory, setMemory] = useState("16GB RAM");
     const location = useLocation();
     const navigate = useNavigate();
     const { addToCart, setIsCartOpen } = useCart();
@@ -74,8 +76,8 @@ export default function ProductDetailPage() {
                                         key={idx}
                                         onClick={() => setMainImage(img)}
                                         className={`w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-lg p-1.5 cursor-pointer shadow-sm transition-all ${mainImage === img
-                                                ? 'border-2 border-orange-500 opacity-100'
-                                                : 'border border-gray-200 hover:border-gray-400 opacity-60 hover:opacity-100'
+                                            ? 'border-2 border-orange-500 opacity-100'
+                                            : 'border border-gray-200 hover:border-gray-400 opacity-60 hover:opacity-100'
                                             }`}
                                     >
                                         <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
@@ -121,16 +123,36 @@ export default function ProductDetailPage() {
                             <div className="mb-5">
                                 <h3 className="font-bold text-[10px] text-gray-400 mb-2 uppercase tracking-widest">Capacity</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    <button className="border-2 border-[#FFD700] bg-orange-50/20 text-gray-900 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors shadow-sm ring-1 ring-[#FFD700] ring-opacity-20">1TB SSD</button>
-                                    <button className="border border-gray-200 hover:border-gray-300 bg-white text-gray-600 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors">2TB SSD</button>
+                                    {["1TB SSD", "2TB SSD"].map((cap) => (
+                                        <button
+                                            key={cap}
+                                            onClick={() => setCapacity(cap)}
+                                            className={`px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors ${capacity === cap
+                                                    ? 'border-2 border-[#FFD700] bg-orange-50/20 text-gray-900 shadow-sm ring-1 ring-[#FFD700] ring-opacity-20'
+                                                    : 'border border-gray-200 hover:border-gray-300 bg-white text-gray-600'
+                                                }`}
+                                        >
+                                            {cap}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
                             <div className="mb-6">
                                 <h3 className="font-bold text-[10px] text-gray-400 mb-2 uppercase tracking-widest">Memory</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    <button className="border-2 border-[#FFD700] bg-orange-50/20 text-gray-900 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors shadow-sm ring-1 ring-[#FFD700] ring-opacity-20">16GB RAM</button>
-                                    <button className="border border-gray-200 hover:border-gray-300 bg-white text-gray-600 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors">32GB RAM</button>
+                                    {["16GB RAM", "32GB RAM"].map((mem) => (
+                                        <button
+                                            key={mem}
+                                            onClick={() => setMemory(mem)}
+                                            className={`px-4 py-1.5 rounded-lg text-[11px] font-bold transition-colors ${memory === mem
+                                                    ? 'border-2 border-[#FFD700] bg-orange-50/20 text-gray-900 shadow-sm ring-1 ring-[#FFD700] ring-opacity-20'
+                                                    : 'border border-gray-200 hover:border-gray-300 bg-white text-gray-600'
+                                                }`}
+                                        >
+                                            {mem}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
