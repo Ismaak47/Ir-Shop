@@ -9,20 +9,20 @@ export const Logo = () => (
       <span className="text-xl md:text-2xl font-black tracking-tighter text-[#FFD700] drop-shadow-sm">Ir-Shop</span>
     </div>
     <div className="relative w-full h-3 -mt-1.5">
-      <svg 
-        viewBox="0 0 100 20" 
-        fill="none" 
+      <svg
+        viewBox="0 0 100 20"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full transform group-hover:scale-105 transition-transform duration-300"
       >
-        <path 
-          d="M10 5C30 15 70 15 90 5" 
-          stroke="#FFD700" 
-          strokeWidth="4" 
+        <path
+          d="M10 5C30 15 70 15 90 5"
+          stroke="#FFD700"
+          strokeWidth="4"
           strokeLinecap="round"
         />
-        <path 
-          d="M85 3L94 6L87 11" 
+        <path
+          d="M85 3L94 6L87 11"
           fill="#FFD700"
         />
       </svg>
@@ -62,15 +62,15 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
         {/* Tools */}
         <div className="flex items-center gap-1">
           <div className="relative">
-            <div 
+            <div
               onClick={() => setShowAccountDropdown(!showAccountDropdown)}
               className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors"
             >
-              <User size={24} className="text-irshop-accent" />
-              <span className="font-bold text-irshop-accent hidden md:inline">
-                {showAccountDropdown ? "Account" : "Hello, Sign In"}
+              <User size={24} className="text-[#FFD700]" />
+              <span className="font-bold text-[#FFD700] hidden md:inline">
+                Account
               </span>
-              <ChevronDown size={16} className="text-irshop-accent hidden md:inline" />
+              <ChevronDown size={16} className="text-[#FFD700] hidden md:inline" />
             </div>
             <AnimatePresence>
               {showAccountDropdown && (
@@ -103,7 +103,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
       {/* Main Nav */}
       <div className="bg-irshop-teal-light relative">
         <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-          <div 
+          <div
             onClick={onMenuOpen}
             className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
           >
@@ -139,14 +139,14 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
             className="fixed inset-0 bg-black/70 z-[100]"
           />
-          <motion.div 
+          <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
@@ -160,10 +160,10 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     <User size={20} className="text-irshop-teal" />
                   </div>
                   <span className="font-bold text-lg text-[#FFD700]">
-                    Hello, Sign In
+                    Account
                   </span>
                 </div>
-                <button 
+                <button
                   onClick={onClose}
                   className="text-white hover:text-gray-300"
                 >

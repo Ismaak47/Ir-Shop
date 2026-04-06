@@ -4,22 +4,22 @@ import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
 
-const GameProductCard = ({ 
-  title, 
-  img, 
-  rating, 
-  reviews, 
-  price, 
-  delivery, 
+const GameProductCard = ({
+  title,
+  img,
+  rating,
+  reviews,
+  price,
+  delivery,
   isBestSeller = false,
   isOverallPick = false,
   key
-}: { 
-  title: string, 
-  img: string, 
-  rating: number, 
-  reviews: string, 
-  price: string, 
+}: {
+  title: string,
+  img: string,
+  rating: number,
+  reviews: string,
+  price: string,
   delivery: string,
   isBestSeller?: boolean,
   isOverallPick?: boolean,
@@ -36,14 +36,14 @@ const GameProductCard = ({
         Overall Pick
       </div>
     )}
-    
+
     <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
       <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
     </div>
-    
+
     <div className="flex-1 flex flex-col">
       <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{title}</h3>
-      
+
       <div className="flex items-center gap-1 mb-1">
         <div className="flex text-orange-400">
           {[...Array(5)].map((_, i) => (
@@ -52,15 +52,15 @@ const GameProductCard = ({
         </div>
         <span className="text-[10px] sm:text-xs text-blue-600 hover:text-orange-600 cursor-pointer">{reviews}</span>
       </div>
-      
+
       <div className="mt-auto">
         <div className="flex items-baseline gap-0.5 mb-1">
           <span className="text-[10px] sm:text-xs font-bold self-start mt-0.5 sm:mt-1">TZS</span>
           <span className="text-base sm:text-2xl font-bold">{price}</span>
         </div>
-        
+
         <p className="text-[10px] sm:text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-1">{delivery}</p>
-        
+
         <button className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm">
           Add to cart
         </button>
@@ -76,7 +76,7 @@ export default function GamesPage() {
   const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
-  
+
   const products = [
     {
       title: "ASUS ROG Strix G16 (2025) Gaming Laptop, 16” FHD+ 16:10 165Hz/3ms Display, NVIDIA® GeForce RTX™ 5060 Laptop GPU, Intel® Core™ i7 Processor 14650HX, 16GB DDR5, 1TB Gen 4 SSD, Wi-Fi 7, Windows 11 Home",
@@ -499,18 +499,18 @@ export default function GamesPage() {
       delivery: "TZS 619,424 delivery Apr 16 - May 4"
     }
   ];
-  
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-    const indexOfLastProduct = currentPage * itemsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    const handlePageChange = (page: number) => {
-      if (page >= 1 && page <= totalPages) {
-        setCurrentPage(page);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    };
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
@@ -586,7 +586,7 @@ export default function GamesPage() {
             <div className="flex items-center justify-between border-b border-gray-200 pb-2 relative">
               {/* Mobile Filters Button */}
               <div className="md:hidden">
-                <button 
+                <button
                   onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
                   className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors"
                 >
@@ -598,14 +598,14 @@ export default function GamesPage() {
                 <AnimatePresence>
                   {isMobileFiltersOpen && (
                     <>
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsMobileFiltersOpen(false)}
                         className="fixed inset-0 bg-black/50 z-[60]"
                       />
-                      <motion.div 
+                      <motion.div
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -20, opacity: 0 }}
@@ -617,7 +617,7 @@ export default function GamesPage() {
                             <X size={16} />
                           </button>
                         </div>
-                        
+
                         <div className="space-y-6">
                           <div>
                             <h3 className="text-sm font-bold mb-2">Popular Shopping Ideas</h3>
@@ -682,26 +682,26 @@ export default function GamesPage() {
 
               <div className="flex items-center gap-2">
                 <div className="md:hidden">
-                  <button 
+                  <button
                     onClick={() => setIsMobileSortOpen(!isMobileSortOpen)}
                     className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors"
                   >
                     <Menu size={14} />
-                    <span>Sort</span>
+                    <span>Sort by: {sortBy}</span>
                     <ChevronDown size={14} className={`transition-transform duration-200 ${isMobileSortOpen ? 'rotate-180' : ''}`} />
                   </button>
 
                   <AnimatePresence>
                     {isMobileSortOpen && (
                       <>
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           onClick={() => setIsMobileSortOpen(false)}
                           className="fixed inset-0 bg-black/50 z-[60]"
                         />
-                        <motion.div 
+                        <motion.div
                           initial={{ y: -20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           exit={{ y: -20, opacity: 0 }}
@@ -713,17 +713,21 @@ export default function GamesPage() {
                               <X size={16} />
                             </button>
                           </div>
-                          
-                          <div className="space-y-4">
-                            {['Featured', 'Price: Low to High', 'Price: High to Low', 'Avg. Customer Review', 'Newest Arrivals'].map((option) => (
-                              <div 
-                                key={option}
-                                onClick={() => { setSortBy(option); setIsMobileSortOpen(false); }}
-                                className={`text-xs py-2 px-1 cursor-pointer transition-colors hover:text-orange-600 ${sortBy === option ? 'font-bold text-orange-600 bg-orange-50 rounded-sm px-2' : 'px-2'}`}
-                              >
-                                {option}
-                              </div>
-                            ))}
+
+                          <div className="space-y-6">
+                            <div>
+                              <ul className="space-y-2 text-xs">
+                                {['Featured', 'Price: Low to High', 'Price: High to Low', 'Avg. Customer Review', 'Newest Arrivals'].map((option) => (
+                                  <li
+                                    key={option}
+                                    onClick={() => { setSortBy(option); setIsMobileSortOpen(false); }}
+                                    className={`hover:text-orange-600 cursor-pointer ${sortBy === option ? 'font-bold text-orange-600' : ''}`}
+                                  >
+                                    {option}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
                         </motion.div>
                       </>
@@ -733,7 +737,7 @@ export default function GamesPage() {
 
                 <div className="hidden md:flex items-center gap-2">
                   <span className="text-xs text-gray-600">Sort by:</span>
-                  <select 
+                  <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                     className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal"
@@ -750,8 +754,8 @@ export default function GamesPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
               {currentProducts.map((product, index) => (
-                <GameProductCard 
-                  key={indexOfFirstProduct + index} 
+                <GameProductCard
+                  key={indexOfFirstProduct + index}
                   title={product.title}
                   img={product.img}
                   rating={product.rating}
@@ -766,20 +770,20 @@ export default function GamesPage() {
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 my-4">
-              <button 
+              <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
                 className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
-              
+
               {[...Array(totalPages)].map((_, i) => {
                 const pageNum = i + 1;
                 // Simple logic to show 1, 2, 3 ... total
                 if (pageNum <= 3 || pageNum === totalPages) {
                   return (
-                    <button 
+                    <button
                       key={pageNum}
                       onClick={() => handlePageChange(pageNum)}
                       className={`px-3 py-1 border border-gray-300 rounded-md text-xs ${currentPage === pageNum ? 'bg-gray-100 font-bold' : 'hover:bg-gray-100'}`}
@@ -794,7 +798,7 @@ export default function GamesPage() {
                 return null;
               })}
 
-              <button 
+              <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
