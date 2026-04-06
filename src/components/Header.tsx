@@ -239,6 +239,11 @@ export const CartSidebar = () => {
   const { isCartOpen, setIsCartOpen, cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
   const navigate = useNavigate();
 
+  const totalAmount = cartItems.reduce((total, item) => {
+    const priceNum = parseFloat(item.price.replace(/,/g, ''));
+    return total + (isNaN(priceNum) ? 0 : priceNum * item.quantity);
+  }, 0);
+
   return (
     <AnimatePresence>
       {isCartOpen && (
@@ -279,7 +284,9 @@ export const CartSidebar = () => {
                     <img src={item.img} alt={item.title} className="w-20 h-20 object-contain" referrerPolicy="no-referrer" />
                     <div className="flex-1 flex flex-col">
                       <h4 className="font-medium text-sm line-clamp-2 text-gray-800 mb-1">{item.title}</h4>
-                      <span className="font-bold text-lg mb-2 text-gray-900">TZS {item.price}</span>
+                      <span className="font-bold text-lg mb-2 text-gray-900">
+                        TZS {(parseFloat(item.price.replace(/,/g, '')) * item.quantity).toLocaleString()}
+                      </span>
                       <div className="mt-auto flex items-center justify-between">
                         <div className="flex items-center border border-gray-300 rounded-md overflow-hidden bg-gray-50">
                           <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 py-1 hover:bg-gray-200 transition-colors text-gray-600">
@@ -302,12 +309,16 @@ export const CartSidebar = () => {
 
             {cartItems.length > 0 && (
               <div className="p-4 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="font-medium text-gray-600">Subtotal:</span>
+                  <span className="font-bold text-xl text-gray-900">TZS {totalAmount.toLocaleString()}</span>
+                </div>
                 <button
                   onClick={() => {
                     setIsCartOpen(false);
                     navigate("/checkout");
                   }}
-                  className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black py-3 rounded-xl font-bold transition-colors"
+                  className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black py-3 rounded-xl font-bold transition-colors shadow-sm"
                 >
                   Proceed to Checkout
                 </button>
