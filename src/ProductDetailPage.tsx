@@ -28,11 +28,13 @@ export default function ProductDetailPage() {
     };
 
     const handleAddToCart = () => {
-        // Add multiple quantities by calling addToCart directly. 
-        // In our current CartContext, it adds 1 or creates item. We can just add it and it handles logic.
-        // For accurate tracking we would modify cart to handle specific quantity, but adding the item opens the sidebar.
-        addToCart({ id: product.title, title: product.title, img: product.img, price: product.price });
+        addToCart({ id: product.title, title: product.title, img: product.img, price: product.price }, quantity);
         setIsCartOpen(true);
+    };
+
+    const handleBuyNow = () => {
+        addToCart({ id: product.title, title: product.title, img: product.img, price: product.price }, quantity);
+        navigate("/checkout");
     };
 
     return (
@@ -164,7 +166,7 @@ export default function ProductDetailPage() {
                             </button>
 
                             <button
-                                onClick={() => navigate("/checkout")}
+                                onClick={handleBuyNow}
                                 className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl font-extrabold text-[12px] uppercase tracking-wider transition-all shadow-[0_2px_8px_rgba(249,115,22,0.3)] hover:shadow-[0_4px_12px_rgba(249,115,22,0.4)] mb-5 transform hover:-translate-y-0.5 active:translate-y-0"
                             >
                                 Buy It Now
