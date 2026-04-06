@@ -29,32 +29,32 @@ const LoginPage = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full space-y-8 bg-white shadow-2xl rounded-3xl p-10 border border-gray-100"
+          className="max-w-sm w-full space-y-6 bg-white shadow-xl rounded-2xl p-8 border border-gray-100"
         >
           {/* Header */}
           <div className="text-center">
-            <div className="mx-auto w-20 h-20 bg-gradient-to-br from-irshop-teal to-irshop-teal-light rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-              <User size={36} className="text-white" />
+            <div className="mx-auto w-16 h-16 bg-gradient-to-br from-irshop-teal to-irshop-teal-light rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+              <User size={28} className="text-white" />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome Back</h2>
             <p className="text-gray-600 text-sm">Sign in to your Ir-Shop account</p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-xs font-semibold text-gray-700 mb-1.5">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <input
                   id="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-irshop-accent focus:border-transparent transition-all duration-200 bg-gray-50/50 hover:bg-gray-50"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-irshop-accent focus:border-transparent transition-all duration-200 bg-gray-50/50 hover:bg-gray-50 text-sm"
                   placeholder="Enter your email"
                 />
               </div>
@@ -91,7 +91,7 @@ const LoginPage = () => {
               disabled={isLoading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-irshop-accent to-[#FFD700] hover:from-[#e6c200] hover:to-irshop-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-irshop-accent shadow-xl hover:shadow-2xl transform transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-irshop-accent to-[#FFD700] hover:from-[#e6c200] hover:to-irshop-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-irshop-accent shadow-lg hover:shadow-xl transform transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
