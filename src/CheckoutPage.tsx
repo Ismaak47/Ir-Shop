@@ -3,10 +3,12 @@ import { Footer } from "./components/Footer";
 import { useCart } from "./CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ShieldCheck, MapPin, CreditCard, Edit2, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShieldCheck, MapPin, CreditCard, ShoppingCart } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function CheckoutPage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState("card");
     const { cartItems, cartCount } = useCart();
     const navigate = useNavigate();
 
@@ -50,41 +52,124 @@ export default function CheckoutPage() {
                         {/* LEFT COLUMN: Order Summary & Info */}
                         <div className="flex-1 w-full space-y-8">
 
-                            {/* Dummy Delivery info */}
+                            {/* Shipping Information Form */}
                             <div className="bg-white p-6 sm:p-8 shadow-sm rounded-2xl border border-gray-100">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                                        <MapPin className="text-[#FFD700]" /> Shipping Address
-                                    </h2>
-                                    <button className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center">
-                                        <Edit2 size={14} className="mr-1" /> Edit
-                                    </button>
-                                </div>
-                                <div className="text-gray-600 text-base leading-relaxed pl-8">
-                                    <p className="font-semibold text-gray-900">John Doe</p>
-                                    <p>123 Kilimanjaro Ave, P.O. Box 456</p>
-                                    <p>Dar es Salaam, Tanzania</p>
-                                </div>
+                                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mb-6">
+                                    <MapPin className="text-[#FFD700]" /> Shipping Information
+                                </h2>
+                                <form className="space-y-5">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
+                                            <input type="text" placeholder="John Doe" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+                                            <input type="email" placeholder="john@example.com" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
+                                        <input type="tel" placeholder="+255 123 456 789" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Shipping Address</label>
+                                        <input type="text" placeholder="Street Address (e.g. 123 Kilimanjaro Ave)" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400 mb-4" />
+                                        <div className="grid grid-cols-2 gap-5">
+                                            <input type="text" placeholder="City" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                            <input type="text" placeholder="Postal Code" className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
-                            {/* Dummy Payment info */}
+                            {/* Payment Method */}
                             <div className="bg-white p-6 sm:p-8 shadow-sm rounded-2xl border border-gray-100">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                                        <CreditCard className="text-[#FFD700]" /> Payment Method
-                                    </h2>
-                                    <button className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center">
-                                        <Edit2 size={14} className="mr-1" /> Edit
-                                    </button>
-                                </div>
-                                <div className="flex items-center gap-4 pl-8">
-                                    <div className="w-12 h-8 bg-gray-100 rounded border border-gray-200 flex items-center justify-center font-bold text-[10px] text-gray-500">
-                                        VISA
-                                    </div>
-                                    <div className="text-gray-600 text-base">
-                                        <p className="font-medium text-gray-900">Visa ending in 4242</p>
-                                        <p className="text-sm">Expires 12/28</p>
-                                    </div>
+                                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mb-6">
+                                    <CreditCard className="text-[#FFD700]" /> Payment Method
+                                </h2>
+                                <div className="space-y-3">
+                                    {/* Option 1: Credit Card */}
+                                    <label
+                                        className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all hover:shadow-sm ${paymentMethod === 'card' ? 'border-[#FFD700] bg-orange-50/20 ring-1 ring-[#FFD700]' : 'border-gray-200 hover:border-gray-300'}`}
+                                        onClick={() => setPaymentMethod('card')}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border outline-none flex items-center justify-center transition-colors ${paymentMethod === 'card' ? 'border-[#FFD700]' : 'border-gray-300'}`}>
+                                                {paymentMethod === 'card' && <div className="w-2.5 h-2.5 bg-[#FFD700] rounded-full"></div>}
+                                            </div>
+                                            <span className="font-semibold text-gray-900">Credit or Debit Card</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-[#1A1F71] text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">VISA</div>
+                                            <div className="bg-gray-100 px-2 py-0.5 rounded flex items-center shadow-sm">
+                                                <div className="w-3 h-3 bg-[#EB001B] rounded-full mix-blend-multiply"></div>
+                                                <div className="w-3 h-3 bg-[#F79E1B] rounded-full mix-blend-multiply -ml-1"></div>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    {/* Card Details Form (Only shows when 'card' is selected) */}
+                                    <AnimatePresence>
+                                        {paymentMethod === 'card' && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                animate={{ height: 'auto', opacity: 1, marginTop: 12 }}
+                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                className="overflow-hidden"
+                                            >
+                                                <div className="p-5 bg-gray-50 rounded-xl border border-gray-100 space-y-4 shadow-inner">
+                                                    <div>
+                                                        <label className="block text-xs font-semibold text-gray-700 mb-1.5">Card Number</label>
+                                                        <input type="text" placeholder="0000 0000 0000 0000" className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-xs font-semibold text-gray-700 mb-1.5">Expiry Date</label>
+                                                            <input type="text" placeholder="MM/YY" className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-semibold text-gray-700 mb-1.5">CVC</label>
+                                                            <input type="text" placeholder="123" className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-offset-1 focus:ring-[#FFD700] focus:border-[#FFD700] outline-none transition-all placeholder-gray-400" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    {/* Option 2: Mobile Money */}
+                                    <label
+                                        className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all hover:shadow-sm ${paymentMethod === 'mobile' ? 'border-[#FFD700] bg-orange-50/20 ring-1 ring-[#FFD700]' : 'border-gray-200 hover:border-gray-300'}`}
+                                        onClick={() => setPaymentMethod('mobile')}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${paymentMethod === 'mobile' ? 'border-[#FFD700]' : 'border-gray-300'}`}>
+                                                {paymentMethod === 'mobile' && <div className="w-2.5 h-2.5 bg-[#FFD700] rounded-full"></div>}
+                                            </div>
+                                            <span className="font-semibold text-gray-900">Mobile Money</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-[#43B82F] text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">M-Pesa</div>
+                                            <div className="bg-[#E11116] text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">Airtel</div>
+                                        </div>
+                                    </label>
+
+                                    {/* Option 3: PayPal */}
+                                    <label
+                                        className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer transition-all hover:shadow-sm ${paymentMethod === 'paypal' ? 'border-[#FFD700] bg-orange-50/20 ring-1 ring-[#FFD700]' : 'border-gray-200 hover:border-gray-300'}`}
+                                        onClick={() => setPaymentMethod('paypal')}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${paymentMethod === 'paypal' ? 'border-[#FFD700]' : 'border-gray-300'}`}>
+                                                {paymentMethod === 'paypal' && <div className="w-2.5 h-2.5 bg-[#FFD700] rounded-full"></div>}
+                                            </div>
+                                            <span className="font-semibold text-gray-900">PayPal</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="text-[#00457C] font-extrabold italic text-sm tracking-tighter">Pay<span className="text-[#0079C1]">Pal</span></div>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
 
