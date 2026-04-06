@@ -66,11 +66,11 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
               onClick={() => setShowAccountDropdown(!showAccountDropdown)}
               className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors"
             >
-              <User size={24} className="text-irshop-accent" />
-              <span className="font-bold text-irshop-accent hidden md:inline">
-                {showAccountDropdown ? "Account" : "Hello, Sign In"}
+              <User size={24} className="text-[#FFD700]" />
+              <span className="font-bold text-[#FFD700] hidden md:inline">
+                Account
               </span>
-              <ChevronDown size={16} className="text-irshop-accent hidden md:inline" />
+              <ChevronDown size={16} className="text-[#FFD700] hidden md:inline" />
             </div>
             <AnimatePresence>
               {showAccountDropdown && (
@@ -78,12 +78,12 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute right-0 top-full mt-1 w-40 bg-white rounded-md shadow-lg py-1 z-50"
+                  className="absolute right-0 top-full mt-1 w-48 bg-white rounded-md shadow-lg p-3 z-50 flex flex-col gap-2"
                 >
-                  <button className="w-full px-4 py-2 text-left text-[#FFD700] hover:bg-gray-100 font-medium text-sm">
+                  <button className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center">
                     Sign in
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-[#FFD700] hover:bg-gray-100 font-medium text-sm">
+                  <button className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center">
                     Sign up
                   </button>
                 </motion.div>
@@ -160,7 +160,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     <User size={20} className="text-irshop-teal" />
                   </div>
                   <span className="font-bold text-lg text-[#FFD700]">
-                    Hello, Sign In
+                    Account
                   </span>
                 </div>
                 <button
