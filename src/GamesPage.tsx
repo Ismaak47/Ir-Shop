@@ -72,6 +72,8 @@ const GameProductCard = ({
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
+  const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 

@@ -36,6 +36,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -159,7 +160,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     <User size={20} className="text-irshop-teal" />
                   </div>
                   <span className="font-bold text-lg text-[#FFD700]">
-                    Account
+                    Hello, Sign In
                   </span>
                 </div>
                 <button
