@@ -26,7 +26,7 @@ const GameProductCard = ({
   isOverallPick?: boolean,
   key?: number
 }) => {
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   return (
     <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
       {isBestSeller && (
@@ -65,7 +65,10 @@ const GameProductCard = ({
           <p className="text-[10px] sm:text-xs text-gray-600 mb-2 sm:mb-3 line-clamp-1">{delivery}</p>
 
           <button
-            onClick={addToCart}
+            onClick={() => {
+              addToCart({ id: key?.toString() || title, title, img, price });
+              setIsCartOpen(true);
+            }}
             className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm"
           >
             Add to cart
