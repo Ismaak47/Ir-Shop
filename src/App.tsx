@@ -146,8 +146,7 @@ function HomePage() {
     "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX3000_.jpg",
     "https://i.ebayimg.com/images/g/9nwAAOSwfX5n1EXY/s-l2400.jpg",
     "https://i.ebayimg.com/images/g/t1cAAeSwjwRpusMM/s-l1600.webp",
-"https://ke.jumia.is/cms/2026/W03/KE_ONS_FlashSales_Generic_1225_S.jpg",
-    "https://lh3.googleusercontent.com/notebooklm/ANHLwAzwe7O_p7sS3f3W7vifevsG-bsH-zmORUcINrMRaCTl2Xvu6yiF1Zy_bL2IIDKWNjFNXStW2FKs1m45XA36kwqWYJF4h3OrU-7O8UY2TE4l1HG-IHTnpJU9pgkgAIPCoLitQwDY1kkfSHV8sRwzMAxBWqhBiQ=w2752-d-h1536-mp2?authuser=0"
+    "https://ke.jumia.is/cms/2026/W03/KE_ONS_FlashSales_Generic_1225_S.jpg"
   ];
 
   useEffect(() => {
