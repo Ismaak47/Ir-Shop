@@ -159,48 +159,52 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 left-0 bottom-0 w-[280px] sm:w-[350px] bg-white z-[101] overflow-y-auto"
+            className="fixed top-0 left-0 bottom-0 w-[260px] sm:w-[300px] max-w-[85vw] bg-white z-[101] overflow-y-auto shadow-2xl"
           >
-            <div className="bg-irshop-teal text-white p-4 flex flex-col sticky top-0 z-10">
-              <div className="flex items-center justify-end">
+            <div className="bg-irshop-teal text-white p-3 flex flex-col sticky top-0 z-10 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-base flex items-center gap-2 pl-2">
+                  <Menu size={18} className="text-white" />
+                  Ir-Shop Menu
+                </span>
                 <button
                   onClick={onClose}
-                  className="text-white hover:text-gray-300"
+                  className="text-white hover:text-gray-200 transition-colors p-1"
                 >
-                  <X size={28} />
+                  <X size={24} />
                 </button>
               </div>
             </div>
 
             <div className="py-2">
-              <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 mb-1">Trending</div>
-              <ul className="text-gray-700 pb-2">
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Best Sellers</li>
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">New Releases</li>
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Movers & Shakers</li>
+              <div className="px-4 py-2.5 font-bold text-[14px] text-gray-900 border-b border-gray-100 mb-1 tracking-wide">Trending</div>
+              <ul className="text-gray-600 pb-2 text-[13px] font-medium">
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-colors">Best Sellers</li>
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-colors">New Releases</li>
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-colors">Movers & Shakers</li>
               </ul>
 
-              <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-1">Digital Content & Devices</div>
-              <ul className="text-gray-700 pb-2">
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                  Prime Video <ChevronRight size={18} />
+              <div className="px-4 py-2.5 font-bold text-[14px] text-gray-900 border-b border-gray-100 my-1 tracking-wide">Digital Content & Devices</div>
+              <ul className="text-gray-600 pb-2 text-[13px] font-medium">
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer flex justify-between items-center transition-colors">
+                  Prime Video <ChevronRight size={14} className="text-gray-400" />
                 </li>
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                  Amazon Music <ChevronRight size={18} />
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer flex justify-between items-center transition-colors">
+                  Amazon Music <ChevronRight size={14} className="text-gray-400" />
                 </li>
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                  Echo & Alexa <ChevronRight size={18} />
+                <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer flex justify-between items-center transition-colors">
+                  Echo & Alexa <ChevronRight size={14} className="text-gray-400" />
                 </li>
               </ul>
 
-              <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-1">Shop By Department</div>
-              <ul className="text-gray-700 pb-2">
+              <div className="px-4 py-2.5 font-bold text-[14px] text-gray-900 border-b border-gray-100 my-1 tracking-wide">Shop By Department</div>
+              <ul className="text-gray-600 pb-2 text-[13px] font-medium">
                 {categories.map(cat => (
-                  <li key={cat} className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                    {cat} <ChevronRight size={18} />
+                  <li key={cat} className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer flex justify-between items-center transition-colors">
+                    {cat} <ChevronRight size={14} className="text-gray-400" />
                   </li>
                 ))}
-                <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer text-blue-600 font-medium">See All</li>
+                <li className="px-5 py-2 hover:bg-gray-50 text-blue-600 cursor-pointer font-semibold transition-colors mt-1">See All</li>
               </ul>
             </div>
           </motion.div>
@@ -260,11 +264,11 @@ export const CartSidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 bottom-0 w-[280px] sm:w-[340px] bg-white z-[101] flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 bottom-0 w-[260px] sm:w-[320px] max-w-[85vw] bg-white z-[101] flex flex-col shadow-2xl"
           >
-            <div className="bg-irshop-teal text-white p-3 sm:p-4 flex items-center justify-between shadow-sm">
-              <span className="font-bold text-base sm:text-lg flex items-center gap-2">
-                <ShoppingCart size={20} />
+            <div className="bg-irshop-teal text-white p-3 flex items-center justify-between shadow-sm">
+              <span className="font-bold text-[15px] sm:text-base flex items-center gap-2 pl-1">
+                <ShoppingCart size={18} />
                 Your Cart ({cartCount})
               </span>
               <button onClick={() => setIsCartOpen(false)} className="text-white hover:text-gray-200 transition-colors">
