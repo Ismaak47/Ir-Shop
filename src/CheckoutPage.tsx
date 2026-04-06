@@ -1,4 +1,4 @@
-import { Header, MobileBottomNav } from "./components/Header";
+import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { useCart } from "./CartContext";
 import { useState } from "react";
@@ -20,6 +20,7 @@ export default function CheckoutPage() {
     return (
         <div className="min-h-screen flex flex-col text-sm font-sans bg-[#F9FAFB]">
             <Header onMenuOpen={() => setIsMenuOpen(true)} />
+            <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
             <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
             <main className="flex-1 max-w-[1000px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
