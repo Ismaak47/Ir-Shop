@@ -88,20 +88,7 @@ export const Footer = () => {
                 </a>
               </div>
 
-              <div className="irshop-footer-app-download flex items-center gap-3 p-2 bg-irshop-teal/10 rounded-lg border border-irshop-teal/20">
-                <div className="flex flex-col items-center">
-                  <a href="#" className="w-20 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-lg flex flex-col items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-200 text-xs font-bold">
-                    <div>📱</div>
-                    <div>App Store</div>
-                  </a>
-                </div>
-                <div className="flex flex-col items-center">
-                  <a href="#" className="w-20 h-12 bg-gradient-to-r from-[#4285F4] via-[#34A853] to-[#FBBC05] hover:shadow-xl rounded-lg flex flex-col items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-200 text-xs font-bold">
-                    <div>📲</div>
-                    <div>Play Store</div>
-                  </a>
-                </div>
-              </div>
+              <!-- App download removed per user request -->
 
               <div className="irshop-footer-payment">
                 <div className="irshop-footer-payment-icons flex gap-2">
