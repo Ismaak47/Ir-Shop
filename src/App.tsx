@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
+import { Header, Sidebar } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 // Reusable Components
 const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
@@ -23,7 +25,7 @@ const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, i
         </div>
       ))}
     </div>
-    <a href={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</a>
+    <Link to={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</Link>
   </div>
 );
 
@@ -38,7 +40,7 @@ const SingleCard = ({ title, img, linkText, linkHref = "#" }: { title: string, i
         referrerPolicy="no-referrer" 
       />
     </div>
-    <a href={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</a>
+    <Link to={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</Link>
   </div>
 );
 
@@ -130,7 +132,6 @@ export default function App() {
 
 function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
 
   const heroImages = [
@@ -183,154 +184,8 @@ function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-[#e3e6e6]">
-      {/* Header */}
-      <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
-        {/* Top Belt */}
-        <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
-          {/* Logo */}
-          <Link to="/" className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
-            <Logo />
-          </Link>
-
-          {/* Search Bar */}
-          <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
-            <input
-              type="text"
-              placeholder="Search Ir-Shop"
-              className="flex-1 px-3 py-2 text-black outline-none bg-white min-w-0"
-            />
-            <button className="bg-irshop-accent hover:bg-irshop-accent-hover px-4 flex items-center justify-center text-black transition-colors">
-              <Search size={20} />
-            </button>
-          </div>
-
-          {/* Tools */}
-          <div className="flex items-center gap-1">
-            <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
-              <div className="relative">
-                <ShoppingCart size={32} />
-                <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">0</span>
-              </div>
-              <span className="font-bold mt-3 hidden md:inline">Cart</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Nav */}
-        <div className="bg-irshop-teal-light relative">
-          <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-            <div 
-              onClick={() => setIsMenuOpen(true)}
-              className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
-            >
-              <Menu size={20} />
-              All
-            </div>
-            <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Today's Deals</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Gift Cards</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Sell</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Registry</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Prime Video</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Customer Service</li>
-            </ul>
-          </div>
-        </div>
-      </header>
-
-      {/* Sidebar Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 bg-black/70 z-[100]"
-            />
-            <motion.div 
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 left-0 bottom-0 w-[350px] bg-white z-[101] overflow-y-auto"
-            >
-              <div className="bg-irshop-teal text-white p-4 flex flex-col sticky top-0 z-10">
-                <div 
-                  className="flex items-center gap-3 cursor-pointer group"
-                  onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                >
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <User size={20} className="text-[#FFD700]" />
-                  </div>
-                  <span className="font-bold text-lg text-[#FFD700] flex items-center gap-1">
-                    Account
-                    <ChevronDown size={16} className={`transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
-                  </span>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsMenuOpen(false);
-                    }}
-                    className="ml-auto text-white hover:text-gray-300"
-                  >
-                    <X size={28} />
-                  </button>
-                </div>
-
-                <AnimatePresence>
-                  {isAccountDropdownOpen && (
-                    <motion.div 
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-3 flex flex-col gap-1 bg-white/10 p-2 rounded">
-                        <button className="text-left px-3 py-2 hover:bg-white/20 rounded font-medium transition-colors">Sign in</button>
-                        <button className="text-left px-3 py-2 hover:bg-white/20 rounded font-medium transition-colors">Sign up</button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className="py-4">
-                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 mb-2">Trending</div>
-                <ul className="text-gray-700">
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Best Sellers</li>
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">New Releases</li>
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer">Movers & Shakers</li>
-                </ul>
-
-                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-2">Digital Content & Devices</div>
-                <ul className="text-gray-700">
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                    Prime Video <ChevronRight size={18} />
-                  </li>
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                    Amazon Music <ChevronRight size={18} />
-                  </li>
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                    Echo & Alexa <ChevronRight size={18} />
-                  </li>
-                </ul>
-
-                <div className="px-6 py-3 font-bold text-lg border-b border-gray-200 my-2">Shop By Department</div>
-                <ul className="text-gray-700">
-                  {categories.slice(0, 8).map(cat => (
-                    <li key={cat} className="px-6 py-3 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
-                      {cat} <ChevronRight size={18} />
-                    </li>
-                  ))}
-                  <li className="px-6 py-3 hover:bg-gray-100 cursor-pointer text-blue-600 font-medium">See All</li>
-                </ul>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <Header onMenuOpen={() => setIsMenuOpen(true)} />
+      <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Main Content */}
       <main className="flex-1">
@@ -640,107 +495,7 @@ function HomePage() {
         </div>
       </main>
 
-      {/* Back to Top */}
-      <button 
-        onClick={scrollToTop}
-        className="bg-[#37475a] hover:bg-[#485769] text-white py-4 text-center w-full transition-colors font-medium"
-      >
-        Back to top
-      </button>
-
-      {/* Modern Footer */}
-      <footer className="irshop-footer">
-        <div className="irshop-footer-container">
-          <div className="irshop-footer-grid">
-            <div className="irshop-footer-col">
-              <h4>Get to Know Us</h4>
-              <ul>
-                <li><a href="#">About Ir-Shop</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Investor Relations</a></li>
-                <li><a href="#">Ir-Shop Devices</a></li>
-                <li><a href="#">Ir-Shop Science</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Make Money with Us</h4>
-              <ul>
-                <li><a href="#">Sell products on Ir-Shop</a></li>
-                <li><a href="#">Sell on Ir-Shop Business</a></li>
-                <li><a href="#">Sell apps on Ir-Shop</a></li>
-                <li><a href="#">Become an Affiliate</a></li>
-                <li><a href="#">Advertise Your Products</a></li>
-                <li><a href="#">Self-Publish with Us</a></li>
-                <li><a href="#">Host an Ir-Shop Hub</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Ir-Shop Payment Products</h4>
-              <ul>
-                <li><a href="#">Ir-Shop Business Card</a></li>
-                <li><a href="#">Shop with Points</a></li>
-                <li><a href="#">Reload Your Balance</a></li>
-                <li><a href="#">Ir-Shop Currency Converter</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Let Us Help You</h4>
-              <ul>
-                <li><a href="#">Your Account</a></li>
-                <li><a href="#">Your Orders</a></li>
-                <li><a href="#">Shipping Rates & Policies</a></li>
-                <li><a href="#">Returns & Replacements</a></li>
-                <li><a href="#">Manage Your Content</a></li>
-                <li><a href="#">Help</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Contact Us</h4>
-              <ul>
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Contact Customer Service</a></li>
-                <li><a href="#">Shipping Info</a></li>
-                <li><a href="#">Returns & Exchanges</a></li>
-                <li><a href="#">Track Order</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="irshop-footer-middle">
-            <div className="irshop-footer-middle-content">
-              <div className="irshop-footer-social">
-                <a href="#" aria-label="Facebook">
-                  <Facebook size={18} />
-                </a>
-                <a href="#" aria-label="Instagram">
-                  <Instagram size={18} />
-                </a>
-                <a href="#" aria-label="TikTok">
-                  <Tiktok size={18} />
-                </a>
-              </div>
-
-              <div className="irshop-footer-payment">
-                <div className="irshop-footer-payment-icons flex gap-2">
-                  <div className="w-10 h-6 bg-[#1A1F71] rounded flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
-                  <div className="w-10 h-6 bg-white rounded flex items-center justify-center overflow-hidden">
-                    <div className="w-4 h-4 bg-red-600 rounded-full -mr-1"></div>
-                    <div className="w-4 h-4 bg-orange-500 rounded-full opacity-80"></div>
-                  </div>
-                  <div className="w-10 h-6 bg-[#003087] rounded flex items-center justify-center text-[7px] font-bold text-white italic">PayPal</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="irshop-footer-bottom">
-            <div className="irshop-footer-bottom-right">
-              <span>© 2026 Ir-Shop. All rights reserved.</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

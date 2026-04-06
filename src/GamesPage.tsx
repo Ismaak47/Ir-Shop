@@ -1,35 +1,7 @@
-import { Search, ShoppingCart, MapPin, Menu, Facebook, Instagram, Music2 as Tiktok, ChevronLeft, ChevronRight, ChevronDown, X, User, Star } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
-// Reusable Components from App.tsx (Header/Footer logic)
-const Logo = () => (
-  <div className="flex flex-col items-start justify-center px-1 group">
-    <div className="flex items-baseline leading-none">
-      <span className="text-xl md:text-2xl font-black tracking-tighter text-[#FFD700] drop-shadow-sm">Ir-Shop</span>
-    </div>
-    <div className="relative w-full h-3 -mt-1.5">
-      <svg 
-        viewBox="0 0 100 20" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full transform group-hover:scale-105 transition-transform duration-300"
-      >
-        <path 
-          d="M10 5C30 15 70 15 90 5" 
-          stroke="#FFD700" 
-          strokeWidth="4" 
-          strokeLinecap="round"
-        />
-        <path 
-          d="M85 3L94 6L87 11" 
-          fill="#FFD700"
-        />
-      </svg>
-    </div>
-  </div>
-);
+import { Star } from "lucide-react";
+import { useState } from "react";
+import { Header, Sidebar } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 const GameProductCard = ({ 
   title, 
@@ -39,7 +11,8 @@ const GameProductCard = ({
   price, 
   delivery, 
   isBestSeller = false,
-  isOverallPick = false
+  isOverallPick = false,
+  key
 }: { 
   title: string, 
   img: string, 
@@ -51,7 +24,7 @@ const GameProductCard = ({
   isOverallPick?: boolean,
   key?: number
 }) => (
-  <div className="bg-white p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative">
+  <div className="bg-white p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
     {isBestSeller && (
       <div className="absolute top-0 left-0 bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-br-sm z-10">
         Best Seller
@@ -196,61 +169,335 @@ export default function GamesPage() {
       reviews: "1,607",
       price: "519,974",
       delivery: "TZS 532,792 delivery Wed, Apr 15"
+    },
+    {
+      title: "BladeHawks Extra Large RGB Gaming Mouse Pad-14 Light Modes, Extended Soft LED Mouse Pad, Anti-Slip Rubber Base, Computer Keyboard Mousepad Mat (31.5 x 12 Inch)",
+      img: "https://m.media-amazon.com/images/I/51UsbIj9HAL._AC_UL320_.jpg",
+      rating: 4.7,
+      reviews: "15,660",
+      price: "38,974",
+      delivery: "TZS 121,368 delivery Wed, Apr 15"
+    },
+    {
+      title: "ASUS TUF Gaming F16 Gaming Laptop, 16” FHD+ 144Hz IPS-Level 16:10 Display, Intel® Core™ 5 210H, NVIDIA® GeForce RTX™ 4050, 16GB DDR5, 512GB PCIe Gen4 SSD, Wi-Fi 6, Win11 Home, FX607VU-SS53",
+      img: "https://m.media-amazon.com/images/I/71ZEi4fMrzL._AC_UL320_.jpg",
+      rating: 4.5,
+      reviews: "197",
+      price: "2,516,800",
+      delivery: "TZS 215,540 delivery Wed, Apr 15"
+    },
+    {
+      title: "Lenovo Legion Tower 5i – AI-Powered Gaming PC - Intel® Core Ultra 7 265F Processor – NVIDIA® GeForce RTX™ 5060 Ti Graphics – 16 GB Memory – 1 TB Storage – 3 Months of PC GamePass",
+      img: "https://m.media-amazon.com/images/I/41FNOf33+nL._AC_UL320_.jpg",
+      rating: 4.1,
+      reviews: "27",
+      price: "3,928,574",
+      delivery: "TZS 712,738 delivery Fri, Apr 24"
+    },
+    {
+      title: "ASUS ROG Strix G16 (2025) Gaming Laptop, 16” ROG Nebula 16:10 2.5K 240Hz/3ms, NVIDIA® GeForce RTX™ 5080, Intel® Core Ultra 9 275HX, 32GB DDR5, 1TB PCIe Gen 4 SSD, Wi-Fi 7, Windows 11 Home, G615LW-AS96",
+      img: "https://m.media-amazon.com/images/I/71WH7jtyWpL._AC_UL320_.jpg",
+      rating: 3.9,
+      reviews: "79",
+      price: "7,439,068",
+      delivery: "TZS 247,988 delivery Apr 14 - 29"
+    },
+    {
+      title: "ASUS ROG Strix G18 (2025) Gaming Laptop, 18” ROG Nebula 16:10 2.5K 240Hz/3ms, NVIDIA® GeForce RTX™ 5070, Intel® Core™ Ultra 9 275HX, 32GB DDR5-5600, 2TB PCIe Gen 4 SSD, Wi-Fi 7, Windows 11 Pro",
+      img: "https://m.media-amazon.com/images/I/81mRCWvzUTL._AC_UL320_.jpg",
+      rating: 4.1,
+      reviews: "34",
+      price: "5,977,400",
+      delivery: "TZS 266,786 delivery Fri, Apr 24"
+    },
+    {
+      title: "msi Katana 15 HX 15.6” 165Hz QHD+ Gaming Laptop: Intel Core i9-14900HX, NVIDIA Geforce RTX 5070, 32GB DDR5, 1TB NVMe SSD, RGB Keyboard, Win 11 Home: Black B14WGK-016US",
+      img: "https://m.media-amazon.com/images/I/71TvKdAmIjL._AC_UL320_.jpg",
+      rating: 4.2,
+      reviews: "267",
+      price: "4,367,974",
+      delivery: "TZS 227,240 delivery Fri, Apr 24"
+    },
+    {
+      title: "Led Light Bar with Music Sync, Color Changing TV Backlight App & Remote Control, IC+RGB & W Smart RGB Light Bar, USB Powered Led Lights for TV, PC Room Monitor Backlight Gaming Accessories",
+      img: "https://m.media-amazon.com/images/I/51iuieCuxSL._AC_UL320_.jpg",
+      rating: 4.4,
+      reviews: "260",
+      price: "25,974",
+      delivery: "TZS 112,190 delivery Wed, Apr 15"
+    },
+    {
+      title: "Wired Gaming Earbuds, Ak3file in Ear Monitors, Deep Bass Sound Wired Earbuds, HiFi in Ear Headphones with 1DD 10mm Dynamic Driver, IEM for Music Gaming Video Calling (Black)",
+      img: "https://m.media-amazon.com/images/I/619bBByro4L._AC_UL320_.jpg",
+      rating: 4.2,
+      reviews: "1,072",
+      price: "25,974",
+      delivery: "TZS 105,144 delivery Wed, Apr 15"
+    },
+    {
+      title: "Amazon Basics Large Extended Computer Rectangular Mouse Pad, 16.7 x 35.7 inch, Black",
+      img: "https://m.media-amazon.com/images/I/51XGotAiYYL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "64,811",
+      price: "36,348",
+      delivery: "TZS 127,452 delivery Wed, Apr 15"
+    },
+    {
+      title: "Samsung 27” Odyssey OLED G6 G60SF QHD QD-OLED Gaming Monitor, 500Hz Refresh Rate, 0.03ms (GtG) Response Time, G-Sync Compatible, VESA DisplayHDR TrueBlack 500, LS27FG602SNXZA, 2025, 3 Yr Warranty",
+      img: "https://m.media-amazon.com/images/I/81pwfttOorL._AC_UL320_.jpg",
+      rating: 4.1,
+      reviews: "62",
+      price: "2,391,974",
+      delivery: "TZS 500,266 delivery Wed, Apr 15"
+    },
+    {
+      title: "Samsung 27” Odyssey OLED G6 (G61SD) QHD & QD-OLED 240Hz 0.03ms FreeSync Premium Pro Gaming Monitor with Sleek Metal Design, 3 Year Warranty, US, LS27DG610SNXZA",
+      img: "https://m.media-amazon.com/images/I/8127skgs+ML._AC_UL320_.jpg",
+      rating: 4.3,
+      reviews: "305",
+      price: "2,079,974",
+      delivery: "TZS 460,148 delivery Wed, Apr 15"
+    },
+    {
+      title: "Samsung 27” Odyssey OLED G5 (G50SF) QHD & QD-OLED Gaming Monitor, 180Hz Refresh Rate, 0.03ms (GtG) Response Time, NVIDIA G-Sync Compatible, AMD FreeSync™, LS27FG500SNXZA",
+      img: "https://m.media-amazon.com/images/I/818+AiwCClL._AC_UL320_.jpg",
+      rating: 4.4,
+      reviews: "265",
+      price: "1,117,974",
+      delivery: "TZS 301,496 delivery Wed, Apr 15"
+    },
+    {
+      title: "Frigidaire Gaming Light Up Mini Beverage Refrigerator, 6 can, 4 liters, Cooler with large see through door and LED lights Perfect for Gaming Experience, Home, Office, or Cars.12V Charger (Stealth)",
+      img: "https://m.media-amazon.com/images/I/71yl7YJUTKL._AC_UL320_.jpg",
+      rating: 4.0,
+      reviews: "954",
+      price: "97,266",
+      delivery: "TZS 180,596 delivery Apr 13 - 20"
+    },
+    {
+      title: "HUANUO FlowLift™ Dual Monitor Stand, Fully Adjustable Gaming Monitor Desk Mount for 13–32″ Computer Screens, Full Motion VESA 75x75/100x100 with C-Clamp & Grommet Base, Each Arm Holds 4.4 to 19.8 lbs",
+      img: "https://m.media-amazon.com/images/I/7182jSFV25L._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "33,753",
+      price: "168,974",
+      delivery: "Contact for shipping"
+    },
+    {
+      title: "acer Nitro V Gaming Laptop | Intel Core i5-13420H Processor | NVIDIA GeForce RTX 4050 Laptop GPU | 15.6\" FHD IPS 165Hz Display | 8GB DDR5 | 512GB Gen 4 SSD | Wi-Fi 6 | Backlit KB | ANV15-52-586Z",
+      img: "https://m.media-amazon.com/images/I/71gXelI8upL._AC_UL320_.jpg",
+      rating: 4.5,
+      reviews: "270",
+      price: "1,949,974",
+      delivery: "TZS 208,416 delivery Wed, Apr 15"
+    },
+    {
+      title: "ROG NUC (2025) Gaming Mini PC with Intel® Core™ Ultra 9 (Series 2) ARL-HX CPU, NVIDIA® GeForce RTX™ 5070 Ti MobileGPU, 16GB DDR5 RAM, 1TB NVMe SSD, Thunderbolt 4 Triple-Fan Cooling and ARGB Lighting",
+      img: "https://m.media-amazon.com/images/I/71VgxM1WSXL._AC_UL320_.jpg",
+      rating: 5.0,
+      reviews: "3",
+      price: "9,446,840",
+      delivery: "TZS 272,116 delivery Fri, Apr 24"
+    },
+    {
+      title: "KTC 27\" 4K UHD 144Hz Gaming Monitor - Fast IPS Panel 160Hz 1ms GTG, HDR400 132% sRGB, HDMI2.1/DP1.4, VESA Mount, Height/Tilt/Pivot/Swivel Stand, Vertical Monitor Ideal for Gamers, Designers",
+      img: "https://m.media-amazon.com/images/I/71Ie-0tsggL._AC_UL320_.jpg",
+      rating: 4.3,
+      reviews: "114",
+      price: "779,974",
+      delivery: "TZS 486,330 delivery Thu, Apr 16"
+    },
+    {
+      title: "BOSGAME P3 Mini Gaming PC AMD Ryzen 7 7840HS | 32GB DDR5 RAM | 1TB PCIe 4.0 NVMe SSD | Dual Gigabit Ethernet | Triple Display (HDMI/DP/USB-C) | AX210 Wi-Fi 6E | BT 5.2 | Compact Desktop Computer",
+      img: "https://m.media-amazon.com/images/I/81yUFWcLXRL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "30",
+      price: "1,481,974",
+      delivery: "TZS 140,036 delivery Thu, Apr 16"
+    },
+    {
+      title: "Puro Sound Labs Wireless Gaming Headset - Easy to Pair with 2.4GHz USB, Volume-Limited, Tri-Mode Connectivity, Detachable Mic, 32-Hour Battery, Wireless Headphones with mic for PC- PuroGamer-BT, Black",
+      img: "https://m.media-amazon.com/images/I/81L7Ck1WgKL._AC_UL320_.jpg",
+      rating: 4.4,
+      reviews: "8",
+      price: "257,400",
+      delivery: "TZS 129,818 delivery Wed, Apr 15"
+    },
+    {
+      title: "Wired Gaming Mouse,Ergonomic 8000 DPI Optical Gaming Mice with 12 RGB Backlit Modes, 6 Programmable Buttons, DIY Software for PC Gamer & Office",
+      img: "https://m.media-amazon.com/images/I/51NuotNEd6L._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "56",
+      price: "49,374",
+      delivery: "TZS 112,190 delivery Wed, Apr 15"
+    },
+    {
+      title: "ASUS ROG Strix G16 (2025) Gaming Laptop, 16” FHD+ 16:10 165Hz/3ms, NVIDIA® GeForce RTX™ 5050, Intel® Core™ i5-13450HX, 16GB DDR5-5600, 1TB PCIe Gen 4 SSD, Wi-Fi 7, Windows 11 Home, G615JH-DS54",
+      img: "https://m.media-amazon.com/images/I/61LlFyN+B3L._AC_UL320_.jpg",
+      rating: 4.8,
+      reviews: "45",
+      price: "3,455,400",
+      delivery: "TZS 243,568 delivery Fri, Apr 24"
+    },
+    {
+      title: "acer Nitro V Gaming Laptop | Intel Core i7-13620H Processor | NVIDIA GeForce RTX 4050 Laptop GPU | 15.6\" FHD IPS 165Hz Display | 16GB DDR5 | 1TB Gen 4 SSD | Wi-Fi 6 | Backlit KB | ANV15-52-76NK",
+      img: "https://m.media-amazon.com/images/I/719MpRszpCL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "247",
+      price: "2,599,974",
+      delivery: "TZS 194,662 delivery Wed, Apr 15"
+    },
+    {
+      title: "ASUS TUF Gaming F16 (2025) Gaming Laptop, 16” FHD+ 165Hz IPS-Level 16:10 Display, Intel® Core™ i7 Processor 14650HX, NVIDIA® GeForce RTX™ 5050, 16GB DDR5, 1TB PCIe Gen4 SSD, Wi-Fi 6E, Windows 11 Home",
+      img: "https://m.media-amazon.com/images/I/71cjDQIKaPL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "45",
+      price: "3,377,400",
+      delivery: "TZS 226,460 delivery Fri, Apr 24"
+    },
+    {
+      title: "UGREEN Cat 8 Ethernet Cable 6FT, High Speed Braided 40Gbps 2000Mhz Network Cord Cat8 RJ45 Shielded Indoor Heavy Duty LAN Cables Compatible with Gaming PC PS5 PS4 PS3 Xbox Modem Router 6FT",
+      img: "https://m.media-amazon.com/images/I/712GA0EBfIL._AC_UL320_.jpg",
+      rating: 4.7,
+      reviews: "56,329",
+      price: "18,174",
+      delivery: "TZS 108,134 delivery Wed, Apr 15",
+      isBestSeller: true
+    },
+    {
+      title: "STGAubron Gaming PC Desktop, Intel Core i7 up to 3.9GHz, GeForce RTX 3050 6G, 16GB RAM, 512GB SSD, WiFi 6, BT 5.0, RGB Fan x6, Windows 11 Home",
+      img: "https://m.media-amazon.com/images/I/713XidebesL._AC_UL320_.jpg",
+      rating: 3.7,
+      reviews: "252",
+      price: "1,663,974",
+      delivery: "TZS 567,476 delivery Wed, Apr 15"
+    },
+    {
+      title: "Raijintek MGA-68 Black, 65% TKL Magnetic Switch Gaming Keyboard, Wired, 69 Keys, Hot-Swappable, CNC Aluminum Frame, Customizable ARGB Lighting, USB-C, Compatible with Windows & Mac (0R40B00275)",
+      img: "https://m.media-amazon.com/images/I/71pmVGTqEfL._AC_UL320_.jpg",
+      rating: 3.6,
+      reviews: "8",
+      price: "311,740",
+      delivery: "TZS 160,290 delivery Thu, Apr 16"
+    },
+    {
+      title: "Skytech Gaming Rampage Desktop PC, Intel i7 14700F 2.1 GHz (5.3GHz), AMD RX 9070XT 16GB, 1TB Gen4 NVMe SSD, 32GB DDR5 RAM 5600 RGB, 850W Gold PSU, 360mm ARGB AIO, Wi-Fi, Win 11",
+      img: "https://m.media-amazon.com/images/I/71CFImi-U4L._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "30",
+      price: "5,719,974",
+      delivery: "TZS 825,292 delivery Fri, Apr 24"
+    },
+    {
+      title: "msi Aegis ZS2 Gaming Desktop | AMD 12-core Zen 5 Ryzen 9 9900X | 64GB DDR5 8TB SSD | GeForce RTX 5080 DLSS 4 | 360mm Liquid Cooler 850W 80+ Gold PSU Support HDD Wi-Fi 7 Win11 Pro w/DLCA Accessory",
+      img: "https://m.media-amazon.com/images/I/71mSw0yRL2L._AC_UL320_.jpg",
+      rating: 4.2,
+      reviews: "6",
+      price: "11,749,400",
+      delivery: "Contact for shipping"
+    },
+    {
+      title: "Corsair Vengeance a5100 Gaming PC – Liquid Cooled AMD Ryzen 7 7800X3D CPU – NVIDIA GeForce RTX 5080 GPU – 32GB Dominator Titanium RGB DDR5 Memory – 2TB M.2 SSD – Black",
+      img: "https://m.media-amazon.com/images/I/711LRMTxCSL._AC_UL320_.jpg",
+      rating: 4.2,
+      reviews: "5",
+      price: "11,439,974",
+      delivery: "TZS 715,884 delivery Apr 20 - May 11"
+    },
+    {
+      title: "LISEN Cell Phone Stand Phone Holder for Desk Office Decor, Office Desk Accessories Women PC Gaming Essentials iPhone Stand Gadgets Men Gifts for Kids Fit OtterBox Case Switch iPad Air Tablet 4-10 in",
+      img: "https://m.media-amazon.com/images/I/61KD4hoirXL._AC_UL320_.jpg",
+      rating: 4.5,
+      reviews: "70,447",
+      price: "25,974",
+      delivery: "TZS 113,178 delivery Wed, Apr 15"
+    },
+    {
+      title: "ASUS ROG Rapture GT-BE98 PRO First Quad-Band WiFi 7 Gaming Router supports 320MHz, Dual 10G Port, Triple-level Game Acceleration, Mobile Game Mode, Subscription-Free Security, AiMesh, and VPN features",
+      img: "https://m.media-amazon.com/images/I/71mCbhfOTJL._AC_UL320_.jpg",
+      rating: 4.1,
+      reviews: "445",
+      price: "1,554,774",
+      delivery: "TZS 225,940 delivery Wed, Apr 15"
+    },
+    {
+      title: "Exquisite Gaming: Call of Duty: Monkeybomb - Original Mobile Phone & Gaming Controller Holder, Device Stand, Cable Guys, Licensed Figure",
+      img: "https://m.media-amazon.com/images/I/51LU5w+h2gL._AC_UL320_.jpg",
+      rating: 4.8,
+      reviews: "2,313",
+      price: "64,974",
+      delivery: "TZS 137,670 delivery Wed, Apr 15"
+    },
+    {
+      title: "KDD Headphone & Controller Stand with Wireless Charging - Rotatable Headset Stand with 9 Light Modes - Controller Holder with 2 USB and Type C Ports - for Gamers Desktop Accessories",
+      img: "https://m.media-amazon.com/images/I/61JI6UgtcJL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "794",
+      price: "77,948",
+      delivery: "TZS 131,560 delivery Wed, Apr 15"
+    },
+    {
+      title: "Razer Viper V4 Pro Wireless Esports Gaming Mouse: 49g Ultra Lightweight, Fast & Precise, 50K DPI Optical Sensor, 8K Polling, Gen-4 Optical Switches, Scroll Wheel, USB-C Charging, for PC & Mac - Black",
+      img: "https://m.media-amazon.com/images/I/51Vqc9mwhLL._AC_UL320_.jpg",
+      rating: 4.8,
+      reviews: "32",
+      price: "415,974",
+      delivery: "TZS 119,210 delivery Wed, Apr 15"
+    },
+    {
+      title: "AULA F75 Pro Wireless Mechanical Keyboard,75% Hot Swappable Custom Keyboard with Knob,RGB Backlit,Pre-lubed Reaper Switches,Side Printed PBT Keycaps,2.4GHz/USB-C/BT5.0 Mechanical Gaming Keyboards",
+      img: "https://m.media-amazon.com/images/I/61MC8BK0w0L._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "1,391",
+      price: "179,374",
+      delivery: "TZS 140,426 delivery Wed, Apr 15"
+    },
+    {
+      title: "Logitech G305 Lightspeed Wireless Gaming Mouse, Hero Sensor, 12,000 DPI, Lightweight, 6 Programmable Buttons, 250h Battery, On-Board Memory, Compatible with PC, Mac - Black",
+      img: "https://m.media-amazon.com/images/I/51sg9BLSMTL._AC_UL320_.jpg",
+      rating: 4.6,
+      reviews: "37,830",
+      price: "57,876",
+      delivery: "Contact for shipping",
+      isBestSeller: true
+    },
+    {
+      title: "Lenovo Legion Pro 7i Gen 10 16\" Gaming Laptop (2025 Model) Intel Core Ultra 9 275HX 24C, NVIDIA GeForce RTX 5090 24GB, 64GB RAM, 2TB (1TB+1TB) NVMe SSD, 16\" WQXGA OLED 500 nits 240Hz, Windows 11 Home",
+      img: "https://m.media-amazon.com/images/I/515W50hwJmL._AC_UL320_.jpg",
+      rating: 4.9,
+      reviews: "22",
+      price: "9,097,400",
+      delivery: "Contact for shipping"
+    },
+    {
+      title: "TP-Link Dual-Band BE6500 WiFi 7 Gaming Router Archer GE400 | 6-Stream 6.5 Gbps | 2 x 2.5G + 3 x 1G | Game Acceleration, Dedicated Gaming Port & Panel, RGB Lighting | Easymesh, Homeshield | No 6 GHz",
+      img: "https://m.media-amazon.com/images/I/61d731U4QVL._AC_UL320_.jpg",
+      rating: 4.2,
+      reviews: "35",
+      price: "571,974",
+      delivery: "TZS 166,270 delivery Wed, Apr 15"
+    },
+    {
+      title: "HP OMEN MAX 45L Gaming Desktop PC (AMD Ryzen 9 9900X3D, GeForce RTX 5090 32GB GDDR7, 128GB DDR5, 8TB PCIe SSD, RGB Fans, 360mm AIO, 1200W PSU, WiFi 7, Win 11 Pro) w/DKZ USB Port Expander",
+      img: "https://m.media-amazon.com/images/I/61gNFYtpFeL._AC_UL320_.jpg",
+      rating: 4.5,
+      reviews: "New",
+      price: "20,903,974",
+      delivery: "Contact for shipping"
+    },
+    {
+      title: "ASUS ROG Swift 27\" OLED Gaming Monitor (PG27AQWP-W) - TrueBlack Glossy Tandem OLED, Dual-Mode (QHD@540Hz, HD@720Hz), 0.02ms, G-SYNC Compatible, Neo Proximity Sensor, DP 2.1, 3 yr Warranty",
+      img: "https://m.media-amazon.com/images/I/815FPhAVEpL._AC_UL320_.jpg",
+      rating: 4.0,
+      reviews: "6",
+      price: "2,857,400",
+      delivery: "TZS 619,424 delivery Apr 16 - May 4"
     }
   ];
 
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-white">
-      {/* Header */}
-      <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
-        <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
-          <Link to="/" className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
-            <Logo />
-          </Link>
-
-          <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
-            <input
-              type="text"
-              placeholder="Search Ir-Shop"
-              className="flex-1 px-3 py-2 text-black outline-none bg-white min-w-0"
-              defaultValue="gaming"
-            />
-            <button className="bg-irshop-accent hover:bg-irshop-accent-hover px-4 flex items-center justify-center text-black transition-colors">
-              <Search size={20} />
-            </button>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
-              <div className="relative">
-                <ShoppingCart size={32} />
-                <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">0</span>
-              </div>
-              <span className="font-bold mt-3 hidden md:inline">Cart</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-irshop-teal-light relative">
-          <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-            <div 
-              onClick={() => setIsMenuOpen(true)}
-              className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
-            >
-              <Menu size={20} />
-              All
-            </div>
-            <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors font-bold">Today's Deals</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Gift Cards</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Sell</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Registry</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Prime Video</li>
-              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Customer Service</li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <Header onMenuOpen={() => setIsMenuOpen(true)} searchTerm="gaming" />
+      <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Main Content */}
       <main className="flex-1 max-w-[1500px] mx-auto w-full p-4">
@@ -289,82 +536,7 @@ export default function GamesPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="irshop-footer mt-10">
-        <div className="irshop-footer-container">
-          <div className="irshop-footer-grid">
-            <div className="irshop-footer-col">
-              <h4>Get to Know Us</h4>
-              <ul>
-                <li><a href="#">About Ir-Shop</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Investor Relations</a></li>
-                <li><a href="#">Ir-Shop Devices</a></li>
-                <li><a href="#">Ir-Shop Science</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Make Money with Us</h4>
-              <ul>
-                <li><a href="#">Sell products on Ir-Shop</a></li>
-                <li><a href="#">Sell on Ir-Shop Business</a></li>
-                <li><a href="#">Sell apps on Ir-Shop</a></li>
-                <li><a href="#">Become an Affiliate</a></li>
-                <li><a href="#">Advertise Your Products</a></li>
-                <li><a href="#">Self-Publish with Us</a></li>
-                <li><a href="#">Host an Ir-Shop Hub</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Ir-Shop Payment Products</h4>
-              <ul>
-                <li><a href="#">Ir-Shop Business Card</a></li>
-                <li><a href="#">Shop with Points</a></li>
-                <li><a href="#">Reload Your Balance</a></li>
-                <li><a href="#">Ir-Shop Currency Converter</a></li>
-              </ul>
-            </div>
-            <div className="irshop-footer-col">
-              <h4>Let Us Help You</h4>
-              <ul>
-                <li><a href="#">Your Account</a></li>
-                <li><a href="#">Your Orders</a></li>
-                <li><a href="#">Shipping Rates & Policies</a></li>
-                <li><a href="#">Returns & Replacements</a></li>
-                <li><a href="#">Manage Your Content</a></li>
-                <li><a href="#">Help</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="irshop-footer-middle">
-            <div className="irshop-footer-middle-content">
-              <div className="irshop-footer-social">
-                <a href="#" aria-label="Facebook"><Facebook size={18} /></a>
-                <a href="#" aria-label="Instagram"><Instagram size={18} /></a>
-                <a href="#" aria-label="TikTok"><Tiktok size={18} /></a>
-              </div>
-              <div className="irshop-footer-payment">
-                <div className="irshop-footer-payment-icons flex gap-2">
-                  <div className="w-10 h-6 bg-[#1A1F71] rounded flex items-center justify-center text-[8px] font-bold text-white">VISA</div>
-                  <div className="w-10 h-6 bg-white rounded flex items-center justify-center overflow-hidden">
-                    <div className="w-4 h-4 bg-red-600 rounded-full -mr-1"></div>
-                    <div className="w-4 h-4 bg-orange-500 rounded-full opacity-80"></div>
-                  </div>
-                  <div className="w-10 h-6 bg-[#003087] rounded flex items-center justify-center text-[7px] font-bold text-white italic">PayPal</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="irshop-footer-bottom">
-            <div className="irshop-footer-bottom-right">
-              <span>© 2026 Ir-Shop. All rights reserved.</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
