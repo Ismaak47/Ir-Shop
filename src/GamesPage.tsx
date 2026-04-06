@@ -70,6 +70,8 @@ const GameProductCard = ({
 
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   
   const products = [
     {
@@ -493,6 +495,18 @@ export default function GamesPage() {
       delivery: "TZS 619,424 delivery Apr 16 - May 4"
     }
   ];
+  
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+    const indexOfLastProduct = currentPage * itemsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const handlePageChange = (page: number) => {
+      if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
 
   return (
     <div className="min-h-screen flex flex-col text-sm font-sans bg-white">
@@ -640,9 +654,9 @@ export default function GamesPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {products.map((product, index) => (
+              {currentProducts.map((product, index) => (
                 <GameProductCard 
-                  key={index} 
+                  key={indexOfFirstProduct + index} 
                   title={product.title}
                   img={product.img}
                   rating={product.rating}
@@ -657,13 +671,41 @@ export default function GamesPage() {
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 mt-8 mb-12 border-t border-gray-200 pt-8">
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50" disabled>Previous</button>
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs bg-gray-100 font-bold">1</button>
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">2</button>
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">3</button>
-              <span className="text-xs">...</span>
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">7</button>
-              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">Next</button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              
+              {[...Array(totalPages)].map((_, i) => {
+                const pageNum = i + 1;
+                // Simple logic to show 1, 2, 3 ... total
+                if (pageNum <= 3 || pageNum === totalPages) {
+                  return (
+                    <button 
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`px-3 py-1 border border-gray-300 rounded-md text-xs ${currentPage === pageNum ? 'bg-gray-100 font-bold' : 'hover:bg-gray-100'}`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                }
+                if (pageNum === 4) {
+                  return <span key="ellipsis" className="text-xs">...</span>;
+                }
+                return null;
+              })}
+
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
