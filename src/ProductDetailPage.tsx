@@ -12,11 +12,6 @@ export default function ProductDetailPage() {
     const navigate = useNavigate();
     const { addToCart, setIsCartOpen } = useCart();
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [location]);
-
-    // Default fallback product if accessed directly without state
     const product = location.state?.product || {
         title: "ASUS ROG Strix G16 (2025) Gaming Laptop, 16” FHD+ 16:10 165Hz/3ms Display, NVIDIA® GeForce RTX™ 5060 Laptop GPU, Intel® Core™ i7 Processor 14650HX, 16GB DDR5, 1TB Gen 4 SSD, Wi-Fi 7, Windows 11 Home",
         img: "https://m.media-amazon.com/images/I/81n1T4CYfmL._AC_UL600_.jpg",
@@ -26,6 +21,20 @@ export default function ProductDetailPage() {
         delivery: "TZS 244,088 delivery Fri, Apr 24",
         isOverallPick: true
     };
+
+    const [mainImage, setMainImage] = useState(product.img);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        setMainImage(product.img);
+    }, [location, product.img]);
+
+    // Mock gallery images (We use distinct URLs here so the user can see them change when clicked)
+    const galleryImages = [
+        product.img,
+        "https://m.media-amazon.com/images/I/71cjDQIKaPL._AC_UL600_.jpg",
+        "https://m.media-amazon.com/images/I/81mRCWvzUTL._AC_UL600_.jpg"
+    ];
 
     const handleAddToCart = () => {
         addToCart({ id: product.title, title: product.title, img: product.img, price: product.price }, quantity);
@@ -57,19 +66,21 @@ export default function ProductDetailPage() {
                         {/* Images Section */}
                         <div className="lg:col-span-2 p-5 sm:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-100 bg-gray-50/30">
                             <div className="aspect-square w-full max-w-[350px] flex items-center justify-center bg-white rounded-xl p-6 border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] mb-5">
-                                <img src={product.img} alt={product.title} className="max-w-full max-h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
+                                <img src={mainImage} alt={product.title} className="max-w-full max-h-full object-contain mix-blend-multiply transition-opacity duration-300" referrerPolicy="no-referrer" />
                             </div>
                             <div className="flex gap-2 sm:gap-3 justify-center">
-                                {/* Thumbnails mock */}
-                                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white border-2 border-orange-500 rounded-lg p-1.5 cursor-pointer shadow-sm">
-                                    <img src={product.img} alt={product.title} className="w-full h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
-                                </div>
-                                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white border border-gray-200 hover:border-gray-400 rounded-lg p-1.5 cursor-pointer transition-colors opacity-60 hover:opacity-100 shadow-sm">
-                                    <img src={product.img} alt={product.title} className="w-full h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
-                                </div>
-                                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white border border-gray-200 hover:border-gray-400 rounded-lg p-1.5 cursor-pointer transition-colors opacity-60 hover:opacity-100 shadow-sm">
-                                    <img src={product.img} alt={product.title} className="w-full h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
-                                </div>
+                                {galleryImages.map((img, idx) => (
+                                    <div
+                                        key={idx}
+                                        onClick={() => setMainImage(img)}
+                                        className={`w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-lg p-1.5 cursor-pointer shadow-sm transition-all ${mainImage === img
+                                                ? 'border-2 border-orange-500 opacity-100'
+                                                : 'border border-gray-200 hover:border-gray-400 opacity-60 hover:opacity-100'
+                                            }`}
+                                    >
+                                        <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-contain mix-blend-multiply" referrerPolicy="no-referrer" />
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
