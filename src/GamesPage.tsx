@@ -500,38 +500,174 @@ export default function GamesPage() {
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Main Content */}
-      <main className="flex-1 max-w-[1500px] mx-auto w-full p-4">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-            <h1 className="text-lg font-bold">
-              1-48 of over 100,000 results for <span className="text-irshop-teal">"gaming"</span>
-            </h1>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-600">Sort by:</span>
-              <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
-                <option>Featured</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Avg. Customer Review</option>
-                <option>Newest Arrivals</option>
-              </select>
+      <main className="flex-1 max-w-[1500px] mx-auto w-full p-4 flex gap-6">
+        {/* Left Sidebar Filters */}
+        <aside className="hidden md:block w-64 flex-shrink-0">
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-bold mb-2">Popular Shopping Ideas</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="hover:text-orange-600 cursor-pointer">Chair</li>
+                <li className="hover:text-orange-600 cursor-pointer">Headset</li>
+                <li className="hover:text-orange-600 cursor-pointer">Keyboard & Mouse</li>
+                <li className="hover:text-orange-600 cursor-pointer">PC Speakers</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Deals & Discounts</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="hover:text-orange-600 cursor-pointer">All Discounts</li>
+                <li className="hover:text-orange-600 cursor-pointer">Today's Deals</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Customer Reviews</h3>
+              <div className="flex items-center gap-1 text-xs hover:text-orange-600 cursor-pointer">
+                <div className="flex text-orange-400">
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} />
+                </div>
+                <span>& Up</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Brands</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Razer</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> ASUS</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Logitech</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> msi</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> SteelSeries</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Corsair</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> acer</li>
+              </ul>
+              <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Condition</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="hover:text-orange-600 cursor-pointer">New</li>
+                <li className="hover:text-orange-600 cursor-pointer">Renewed</li>
+                <li className="hover:text-orange-600 cursor-pointer">Used</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Seller</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Amazon.com</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> OFFbb</li>
+              </ul>
+              <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">From Our Brands</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Amazon Brands</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">All Top Brands</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Top Brands</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Premium Brands</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Premium Brands</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Sustainability Features</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Any Feature</li>
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Carbon Impact</li>
+              </ul>
+              <span className="text-xs text-blue-600 hover:text-orange-600 cursor-pointer mt-1 inline-block">See more</span>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Amazon Certified</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Works with Alexa</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Customizable Products</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="flex items-center gap-2"><input type="checkbox" className="w-3 h-3" /> Customizable</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold mb-2">Department</h3>
+              <ul className="space-y-1 text-xs">
+                <li className="hover:text-orange-600 cursor-pointer">Electronics</li>
+                <li className="hover:text-orange-600 cursor-pointer pl-2">Computers & Accessories</li>
+                <li className="hover:text-orange-600 cursor-pointer pl-4 font-bold">PC Games & Accessories</li>
+              </ul>
             </div>
           </div>
+        </aside>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-            {products.map((product, index) => (
-              <GameProductCard 
-                key={index} 
-                title={product.title}
-                img={product.img}
-                rating={product.rating}
-                reviews={product.reviews}
-                price={product.price}
-                delivery={product.delivery}
-                isBestSeller={product.isBestSeller}
-                isOverallPick={product.isOverallPick}
-              />
-            ))}
+        {/* Product Grid and Results */}
+        <div className="flex-1">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-gray-200 pb-2">
+              <h1 className="text-lg font-bold">
+                1-48 of over 100,000 results for <span className="text-irshop-teal">"gaming"</span>
+              </h1>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-600">Sort by:</span>
+                <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
+                  <option>Featured</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Avg. Customer Review</option>
+                  <option>Newest Arrivals</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {products.map((product, index) => (
+                <GameProductCard 
+                  key={index} 
+                  title={product.title}
+                  img={product.img}
+                  rating={product.rating}
+                  reviews={product.reviews}
+                  price={product.price}
+                  delivery={product.delivery}
+                  isBestSeller={product.isBestSeller}
+                  isOverallPick={product.isOverallPick}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-center gap-2 mt-8 mb-12 border-t border-gray-200 pt-8">
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50" disabled>Previous</button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs bg-gray-100 font-bold">1</button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">2</button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">3</button>
+              <span className="text-xs">...</span>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">7</button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100">Next</button>
+            </div>
           </div>
         </div>
       </main>
