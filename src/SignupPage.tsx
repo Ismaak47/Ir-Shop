@@ -1,7 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Phone, Lock, ArrowRight, Home, ShoppingBag, MessageSquare, LogIn, Smartphone } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { Header, Sidebar, MobileBottomNav } from './components/Header';
+import { Footer } from './components/Footer';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ const SignupPage = () => {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,54 +33,10 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Clean Header Navigation */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="flex flex-col items-start justify-center">
-                <div className="flex items-baseline leading-none">
-                  <span className="text-xl md:text-2xl font-black tracking-tighter text-[#1a5c5c]">Ir-Shop</span>
-                </div>
-                <div className="relative w-full h-2 -mt-1">
-                  <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                    <path d="M10 5C30 15 70 15 90 5" stroke="#FFD700" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M85 3L94 6L87 11" fill="#FFD700" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#1a5c5c] transition-colors">
-                <Home size={16} />
-                <span>Home</span>
-              </Link>
-              <Link to="/games" className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#1a5c5c] transition-colors">
-                <ShoppingBag size={16} />
-                <span>Shop</span>
-              </Link>
-              <a href="#" className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#1a5c5c] transition-colors">
-                <MessageSquare size={16} />
-                <span>Feedback</span>
-              </a>
-              <Link to="/login" className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-[#1a5c5c] transition-colors">
-                <LogIn size={16} />
-                <span>Login</span>
-              </Link>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Link to="/login" className="text-[#1a5c5c] font-semibold text-sm">
-                Login
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Use existing Header from home page */}
+      <Header onMenuOpen={() => setIsMenuOpen(true)} />
+      <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -199,22 +158,8 @@ const SignupPage = () => {
         </motion.div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-600 text-center sm:text-left">
-              © 2026 Ir-Shop. All rights reserved.
-            </p>
-            <div className="flex items-center gap-2">
-              <Smartphone size={16} className="text-[#1a5c5c]" />
-              <a href="#" className="text-sm font-medium text-[#1a5c5c] hover:text-[#145454] transition-colors">
-                Download Ir-Shop App
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Use existing Footer from home page */}
+      <Footer />
     </div>
   );
 };
