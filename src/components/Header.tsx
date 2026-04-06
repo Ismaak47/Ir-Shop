@@ -36,7 +36,6 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
-  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -61,35 +60,6 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
 
         {/* Tools */}
         <div className="flex items-center gap-1">
-          <div className="relative">
-            <div 
-              onClick={() => setShowAccountDropdown(!showAccountDropdown)}
-              className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors"
-            >
-              <User size={24} className="text-irshop-accent" />
-              <span className="font-bold text-irshop-accent hidden md:inline">
-                {showAccountDropdown ? "Account" : "Hello, Sign In"}
-              </span>
-              <ChevronDown size={16} className="text-irshop-accent hidden md:inline" />
-            </div>
-            <AnimatePresence>
-              {showAccountDropdown && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute right-0 top-full mt-1 w-40 bg-white rounded-md shadow-lg py-1 z-50"
-                >
-                  <button className="w-full px-4 py-2 text-left text-[#FFD700] hover:bg-gray-100 font-medium text-sm">
-                    Sign in
-                  </button>
-                  <button className="w-full px-4 py-2 text-left text-[#FFD700] hover:bg-gray-100 font-medium text-sm">
-                    Sign up
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
           <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
             <div className="relative">
               <ShoppingCart size={32} />

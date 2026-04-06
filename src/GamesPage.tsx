@@ -72,8 +72,6 @@ const GameProductCard = ({
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-  const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
-  const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   
@@ -681,70 +679,14 @@ export default function GamesPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="md:hidden">
-                  <button 
-                    onClick={() => setIsMobileSortOpen(!isMobileSortOpen)}
-                    className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors"
-                  >
-                    <Menu size={14} />
-                    <span>Sort</span>
-                    <ChevronDown size={14} className={`transition-transform duration-200 ${isMobileSortOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  <AnimatePresence>
-                    {isMobileSortOpen && (
-                      <>
-                        <motion.div 
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          onClick={() => setIsMobileSortOpen(false)}
-                          className="fixed inset-0 bg-black/50 z-[60]"
-                        />
-                        <motion.div 
-                          initial={{ y: -20, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{ y: -20, opacity: 0 }}
-                          className="absolute top-full right-0 w-64 bg-white shadow-xl border border-gray-200 rounded-md mt-1 z-[70] p-4 max-h-[80vh] overflow-y-auto"
-                        >
-                          <div className="flex items-center justify-between mb-4 border-b pb-2">
-                            <span className="font-bold text-sm">Sort by</span>
-                            <button onClick={() => setIsMobileSortOpen(false)}>
-                              <X size={16} />
-                            </button>
-                          </div>
-                          
-                          <div className="space-y-4">
-                            {['Featured', 'Price: Low to High', 'Price: High to Low', 'Avg. Customer Review', 'Newest Arrivals'].map((option) => (
-                              <div 
-                                key={option}
-                                onClick={() => { setSortBy(option); setIsMobileSortOpen(false); }}
-                                className={`text-xs py-2 px-1 cursor-pointer transition-colors hover:text-orange-600 ${sortBy === option ? 'font-bold text-orange-600 bg-orange-50 rounded-sm px-2' : 'px-2'}`}
-                              >
-                                {option}
-                              </div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      </>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div className="hidden md:flex items-center gap-2">
-                  <span className="text-xs text-gray-600">Sort by:</span>
-                  <select 
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal"
-                  >
-                    <option value="Featured">Featured</option>
-                    <option value="Price: Low to High">Price: Low to High</option>
-                    <option value="Price: High to Low">Price: High to Low</option>
-                    <option value="Avg. Customer Review">Avg. Customer Review</option>
-                    <option value="Newest Arrivals">Newest Arrivals</option>
-                  </select>
-                </div>
+                <span className="text-xs text-gray-600">Sort by:</span>
+                <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
+                  <option>Featured</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Avg. Customer Review</option>
+                  <option>Newest Arrivals</option>
+                </select>
               </div>
             </div>
 
