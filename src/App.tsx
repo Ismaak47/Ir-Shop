@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
+import ProductDetailPage from "./ProductDetailPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 
@@ -120,13 +121,14 @@ const Logo = () => (
   </div>
 );
 
-export default function App() {
+function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
       </Routes>
     </Router>
   );

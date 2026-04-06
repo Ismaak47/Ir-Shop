@@ -4,6 +4,7 @@ import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
 import { useCart } from "./CartContext";
+import { useNavigate } from "react-router-dom";
 
 const GameProductCard = ({
   title,
@@ -27,25 +28,41 @@ const GameProductCard = ({
   key?: number
 }) => {
   const { addToCart, setIsCartOpen } = useCart();
+  const navigate = useNavigate();
+
+  const handleProductClick = () => {
+    navigate(`/product/${encodeURIComponent(title)}`, {
+      state: {
+        product: { title, img, rating, reviews, price, delivery, isBestSeller, isOverallPick }
+      }
+    });
+  };
+
   return (
-    <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
+    <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 rounded-[10px] hover:shadow-md transition-all relative" key={key}>
       {isBestSeller && (
-        <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
+        <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-[10px] z-10">
           Best Seller
         </div>
       )}
       {isOverallPick && (
-        <div className="absolute top-0 left-0 bg-[#232f3e] text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
+        <div className="absolute top-0 left-0 bg-[#232f3e] text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-[10px] z-10">
           Overall Pick
         </div>
       )}
 
-      <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
+      <div
+        className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center cursor-pointer"
+        onClick={handleProductClick}
+      >
         <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
       </div>
 
       <div className="flex-1 flex flex-col">
-        <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{title}</h3>
+        <h3
+          className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal"
+          onClick={handleProductClick}
+        >{title}</h3>
 
         <div className="flex items-center gap-1 mb-1">
           <div className="flex text-orange-400">
