@@ -40,21 +40,34 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
 
   const getDefaultProducts = (): Product[] =>
-    defaultProductsData.map((product) => ({
+    defaultProductsData.map((product: any) => ({
       ...product,
       isUserProduct: false,
-      images: Array.isArray(product.images) && product.images.length > 0 ? product.images : [product.image]
+      images: product.images || (product.image ? [product.image] : []),
+      category: product.category || "",
+      description: product.description || "",
+      tags: product.tags || [],
+      price: product.price || "0",
+      rating: product.rating || 0,
+      reviews: product.reviews || "0",
+      delivery: product.delivery || "TZS 50,000 delivery within 3-5 days"
     }));
 
   const getStoredUserProducts = (): Product[] => {
     const stored = localStorage.getItem(USER_PRODUCTS_STORAGE_KEY);
-    if (!stored) return [];
+    if (!stored) {
+      console.log("[ProductsContext] No stored user products found");
+      return [];
+    }
 
     try {
       const parsed = JSON.parse(stored);
-      if (!Array.isArray(parsed)) return [];
+      if (!Array.isArray(parsed)) {
+        console.warn("[ProductsContext] Stored products is not an array");
+        return [];
+      }
 
-      return parsed.map((product) => ({
+      const processed = parsed.map((product) => ({
         ...product,
         images: Array.isArray(product.images)
           ? product.images
@@ -63,8 +76,11 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
             : [],
         isUserProduct: true
       }));
+      
+      console.log("[ProductsContext] Processed stored products:", processed.length);
+      return processed;
     } catch (error) {
-      console.error("Error loading user products:", error);
+      console.error("[ProductsContext] Error loading user products:", error);
       return [];
     }
   };
@@ -87,11 +103,22 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   }, [user]);
 
   const loadProducts = () => {
+    console.log("[ProductsContext] Loading products...");
     const userProducts = getStoredUserProducts();
-    setProducts(mergeProducts(userProducts));
+    console.log("[ProductsContext] Loaded user products:", userProducts.length);
+    const merged = mergeProducts(userProducts);
+    console.log("[ProductsContext] Total products after merge:", merged.length);
+    setProducts(merged);
   };
 
   const addProduct = (productData: Omit<Product, "id" | "rating" | "reviews" | "delivery" | "isBestSeller" | "isOverallPick" | "isUserProduct" | "userId" | "createdAt">) => {
+    // Ensure images is always an array
+    const imagesArray = Array.isArray(productData.images) 
+      ? productData.images.filter(Boolean)
+      : productData.image 
+        ? [productData.image] 
+        : [];
+
     const newProduct: Product = {
       ...productData,
       id: Date.now().toString(),
@@ -103,18 +130,24 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       isUserProduct: true,
       userId: user?.email || "anonymous",
       createdAt: new Date().toISOString(),
-      images: Array.isArray(productData.images)
-        ? productData.images.filter(Boolean)
-        : productData.image
-          ? [productData.image]
-          : []
+      image: imagesArray[0] || "", // Ensure image field is set
+      images: imagesArray
     };
 
+    console.log("[ProductsContext] Adding new product:", newProduct);
+
     const existingUserProducts = getStoredUserProducts();
+    console.log("[ProductsContext] Existing user products:", existingUserProducts.length);
+    
     const updatedUserProducts = [newProduct, ...existingUserProducts];
 
     localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updatedUserProducts));
-    setProducts(mergeProducts(updatedUserProducts));
+    console.log("[ProductsContext] Saved to localStorage:", updatedUserProducts.length, "products");
+    
+    const merged = mergeProducts(updatedUserProducts);
+    console.log("[ProductsContext] Merged products:", merged.length);
+    
+    setProducts(merged);
   };
 
   const deleteProduct = (productId: string) => {

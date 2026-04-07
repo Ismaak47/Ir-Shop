@@ -29,8 +29,10 @@ export default function DashboardPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const itemsPerPage = 12;
 
-  const { getUserProducts } = useProducts();
+  const { getUserProducts, products } = useProducts();
   const userProducts = getUserProducts();
+  
+  console.log("[DashboardPage] All products:", products.length, "User products:", userProducts.length);
 
   const [filters, setFilters] = useState({
     types: [] as string[],

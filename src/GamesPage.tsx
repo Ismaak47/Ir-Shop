@@ -91,9 +91,14 @@ export default function GamesPage() {
   const itemsPerPage = 12;
   const { products } = useProducts();
 
+  // Filter for gaming products with improved robustness
   const gamingProducts = products.filter((product) => {
-    const normalizedCategory = product.category?.toLowerCase();
-    return normalizedCategory === "gaming" || normalizedCategory === "games";
+    const normalizedCategory = (product.category || "").toLowerCase().trim();
+    const isGaming = normalizedCategory === "gaming" || normalizedCategory === "games";
+    if (isGaming) {
+      console.log("[GamesPage] Found gaming product:", product.name, "- category:", product.category);
+    }
+    return isGaming;
   });
 
   const filteredProducts = gamingProducts.filter(p => {
