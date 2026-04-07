@@ -70,7 +70,7 @@ const SignupPage = () => {
             <div className="text-center mb-6">
               <Link to="/" className="inline-flex flex-col items-center justify-center">
                 <div className="flex items-baseline leading-none">
-                  <span className="text-3xl font-black tracking-tighter text-[#1a5c5c]">Ir-Shop</span>
+                  <span className="text-3xl font-black tracking-tighter text-[#FFD700]">Ir-Shop</span>
                 </div>
                 <div className="relative w-24 h-3 -mt-1">
                   <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -178,7 +178,7 @@ const SignupPage = () => {
                 disabled={isLoading}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-[#1a5c5c] hover:bg-[#145454] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1a5c5c] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
