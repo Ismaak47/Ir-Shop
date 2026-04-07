@@ -1,28 +1,21 @@
-# Ir-Shop Login & Sign-Up Implementation TODO
+# TODO: Redesign Add New Product Form
 
-## Completed: 7/7 ✅
+## Plan Breakdown:
+- [x] 1. Confirm plan with user (approved)
+- [ ] 2. Create TODO.md for tracking
+- [x] 3. Update AddProductModal.tsx:
+  - Compact responsive grid layout
+  - Smaller inputs/buttons with gold theme
+  - Multiple image upload (4 slots, previews, remove)
+  - Update formData/state for images array
+  - Pass images[0] as image to addProduct for compatibility
+- [ ] 4. Test changes:
+  - npm run dev
+  - Open /dashboard
+  - Add product with 4 images
+  - Verify UI compact/responsive/professional
+  - Check product appears in grid with first image
+- [ ] 5. attempt_completion
 
-- [x] 1. Create src/LoginPage.tsx  ✅
-- [x] 2. Create src/SignupPage.tsx  ✅
-- [x] 3. Update src/App.tsx (imports & routes)  ✅
-- [x] 4. Update src/components/Header.tsx (functional Links)  ✅
-- [x] 5. Update src/components/Footer.tsx (app download)  ✅
-- [x] 6. Test dev server (run `npm run dev` manually)  ✅
-- [x] 7. Final verification & completion  ✅
-
-**✅ Task complete!** Login/Signup pages added with:
-- Minimalist centered forms (email/password for login; full name/email/phone/password for signup)
-- Mobile-responsive Tailwind design matching Ir-Shop teal/gold theme
-- Header Account dropdown links to /login & /signup
-- Footer app download section (App Store/Play Store buttons)
-- Smooth animations, loading states, form validation
-- Routes integrated in App.tsx
-
-**Run `npm run dev` to test at http://localhost:3000/login & /signup**
-
-
-
-
-
-
+Updated after each step.
 
