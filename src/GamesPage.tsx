@@ -1,4 +1,4 @@
-import { Star, Menu, X, ChevronDown } from "lucide-react";
+import { Star, Menu, X, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -82,6 +82,8 @@ const GameProductCard = ({ product }: { product: Product }) => {
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [sortBy, setSortBy] = useState("relevance");
   const itemsPerPage = 12;
   const { products } = useProducts();
 
@@ -90,10 +92,18 @@ export default function GamesPage() {
     p.tags.some(tag => ["gaming", "laptop", "desktop", "monitor", "keyboard", "mouse"].includes(tag.toLowerCase()))
   );
 
-  const totalPages = Math.ceil(gamingProducts.length / itemsPerPage);
+  const sortedProducts = [...gamingProducts].sort((a, b) => {
+    if (sortBy === "price-low") return parseFloat(a.price) - parseFloat(b.price);
+    if (sortBy === "price-high") return parseFloat(b.price) - parseFloat(a.price);
+    if (sortBy === "rating") return b.rating - a.rating;
+    if (sortBy === "name") return a.name.localeCompare(b.name);
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = gamingProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -109,6 +119,79 @@ export default function GamesPage() {
       <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
       <main className="flex-1 max-w-[1500px] mx-auto w-full px-4 pt-4 pb-20 md:pb-4">
+        {/* Mobile Topbar: Filter & Sort */}
+        <div className="flex items-center justify-between gap-2 lg:hidden mb-4">
+          <button
+            onClick={() => setShowMobileFilters(true)}
+            className="flex-1 flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-xs font-medium bg-white hover:bg-gray-50"
+          >
+            <SlidersHorizontal size={14} />
+            <span>Filter</span>
+          </button>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs font-medium outline-none"
+          >
+            <option value="relevance">Relevance</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Customer Rating</option>
+            <option value="name">Name: A-Z</option>
+          </select>
+        </div>
+
+        {/* Mobile Filters Modal */}
+        <AnimatePresence>
+          {showMobileFilters && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowMobileFilters(false)}
+                className="fixed inset-0 bg-black/50 z-50 lg:hidden"
+              />
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "tween", duration: 0.3 }}
+                className="fixed left-0 top-0 bottom-0 w-72 bg-white z-50 lg:hidden overflow-y-auto"
+              >
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <h2 className="font-bold text-lg">Filters</h2>
+                  <button onClick={() => setShowMobileFilters(false)}>
+                    <X size={20} />
+                  </button>
+                </div>
+                <div className="p-4 space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-sm mb-3">Category</h3>
+                    <div className="space-y-2">
+                      {["Laptop", "Desktop", "Monitor", "Accessories", "Gaming", "Keyboard", "Mouse", "Headset"].map(cat => (
+                        <label key={cat} className="flex items-center gap-2 text-xs">
+                          <input type="checkbox" className="w-3 h-3" />
+                          <span>{cat}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-sm mb-3">Price Range</h3>
+                    <div className="space-y-2 text-xs">
+                      <button className="block text-left w-full hover:text-orange-600">Under TZS 500,000</button>
+                      <button className="block text-left w-full hover:text-orange-600">TZS 500K - 2M</button>
+                      <button className="block text-left w-full hover:text-orange-600">TZS 2M - 5M</button>
+                      <button className="block text-left w-full hover:text-orange-600">Over TZS 5M</button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
           {currentProducts.map((product) => (
             <GameProductCard
