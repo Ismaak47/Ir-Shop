@@ -37,7 +37,7 @@ const SignupPage = () => {
     setIsLoading(false);
     
     if (result.success) {
-      navigate(from);
+      navigate('/dashboard');
     } else {
       setError(result.error || 'Signup failed');
     }

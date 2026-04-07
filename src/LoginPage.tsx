@@ -26,7 +26,7 @@ const LoginPage = () => {
     setIsLoading(false);
     
     if (result.success) {
-      navigate(from);
+      navigate('/dashboard');
     } else {
       setError(result.error || 'Login failed');
     }

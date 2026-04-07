@@ -1,4 +1,4 @@
-import { ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2, LogOut, LayoutDashboard } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -47,7 +47,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
   const handleLogout = () => {
     logout();
     setShowAccountDropdown(false);
-    navigate('/');
+    navigate('/login');
   };
 
   return (
@@ -91,6 +91,16 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                           <p className="text-xs text-gray-500">Signed in as</p>
                           <p className="text-sm font-semibold text-gray-900 truncate">{user?.email}</p>
                         </div>
+                        <button
+                          onClick={() => {
+                            setShowAccountDropdown(false);
+                            navigate('/dashboard');
+                          }}
+                          className="w-full px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          <LayoutDashboard size={16} />
+                          My Dashboard
+                        </button>
                         <button
                           onClick={handleLogout}
                           className="w-full px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2"
@@ -166,6 +176,18 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAccountClick = () => {
+    onClose();
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login');
+    }
+  };
+
   const categories = [
     "All Departments", "Arts & Crafts", "Automotive", "Baby", "Beauty & Personal Care", "Books",
     "Computers", "Digital Music"
@@ -205,6 +227,17 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             </div>
 
             <div className="py-2">
+              <div className="px-4 py-2.5 font-bold text-[14px] text-gray-900 border-b border-gray-100 mb-1 tracking-wide">Account</div>
+              <ul className="text-gray-600 pb-2 text-[13px] font-medium">
+                <li 
+                  onClick={handleAccountClick}
+                  className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-colors flex items-center gap-2"
+                >
+                  <User size={16} />
+                  {isAuthenticated ? 'My Dashboard' : 'Sign In'}
+                </li>
+              </ul>
+
               <div className="px-4 py-2.5 font-bold text-[14px] text-gray-900 border-b border-gray-100 mb-1 tracking-wide">Trending</div>
               <ul className="text-gray-600 pb-2 text-[13px] font-medium">
                 <li className="px-5 py-2 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-colors">Best Sellers</li>
@@ -244,16 +277,27 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
 export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   const { cartCount, setIsCartOpen } = useCart();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAccountClick = () => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around py-2 z-[60] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
       <Link to="/" className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
         <Home size={22} />
         <span className="text-[10px] font-medium">Home</span>
       </Link>
-      <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer">
+      <button onClick={handleAccountClick} className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
         <User size={22} />
         <span className="text-[10px] font-medium">Account</span>
-      </div>
+      </button>
       <div onClick={() => setIsCartOpen(true)} className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer relative">
         <ShoppingCart size={22} />
         <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-4 h-4 flex items-center justify-center font-bold text-[8px]">{cartCount}</span>
