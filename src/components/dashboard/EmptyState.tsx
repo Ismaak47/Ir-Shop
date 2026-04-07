@@ -10,40 +10,36 @@ export default function EmptyState({ onAddProduct }: EmptyStateProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center justify-center min-h-[60vh]"
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center min-h-[60vh] p-4 sm:p-8"
     >
-      <div className="text-center max-w-md px-6">
+      <div className="text-center max-w-md">
         {/* Icon */}
-        <div className="mb-6 flex justify-center">
-          <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center">
-            <Package size={48} className="text-orange-500" />
+        <div className="mb-4 flex justify-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37]/10 to-[#C5A028]/5 rounded-2xl flex items-center justify-center">
+            <Package size={28} className="text-[#D4AF37]" strokeWidth={1.5} />
           </div>
         </div>
 
-        {/* Text */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-3">
+        {/* Title */}
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
           No Products Yet
         </h2>
-        <p className="text-gray-600 mb-8">
-          You haven't added any products to your store. Start by adding your first product to get started.
+        
+        {/* Description */}
+        <p className="text-sm text-gray-500 mb-4 max-w-[400px] mx-auto">
+          Start building your store by adding your first product
         </p>
 
         {/* CTA Button */}
         <button
           type="button"
           onClick={onAddProduct}
-          className="inline-flex items-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37] hover:bg-[#C5A028] text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
         >
-          <Plus size={20} />
+          <Plus size={16} strokeWidth={2.5} />
           <span>Add Your First Product</span>
         </button>
-
-        {/* Additional Info */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
-          <p className="text-sm text-gray-500">
-            💡 Tip: Add detailed descriptions and high-quality images to attract more customers
-          </p>
-        </div>
       </div>
     </motion.div>
   );
