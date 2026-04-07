@@ -7,10 +7,12 @@ import SignupPage from "./SignupPage";
 import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
 import ProductDetailPage from "./ProductDetailPage";
+import SearchResultsPage from "./SearchResultsPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";
 import { AuthProvider } from "./AuthContext";
+import { SearchProvider } from "./SearchContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 // Reusable Components
@@ -129,18 +131,21 @@ const Logo = () => (
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/games" element={<GamesPage />} />
-            <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-          </Routes>
-        </Router>
-      </CartProvider>
+      <SearchProvider>
+        <CartProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/games" element={<GamesPage />} />
+              <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
+            </Routes>
+          </Router>
+        </CartProvider>
+      </SearchProvider>
     </AuthProvider>
   );
 }

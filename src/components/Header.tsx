@@ -1,9 +1,10 @@
-import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../CartContext";
 import { useAuth } from "../AuthContext";
+import { SearchBar } from "./SearchBar";
 
 export const Logo = () => (
   <div className="flex flex-col items-start justify-center px-1 group">
@@ -60,17 +61,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
           </Link>
 
           {/* Search Bar */}
-          <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
-            <input
-              type="text"
-              placeholder="Search Ir-Shop"
-              className="flex-1 px-3 py-2 text-black outline-none bg-white min-w-0"
-              defaultValue={searchTerm}
-            />
-            <button className="bg-irshop-accent hover:bg-irshop-accent-hover px-4 flex items-center justify-center text-black transition-colors">
-              <Search size={20} />
-            </button>
-          </div>
+          <SearchBar defaultValue={searchTerm} />
 
           {/* Tools */}
           <div className="flex items-center gap-1">
