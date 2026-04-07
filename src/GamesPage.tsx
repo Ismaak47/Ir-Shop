@@ -119,7 +119,7 @@ export default function GamesPage() {
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
-      <main className="flex-1 max-w-[1500px] mx-auto w-full px-3 pt-3 pb-10 md:pb-4">
+      <main className="flex-1 max-w-[1500px] mx-auto w-full px-3 pt-3 pb-6 md:pb-4">
         {/* Mobile Topbar: Filter & Sort */}
         <div className="flex items-center justify-between gap-2 lg:hidden mb-3">
           <button
