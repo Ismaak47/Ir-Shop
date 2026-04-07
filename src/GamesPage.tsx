@@ -91,10 +91,10 @@ export default function GamesPage() {
   const itemsPerPage = 12;
   const { products } = useProducts();
 
-  const gamingProducts = products.filter(p => 
-    p.category === "games" || 
-    p.tags.some(tag => ["gaming", "laptop", "desktop", "monitor", "keyboard", "mouse"].includes(tag.toLowerCase()))
-  );
+  const gamingProducts = products.filter((product) => {
+    const normalizedCategory = product.category?.toLowerCase();
+    return normalizedCategory === "gaming" || normalizedCategory === "games";
+  });
 
   const filteredProducts = gamingProducts.filter(p => {
     if (selectedCategories.length > 0) {

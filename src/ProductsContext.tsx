@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { useAuth } from "./AuthContext";
 import defaultProductsData from "./data/products.json";
 
+const USER_PRODUCTS_STORAGE_KEY = "irshop:userProducts:v1";
+
 export interface Product {
   id: string;
   name: string;
@@ -37,52 +39,56 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const { user } = useAuth();
 
+  const getDefaultProducts = (): Product[] =>
+    defaultProductsData.map((product) => ({
+      ...product,
+      isUserProduct: false,
+      images: Array.isArray(product.images) && product.images.length > 0 ? product.images : [product.image]
+    }));
+
+  const getStoredUserProducts = (): Product[] => {
+    const stored = localStorage.getItem(USER_PRODUCTS_STORAGE_KEY);
+    if (!stored) return [];
+
+    try {
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed)) return [];
+
+      return parsed.map((product) => ({
+        ...product,
+        images: Array.isArray(product.images)
+          ? product.images
+          : product.image
+            ? [product.image]
+            : [],
+        isUserProduct: true
+      }));
+    } catch (error) {
+      console.error("Error loading user products:", error);
+      return [];
+    }
+  };
+
+  const mergeProducts = (userProducts: Product[]) => {
+    const defaultProducts = getDefaultProducts();
+    const allProducts = [...userProducts, ...defaultProducts];
+
+    return allProducts.reduce((acc, product) => {
+      if (!acc.find((existingProduct) => existingProduct.id === product.id)) {
+        acc.push(product);
+      }
+      return acc;
+    }, [] as Product[]);
+  };
+
   // Initialize products on mount
   useEffect(() => {
     loadProducts();
   }, [user]);
 
-  // Save user products to localStorage whenever products change
-  useEffect(() => {
-    if (user) {
-      const userProducts = products.filter(p => p.isUserProduct && p.userId === user.email);
-      localStorage.setItem(`userProducts_${user.email}`, JSON.stringify(userProducts));
-    }
-  }, [products, user]);
-
   const loadProducts = () => {
-    // Load default products
-    const defaultProducts: Product[] = defaultProductsData.map(p => ({
-      ...p,
-      isUserProduct: false,
-      images: p.images || [p.image]
-    }));
-
-    // Load user products if logged in
-    let userProducts: Product[] = [];
-    if (user) {
-      const stored = localStorage.getItem(`userProducts_${user.email}`);
-      if (stored) {
-        try {
-          userProducts = JSON.parse(stored);
-        } catch (e) {
-          console.error("Error loading user products:", e);
-        }
-      }
-    }
-
-    // Merge products (user products first, then default)
-    const allProducts = [...userProducts, ...defaultProducts];
-    
-    // Remove duplicates by id
-    const uniqueProducts = allProducts.reduce((acc, product) => {
-      if (!acc.find(p => p.id === product.id)) {
-        acc.push(product);
-      }
-      return acc;
-    }, [] as Product[]);
-
-    setProducts(uniqueProducts);
+    const userProducts = getStoredUserProducts();
+    setProducts(mergeProducts(userProducts));
   };
 
   const addProduct = (productData: Omit<Product, "id" | "rating" | "reviews" | "delivery" | "isBestSeller" | "isOverallPick" | "isUserProduct" | "userId" | "createdAt">) => {
@@ -93,7 +99,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
 
     const newProduct: Product = {
       ...productData,
-      id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: Date.now().toString(),
       rating: 0,
       reviews: "New",
       delivery: "TZS 50,000 delivery within 3-5 days",
@@ -101,24 +107,46 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       isOverallPick: false,
       isUserProduct: true,
       userId: user.email,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      images: Array.isArray(productData.images)
+        ? productData.images.filter(Boolean)
+        : productData.image
+          ? [productData.image]
+          : []
     };
 
-    setProducts(prev => [newProduct, ...prev]);
-    
-    // Explicit immediate save to localStorage for persistence
-    const updatedUserProducts = [newProduct, ...products.filter(p => p.isUserProduct && p.userId === user.email)];
-    localStorage.setItem(`userProducts_${user.email}`, JSON.stringify(updatedUserProducts));
+    const existingUserProducts = getStoredUserProducts();
+    const updatedUserProducts = [newProduct, ...existingUserProducts];
+
+    localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updatedUserProducts));
+    setProducts(mergeProducts(updatedUserProducts));
   };
 
   const deleteProduct = (productId: string) => {
-    setProducts(prev => prev.filter(p => p.id !== productId));
+    const updatedUserProducts = getStoredUserProducts().filter((product) => product.id !== productId);
+    localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updatedUserProducts));
+    setProducts(mergeProducts(updatedUserProducts));
   };
 
   const updateProduct = (productId: string, updates: Partial<Product>) => {
-    setProducts(prev => prev.map(p => 
-      p.id === productId ? { ...p, ...updates } : p
-    ));
+    const updatedUserProducts = getStoredUserProducts().map((product) =>
+      product.id === productId
+        ? {
+            ...product,
+            ...updates,
+            images: Array.isArray(updates.images)
+              ? updates.images
+              : Array.isArray(product.images)
+                ? product.images
+                : product.image
+                  ? [product.image]
+                  : []
+          }
+        : product
+    );
+
+    localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updatedUserProducts));
+    setProducts(mergeProducts(updatedUserProducts));
   };
 
   const searchProducts = (query: string): Product[] => {
@@ -143,7 +171,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
 
   const getUserProducts = (): Product[] => {
     if (!user) return [];
-    return products.filter(p => p.isUserProduct && p.userId === user.email);
+    return products.filter((product) => product.isUserProduct && product.userId === user.email);
   };
 
   const getProductById = (id: string): Product | undefined => {
