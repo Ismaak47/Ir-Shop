@@ -44,8 +44,16 @@ export default function ProductDetailPage() {
     };
 
     const handleBuyNow = () => {
-        addToCart({ id: product.title, title: product.title, img: product.img, price: product.price }, quantity);
-        navigate("/checkout");
+        // Check if user is logged in (you can implement proper auth check here)
+        const isLoggedIn = false; // TODO: Replace with actual auth check
+        
+        if (!isLoggedIn) {
+            // Redirect to signup page with checkout as the return destination
+            navigate('/signup', { state: { from: '/checkout' } });
+        } else {
+            addToCart({ id: product.title, title: product.title, img: product.img, price: product.price }, quantity);
+            navigate("/checkout");
+        }
     };
 
     return (

@@ -1,7 +1,7 @@
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { useCart } from "./CartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ShieldCheck, MapPin, CreditCard, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -11,6 +11,16 @@ export default function CheckoutPage() {
     const [paymentMethod, setPaymentMethod] = useState("card");
     const { cartItems, cartCount } = useCart();
     const navigate = useNavigate();
+
+    // Check if user is logged in on component mount
+    useEffect(() => {
+        const isLoggedIn = false; // TODO: Replace with actual auth check
+        
+        if (!isLoggedIn) {
+            // Redirect to signup page with checkout as the return destination
+            navigate('/signup', { state: { from: '/checkout' } });
+        }
+    }, [navigate]);
 
     const totalAmount = cartItems.reduce((total, item) => {
         const priceNum = parseFloat(item.price.replace(/,/g, ''));

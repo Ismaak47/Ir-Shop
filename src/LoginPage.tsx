@@ -1,32 +1,29 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { Header, Sidebar, MobileBottomNav } from './components/Header';
-import { Footer } from './components/Footer';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the redirect path from location state (e.g., from checkout)
+  const from = location.state?.from || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);
-    navigate('/');
+    // Redirect to the page user came from or home
+    navigate(from);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Use existing Header from home page */}
-      <Header onMenuOpen={() => setIsMenuOpen(true)} />
-      <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
-
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <motion.div 
@@ -35,8 +32,34 @@ const LoginPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-md w-full"
         >
+          {/* Back to Home Button */}
+          <div className="mb-6">
+            <Link 
+              to="/" 
+              className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-[#1a5c5c] transition-colors"
+            >
+              <ArrowLeft size={16} />
+              <span>Back to Home</span>
+            </Link>
+          </div>
+
           {/* Form Card */}
           <div className="bg-white shadow-lg rounded-lg p-8 sm:p-10 border border-gray-200">
+            {/* Logo */}
+            <div className="text-center mb-6">
+              <Link to="/" className="inline-flex flex-col items-center justify-center">
+                <div className="flex items-baseline leading-none">
+                  <span className="text-3xl font-black tracking-tighter text-[#1a5c5c]">Ir-Shop</span>
+                </div>
+                <div className="relative w-24 h-3 -mt-1">
+                  <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                    <path d="M10 5C30 15 70 15 90 5" stroke="#FFD700" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M85 3L94 6L87 11" fill="#FFD700" />
+                  </svg>
+                </div>
+              </Link>
+            </div>
+
             {/* Header */}
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
@@ -107,7 +130,8 @@ const LoginPage = () => {
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
                 <Link 
-                  to="/signup" 
+                  to="/signup"
+                  state={{ from }}
                   className="font-semibold text-[#1a5c5c] hover:text-[#145454] transition-colors"
                 >
                   Register Now
@@ -117,9 +141,6 @@ const LoginPage = () => {
           </div>
         </motion.div>
       </main>
-
-      {/* Use existing Footer from home page */}
-      <Footer />
     </div>
   );
 };
