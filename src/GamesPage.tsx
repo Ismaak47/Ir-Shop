@@ -192,7 +192,126 @@ export default function GamesPage() {
           )}
         </AnimatePresence>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
+        {/* Desktop Layout: Sidebar + Products */}
+        <div className="hidden lg:flex gap-6">
+          {/* LEFT: Filters Sidebar */}
+          <aside className="w-64 flex-shrink-0">
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 sticky top-4">
+              <h2 className="text-lg font-bold mb-4">Filters</h2>
+              
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-semibold text-sm mb-3">Category</h3>
+                  <div className="space-y-2">
+                    {["Laptop", "Desktop", "Monitor", "Accessories", "Gaming", "Keyboard", "Mouse", "Headset"].map(cat => (
+                      <label key={cat} className="flex items-center gap-2 text-xs cursor-pointer hover:text-orange-600">
+                        <input type="checkbox" className="w-3 h-3" />
+                        <span>{cat}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4">
+                  <h3 className="font-semibold text-sm mb-3">Price Range</h3>
+                  <div className="space-y-2 text-xs">
+                    <button className="block text-left w-full hover:text-orange-600 py-1">Under TZS 500,000</button>
+                    <button className="block text-left w-full hover:text-orange-600 py-1">TZS 500K - 2M</button>
+                    <button className="block text-left w-full hover:text-orange-600 py-1">TZS 2M - 5M</button>
+                    <button className="block text-left w-full hover:text-orange-600 py-1">Over TZS 5M</button>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4">
+                  <h3 className="font-semibold text-sm mb-3">Brand</h3>
+                  <div className="space-y-2">
+                    {["ASUS", "Lenovo", "Alienware", "Samsung", "Acer", "HP"].map(brand => (
+                      <label key={brand} className="flex items-center gap-2 text-xs cursor-pointer hover:text-orange-600">
+                        <input type="checkbox" className="w-3 h-3" />
+                        <span>{brand}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* RIGHT: Products Area */}
+          <div className="flex-1">
+            {/* Topbar with Sort */}
+            <div className="flex items-center justify-between mb-4 bg-white p-4 rounded-lg border border-gray-200">
+              <h2 className="text-lg font-semibold">{sortedProducts.length} Gaming Products</h2>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-600">Sort by:</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-xs font-medium outline-none hover:border-gray-400"
+                >
+                  <option value="relevance">Relevance</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Customer Rating</option>
+                  <option value="name">Name: A-Z</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Product Grid */}
+            <div className="grid grid-cols-4 gap-6">
+              {currentProducts.map((product) => (
+                <GameProductCard
+                  key={product.id}
+                  product={product}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-8">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNum = i + 1;
+                  if (pageNum <= 3 || pageNum === totalPages) {
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        className={`px-3 py-1 border border-gray-300 rounded-md text-xs ${currentPage === pageNum ? 'bg-gray-100 font-bold' : 'hover:bg-gray-100'}`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  }
+                  if (pageNum === 4) {
+                    return <span key="ellipsis" className="text-xs">...</span>;
+                  }
+                  return null;
+                })}
+
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Grid (below mobile topbar) */}
+        <div className="lg:hidden grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4 mt-4">
           {currentProducts.map((product) => (
             <GameProductCard
               key={product.id}
@@ -200,45 +319,6 @@ export default function GamesPage() {
             />
           ))}
         </div>
-
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 my-4">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-
-            {[...Array(totalPages)].map((_, i) => {
-              const pageNum = i + 1;
-              if (pageNum <= 3 || pageNum === totalPages) {
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border border-gray-300 rounded-md text-xs ${currentPage === pageNum ? 'bg-gray-100 font-bold' : 'hover:bg-gray-100'}`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              }
-              if (pageNum === 4) {
-                return <span key="ellipsis" className="text-xs">...</span>;
-              }
-              return null;
-            })}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 border border-gray-300 rounded-md text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
-        )}
       </main>
 
       <Footer />
