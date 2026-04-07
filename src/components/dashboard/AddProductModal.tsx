@@ -148,7 +148,7 @@ const [formData, setFormData] = useState({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full max-w-2xl bg-white rounded-xl shadow-xl z-[101] overflow-hidden flex flex-col max-h-[90vh]"
+            className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:w-full md:max-w-2xl max-h-[90vh] bg-white rounded-xl shadow-xl z-[101] overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white">
@@ -183,7 +183,7 @@ className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/
             </AnimatePresence>
 
             {/* Form */}
-<form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-4 py-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
