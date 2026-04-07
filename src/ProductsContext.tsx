@@ -92,11 +92,6 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addProduct = (productData: Omit<Product, "id" | "rating" | "reviews" | "delivery" | "isBestSeller" | "isOverallPick" | "isUserProduct" | "userId" | "createdAt">) => {
-    if (!user) {
-      console.error("User must be logged in to add products");
-      return;
-    }
-
     const newProduct: Product = {
       ...productData,
       id: Date.now().toString(),
@@ -106,7 +101,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       isBestSeller: false,
       isOverallPick: false,
       isUserProduct: true,
-      userId: user.email,
+      userId: user?.email || "anonymous",
       createdAt: new Date().toISOString(),
       images: Array.isArray(productData.images)
         ? productData.images.filter(Boolean)
@@ -170,7 +165,9 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getUserProducts = (): Product[] => {
-    if (!user) return [];
+    if (!user) {
+      return products.filter((product) => product.isUserProduct && product.userId === "anonymous");
+    }
     return products.filter((product) => product.isUserProduct && product.userId === user.email);
   };
 
