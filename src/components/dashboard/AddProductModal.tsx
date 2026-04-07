@@ -148,16 +148,7 @@ const [formData, setFormData] = useState({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed bg-white shadow-xl z-[101] overflow-hidden flex flex-col"
-            style={{
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 'calc(100% - 2rem)',
-              maxWidth: '40rem',
-              maxHeight: '90vh',
-              borderRadius: '0.75rem'
-            }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md md:w-full md:max-w-2xl md:left-auto md:top-auto md:translate-x-0 md:translate-y-0 md:relative bg-white rounded-xl shadow-xl z-[101] overflow-hidden flex flex-col max-h-[90vh]"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white">
