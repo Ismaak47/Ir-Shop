@@ -1,4 +1,4 @@
-import { X, Upload, Plus } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useProducts } from "../../ProductsContext";
@@ -148,18 +148,18 @@ const [formData, setFormData] = useState({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full max-w-md md:max-w-lg lg:max-w-xl bg-white rounded-2xl shadow-2xl z-[101] overflow-hidden flex flex-col max-h-[90vh]"
+className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full max-w-2xl bg-white rounded-xl shadow-xl z-[101] overflow-hidden flex flex-col max-h-[90vh]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900">Add New Product</h2>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white">
+              <h2 className="text-lg font-semibold text-gray-900">Add New Product</h2>
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isSubmitting}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
               >
-                <X size={24} className="text-gray-600" />
+                <X size={18} className="text-gray-500" />
               </button>
             </div>
 
@@ -167,17 +167,17 @@ className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/
             <AnimatePresence>
               {showSuccess && (
                 <motion.div
-                  initial={{ opacity: 0, y: -20 }}
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="mx-6 mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3"
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mx-4 mt-3 p-2.5 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2"
                 >
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-green-800 font-medium">Product added successfully!</span>
+                  <span className="text-green-800 text-sm font-medium">Product added successfully!</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -263,15 +263,15 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
 
               {/* Images */}
               <div className="lg:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Product Images <span className="text-red-500">*</span>
                 </label>
-                {errors.images && <p className="text-red-500 text-xs mb-3">{errors.images}</p>}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {errors.images && <p className="text-red-500 text-xs mb-2">{errors.images}</p>}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                   {imagePreviews.map((preview, index) => (
                     <div
                       key={index}
-                      className="relative aspect-square border-2 border-dashed border-gray-300 rounded-lg p-3 cursor-pointer hover:border-[#D4AF37] hover:bg-gray-50 transition-all group bg-white"
+                      className="relative aspect-square border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#D4AF37] hover:bg-gray-50 transition-all group bg-white overflow-hidden"
                       onClick={() => handleImageSelect(index)}
                     >
                       {preview ? (
@@ -279,7 +279,7 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
                           <img
                             src={preview}
                             alt={`Product image ${index + 1}`}
-                            className="w-full h-full object-cover rounded-md group-hover:scale-105 transition-transform duration-200"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                           />
                           <button
                             type="button"
@@ -287,15 +287,18 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
                               e.stopPropagation();
                               removeImage(index);
                             }}
-                            className="absolute top-1.5 right-1.5 bg-white/95 hover:bg-white rounded-full p-1.5 shadow-md border transition-all opacity-0 group-hover:opacity-100"
+                            className="absolute top-1 right-1 bg-white/90 hover:bg-white rounded-full p-1 shadow-md transition-all opacity-0 group-hover:opacity-100"
                           >
-                            <X size={14} className="text-gray-600 hover:text-red-500" />
+                            <X size={12} className="text-gray-600 hover:text-red-500" />
                           </button>
+                          <div className="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded">
+                            {index + 1}
+                          </div>
                         </>
                       ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-500 group-hover:text-[#D4AF37] transition-colors">
-                          <Plus size={24} className="mb-1" />
-                          <p className="text-xs font-medium">Add Image</p>
+                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 group-hover:text-[#D4AF37] transition-colors">
+                          <Plus size={20} />
+                          <p className="text-[10px] font-medium mt-0.5">Image {index + 1}</p>
                         </div>
                       )}
                     </div>
@@ -311,9 +314,9 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
               </div>
 
               {/* Tags */}
-              <div>
+              <div className="lg:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tags (comma separated)
+                  Tags <span className="text-gray-400 font-normal">(optional)</span>
                 </label>
                 <input
                   type="text"
@@ -321,9 +324,8 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
                   value={formData.tags}
                   onChange={handleChange}
                   placeholder="e.g., gaming, rtx, intel, 16gb"
-className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
                 />
-                <p className="text-xs text-gray-500 mt-1">Separate tags with commas for better search visibility</p>
               </div>
             </form>
 
