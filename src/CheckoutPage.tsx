@@ -1,31 +1,45 @@
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { useCart } from "./CartContext";
+import { useAuth } from "./AuthContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ShieldCheck, MapPin, CreditCard, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ShieldCheck, MapPin, CreditCard, ShoppingCart, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function CheckoutPage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("card");
-    const { cartItems, cartCount } = useCart();
+    const [orderPlaced, setOrderPlaced] = useState(false);
+    const { cartItems, cartCount, clearCart } = useCart();
+    const { user } = useAuth();
     const navigate = useNavigate();
-
-    // Check if user is logged in on component mount
-    useEffect(() => {
-        const isLoggedIn = false; // TODO: Replace with actual auth check
-        
-        if (!isLoggedIn) {
-            // Redirect to signup page with checkout as the return destination
-            navigate('/signup', { state: { from: '/checkout' } });
-        }
-    }, [navigate]);
 
     const totalAmount = cartItems.reduce((total, item) => {
         const priceNum = parseFloat(item.price.replace(/,/g, ''));
         return total + (isNaN(priceNum) ? 0 : priceNum * item.quantity);
     }, 0);
+
+    const handlePlaceOrder = () => {
+        // Save order to localStorage
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        const newOrder = {
+            id: Date.now(),
+            user: user?.email,
+            items: cartItems,
+            total: totalAmount,
+            date: new Date().toISOString(),
+            paymentMethod
+        };
+        orders.push(newOrder);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        
+        setOrderPlaced(true);
+        setTimeout(() => {
+            clearCart();
+            navigate('/');
+        }, 3000);
+    };
 
     return (
         <div className="min-h-screen flex flex-col text-sm font-sans bg-[#F9FAFB]">
@@ -34,6 +48,31 @@ export default function CheckoutPage() {
             <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
             <main className="flex-1 max-w-[1000px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+                {/* Order Success Modal */}
+                <AnimatePresence>
+                    {orderPlaced && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+                        >
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl"
+                            >
+                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <CheckCircle size={32} className="text-green-600" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Order Placed Successfully!</h2>
+                                <p className="text-gray-600 mb-4">This is a demo order. Your cart has been saved.</p>
+                                <p className="text-sm text-gray-500">Redirecting to home...</p>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <button
                     onClick={() => navigate('/games')}
                     className="flex items-center text-gray-500 hover:text-black mb-4 sm:mb-6 transition-colors font-medium text-sm"
@@ -235,7 +274,7 @@ export default function CheckoutPage() {
 
                                 <button
                                     className="w-full bg-[#FFD700] hover:bg-[#FACC15] text-black py-3.5 rounded-xl font-bold text-base transition-all shadow-[0_2px_10px_rgba(255,215,0,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
-                                    onClick={() => alert("Order placed successfully!")}
+                                    onClick={handlePlaceOrder}
                                 >
                                     Place your order <ShieldCheck size={18} className="text-black/70" />
                                 </button>

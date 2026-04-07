@@ -1,8 +1,9 @@
-import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2 } from "lucide-react";
+import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, Plus, Minus, Trash2, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../CartContext";
+import { useAuth } from "../AuthContext";
 
 export const Logo = () => (
   <div className="flex flex-col items-start justify-center px-1 group">
@@ -39,6 +40,15 @@ interface HeaderProps {
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const { cartCount, setIsCartOpen } = useCart();
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setShowAccountDropdown(false);
+    navigate('/');
+  };
+
   return (
     <>
       <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
@@ -70,9 +80,10 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                 className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors"
               >
                 <User size={24} className="text-[#FFD700]" />
-                <span className="font-bold text-[#FFD700] hidden md:inline">
-                  Account
-                </span>
+                <div className="hidden md:flex flex-col items-start">
+                  <span className="text-[10px] text-gray-200">Hello, {isAuthenticated ? user?.fullName?.split(' ')[0] : 'Guest'}</span>
+                  <span className="font-bold text-[#FFD700] text-sm">Account</span>
+                </div>
                 <ChevronDown size={16} className="text-[#FFD700] hidden md:inline" />
               </div>
               <AnimatePresence>
@@ -83,18 +94,38 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                     exit={{ opacity: 0, y: -10 }}
                     className="absolute right-0 top-full mt-1 w-48 bg-white rounded-md shadow-lg p-3 z-50 flex flex-col gap-2"
                   >
-                    <Link 
-                      to="/login"
-                      className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
-                    >
-                      Sign in
-                    </Link>
-                    <Link 
-                      to="/signup"
-                      className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
-                    >
-                      Sign up
-                    </Link>
+                    {isAuthenticated ? (
+                      <>
+                        <div className="px-3 py-2 border-b border-gray-100">
+                          <p className="text-xs text-gray-500">Signed in as</p>
+                          <p className="text-sm font-semibold text-gray-900 truncate">{user?.email}</p>
+                        </div>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          <LogOut size={16} />
+                          Logout
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link 
+                          to="/login"
+                          className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
+                          onClick={() => setShowAccountDropdown(false)}
+                        >
+                          Sign in
+                        </Link>
+                        <Link 
+                          to="/signup"
+                          className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
+                          onClick={() => setShowAccountDropdown(false)}
+                        >
+                          Sign up
+                        </Link>
+                      </>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

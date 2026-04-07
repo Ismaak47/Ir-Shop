@@ -1,7 +1,8 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useAuth } from './AuthContext';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -11,10 +12,11 @@ const SignupPage = () => {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const { signup } = useAuth();
   
-  // Get the redirect path from location state (e.g., from checkout)
   const from = location.state?.from || '/';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,11 +28,19 @@ const SignupPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    const result = await signup(formData.fullName, formData.email, formData.phone, formData.password);
     setIsLoading(false);
-    // Redirect to the page user came from or home
-    navigate(from);
+    
+    if (result.success) {
+      navigate(from);
+    } else {
+      setError(result.error || 'Signup failed');
+    }
   };
 
   return (
@@ -76,6 +86,18 @@ const SignupPage = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign Up</h2>
               <p className="text-gray-600 text-sm">Create your Ir-Shop account</p>
             </div>
+
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md flex items-center gap-2 text-sm"
+              >
+                <AlertCircle size={16} />
+                <span>{error}</span>
+              </motion.div>
+            )}
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">

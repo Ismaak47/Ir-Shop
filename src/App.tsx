@@ -10,6 +10,8 @@ import ProductDetailPage from "./ProductDetailPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";
+import { AuthProvider } from "./AuthContext";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 // Reusable Components
 const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
@@ -126,18 +128,20 @@ const Logo = () => (
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/games" element={<GamesPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/product/:id" element={<ProductDetailPage />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/games" element={<GamesPage />} />
+            <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+            <Route path="/product/:id" element={<ProductDetailPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
