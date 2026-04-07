@@ -8,6 +8,7 @@ import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
 import ProductDetailPage from "./ProductDetailPage";
 import SearchResultsPage from "./SearchResultsPage";
+import DashboardPage from "./DashboardPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";
@@ -139,6 +140,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/games" element={<GamesPage />} />
+              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
               <Route path="/search" element={<SearchResultsPage />} />
               <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
               <Route path="/product/:id" element={<ProductDetailPage />} />
