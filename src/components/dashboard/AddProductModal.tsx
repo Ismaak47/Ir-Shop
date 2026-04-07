@@ -78,13 +78,24 @@ const [formData, setFormData] = useState({
       tags
     });
 
+    // Reset form after successful add
+    setFormData({
+      name: "",
+      price: "",
+      category: "",
+      description: "",
+      tags: ""
+    });
+    setImagePreviews(new Array(4).fill(""));
+    setErrors({});
+
     setIsSubmitting(false);
     setShowSuccess(true);
 
     setTimeout(() => {
       setShowSuccess(false);
       onClose();
-    }, 1500);
+    }, 2000);
   };
 
   const handleClose = () => {

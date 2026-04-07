@@ -105,6 +105,10 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     };
 
     setProducts(prev => [newProduct, ...prev]);
+    
+    // Explicit immediate save to localStorage for persistence
+    const updatedUserProducts = [newProduct, ...products.filter(p => p.isUserProduct && p.userId === user.email)];
+    localStorage.setItem(`userProducts_${user.email}`, JSON.stringify(updatedUserProducts));
   };
 
   const deleteProduct = (productId: string) => {
