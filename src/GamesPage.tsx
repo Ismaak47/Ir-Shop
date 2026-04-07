@@ -85,6 +85,9 @@ export default function GamesPage() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [sortBy, setSortBy] = useState("relevance");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const itemsPerPage = 12;
   const { products } = useProducts();
 
@@ -93,7 +96,27 @@ export default function GamesPage() {
     p.tags.some(tag => ["gaming", "laptop", "desktop", "monitor", "keyboard", "mouse"].includes(tag.toLowerCase()))
   );
 
-  const sortedProducts = [...gamingProducts].sort((a, b) => {
+  const filteredProducts = gamingProducts.filter(p => {
+    if (selectedCategories.length > 0) {
+      const productCategory = p.category.toLowerCase();
+      const hasMatchingTag = p.tags.some(tag => selectedCategories.includes(tag.toLowerCase()));
+      if (!selectedCategories.includes(productCategory) && !hasMatchingTag) return false;
+    }
+    if (selectedPriceRange) {
+      const price = parseFloat(p.price);
+      if (selectedPriceRange === "under500k" && price >= 500000) return false;
+      if (selectedPriceRange === "500k-2m" && (price < 500000 || price > 2000000)) return false;
+      if (selectedPriceRange === "2m-5m" && (price < 2000000 || price > 5000000)) return false;
+      if (selectedPriceRange === "over5m" && price <= 5000000) return false;
+    }
+    if (selectedBrands.length > 0) {
+      const hasMatchingBrand = p.tags.some(tag => selectedBrands.includes(tag.toLowerCase()));
+      if (!hasMatchingBrand) return false;
+    }
+    return true;
+  });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === "price-low") return parseFloat(a.price) - parseFloat(b.price);
     if (sortBy === "price-high") return parseFloat(b.price) - parseFloat(a.price);
     if (sortBy === "rating") return b.rating - a.rating;
@@ -111,6 +134,32 @@ export default function GamesPage() {
       setCurrentPage(page);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const toggleCategory = (category: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
+    );
+    setCurrentPage(1);
+  };
+
+  const setPriceRange = (range: string) => {
+    setSelectedPriceRange(prev => prev === range ? "" : range);
+    setCurrentPage(1);
+  };
+
+  const toggleBrand = (brand: string) => {
+    setSelectedBrands(prev => 
+      prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]
+    );
+    setCurrentPage(1);
+  };
+
+  const clearFilters = () => {
+    setSelectedCategories([]);
+    setSelectedPriceRange("");
+    setSelectedBrands([]);
+    setCurrentPage(1);
   };
 
   return (
@@ -193,8 +242,13 @@ export default function GamesPage() {
                     <h3 className="font-semibold text-sm mb-3">Category</h3>
                     <div className="space-y-2">
                       {["Laptop", "Desktop", "Monitor", "Accessories", "Gaming", "Keyboard", "Mouse", "Headset"].map(cat => (
-                        <label key={cat} className="flex items-center gap-2 text-xs">
-                          <input type="checkbox" className="w-3 h-3" />
+                        <label key={cat} className="flex items-center gap-2 text-xs cursor-pointer">
+                          <input 
+                            type="checkbox" 
+                            className="w-3 h-3"
+                            checked={selectedCategories.includes(cat.toLowerCase())}
+                            onChange={() => toggleCategory(cat.toLowerCase())}
+                          />
                           <span>{cat}</span>
                         </label>
                       ))}
@@ -203,10 +257,30 @@ export default function GamesPage() {
                   <div>
                     <h3 className="font-semibold text-sm mb-3">Price Range</h3>
                     <div className="space-y-2 text-xs">
-                      <button className="block text-left w-full hover:text-orange-600">Under TZS 500,000</button>
-                      <button className="block text-left w-full hover:text-orange-600">TZS 500K - 2M</button>
-                      <button className="block text-left w-full hover:text-orange-600">TZS 2M - 5M</button>
-                      <button className="block text-left w-full hover:text-orange-600">Over TZS 5M</button>
+                      <button 
+                        className={`block text-left w-full py-1 ${selectedPriceRange === 'under500k' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                        onClick={() => setPriceRange('under500k')}
+                      >
+                        Under TZS 500,000
+                      </button>
+                      <button 
+                        className={`block text-left w-full py-1 ${selectedPriceRange === '500k-2m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                        onClick={() => setPriceRange('500k-2m')}
+                      >
+                        TZS 500K - 2M
+                      </button>
+                      <button 
+                        className={`block text-left w-full py-1 ${selectedPriceRange === '2m-5m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                        onClick={() => setPriceRange('2m-5m')}
+                      >
+                        TZS 2M - 5M
+                      </button>
+                      <button 
+                        className={`block text-left w-full py-1 ${selectedPriceRange === 'over5m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                        onClick={() => setPriceRange('over5m')}
+                      >
+                        Over TZS 5M
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -228,7 +302,12 @@ export default function GamesPage() {
                   <div className="space-y-2">
                     {["Laptop", "Desktop", "Monitor", "Accessories", "Gaming", "Keyboard", "Mouse", "Headset"].map(cat => (
                       <label key={cat} className="flex items-center gap-2 text-xs cursor-pointer hover:text-orange-600">
-                        <input type="checkbox" className="w-3 h-3" />
+                        <input 
+                          type="checkbox" 
+                          className="w-3 h-3"
+                          checked={selectedCategories.includes(cat.toLowerCase())}
+                          onChange={() => toggleCategory(cat.toLowerCase())}
+                        />
                         <span>{cat}</span>
                       </label>
                     ))}
@@ -238,10 +317,30 @@ export default function GamesPage() {
                 <div className="border-t border-gray-200 pt-4">
                   <h3 className="font-semibold text-sm mb-3">Price Range</h3>
                   <div className="space-y-2 text-xs">
-                    <button className="block text-left w-full hover:text-orange-600 py-1">Under TZS 500,000</button>
-                    <button className="block text-left w-full hover:text-orange-600 py-1">TZS 500K - 2M</button>
-                    <button className="block text-left w-full hover:text-orange-600 py-1">TZS 2M - 5M</button>
-                    <button className="block text-left w-full hover:text-orange-600 py-1">Over TZS 5M</button>
+                    <button 
+                      className={`block text-left w-full py-1 ${selectedPriceRange === 'under500k' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                      onClick={() => setPriceRange('under500k')}
+                    >
+                      Under TZS 500,000
+                    </button>
+                    <button 
+                      className={`block text-left w-full py-1 ${selectedPriceRange === '500k-2m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                      onClick={() => setPriceRange('500k-2m')}
+                    >
+                      TZS 500K - 2M
+                    </button>
+                    <button 
+                      className={`block text-left w-full py-1 ${selectedPriceRange === '2m-5m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                      onClick={() => setPriceRange('2m-5m')}
+                    >
+                      TZS 2M - 5M
+                    </button>
+                    <button 
+                      className={`block text-left w-full py-1 ${selectedPriceRange === 'over5m' ? 'text-orange-600 font-medium' : 'hover:text-orange-600'}`}
+                      onClick={() => setPriceRange('over5m')}
+                    >
+                      Over TZS 5M
+                    </button>
                   </div>
                 </div>
 
@@ -250,7 +349,12 @@ export default function GamesPage() {
                   <div className="space-y-2">
                     {["ASUS", "Lenovo", "Alienware", "Samsung", "Acer", "HP"].map(brand => (
                       <label key={brand} className="flex items-center gap-2 text-xs cursor-pointer hover:text-orange-600">
-                        <input type="checkbox" className="w-3 h-3" />
+                        <input 
+                          type="checkbox" 
+                          className="w-3 h-3"
+                          checked={selectedBrands.includes(brand.toLowerCase())}
+                          onChange={() => toggleBrand(brand.toLowerCase())}
+                        />
                         <span>{brand}</span>
                       </label>
                     ))}
