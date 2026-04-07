@@ -15,15 +15,9 @@ const SignupPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { signup, isAuthenticated } = useAuth();
+  const { signup } = useAuth();
   
   const from = location.state?.from || '/';
-
-  // Redirect to home if already authenticated
-  if (isAuthenticated) {
-    navigate('/', { replace: true });
-    return null;
-  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({

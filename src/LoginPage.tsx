@@ -11,15 +11,9 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   
   const from = location.state?.from || '/';
-
-  // Redirect to home if already authenticated
-  if (isAuthenticated) {
-    navigate('/', { replace: true });
-    return null;
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
