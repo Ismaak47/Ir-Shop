@@ -1,7 +1,7 @@
 import { X, Upload, Plus } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useUserProducts } from "../../UserProductsContext";
+import { useProducts } from "../../ProductsContext";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface AddProductModalProps {
 }
 
 export default function AddProductModal({ isOpen, onClose }: AddProductModalProps) {
-  const { addProduct } = useUserProducts();
+  const { addProduct } = useProducts();
   const [formData, setFormData] = useState({
     name: "",
     price: "",

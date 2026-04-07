@@ -14,7 +14,7 @@ import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";
 import { AuthProvider } from "./AuthContext";
 import { SearchProvider } from "./SearchContext";
-import { UserProductsProvider } from "./UserProductsContext";
+import { ProductsProvider } from "./ProductsContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 // Reusable Components
@@ -133,8 +133,8 @@ const Logo = () => (
 function App() {
   return (
     <AuthProvider>
-      <SearchProvider>
-        <UserProductsProvider>
+      <ProductsProvider>
+        <SearchProvider>
           <CartProvider>
             <Router>
               <Routes>
@@ -149,8 +149,8 @@ function App() {
               </Routes>
             </Router>
           </CartProvider>
-        </UserProductsProvider>
-      </SearchProvider>
+        </SearchProvider>
+      </ProductsProvider>
     </AuthProvider>
   );
 }

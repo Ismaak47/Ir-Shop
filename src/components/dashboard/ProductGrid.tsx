@@ -1,12 +1,12 @@
 import { Star, MoreVertical, Trash2, Edit } from "lucide-react";
-import { UserProduct, useUserProducts } from "../../UserProductsContext";
+import { Product, useProducts } from "../../ProductsContext";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface ProductGridProps {
-  products: UserProduct[];
+  products: Product[];
 }
 
 export default function ProductGrid({ products }: ProductGridProps) {
@@ -19,10 +19,10 @@ export default function ProductGrid({ products }: ProductGridProps) {
   );
 }
 
-function ProductCard({ product }: { product: UserProduct }) {
+function ProductCard({ product }: { product: Product }) {
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
-  const { deleteProduct } = useUserProducts();
+  const { deleteProduct } = useProducts();
   const [showMenu, setShowMenu] = useState(false);
 
   const handleProductClick = () => {

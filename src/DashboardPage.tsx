@@ -7,7 +7,7 @@ import ProductGrid from "./components/dashboard/ProductGrid";
 import DashboardPagination from "./components/dashboard/DashboardPagination";
 import EmptyState from "./components/dashboard/EmptyState";
 import AddProductModal from "./components/dashboard/AddProductModal";
-import { useUserProducts } from "./UserProductsContext";
+import { useProducts } from "./ProductsContext";
 import { Plus } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -20,7 +20,8 @@ export default function DashboardPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const itemsPerPage = 12;
 
-  const { userProducts } = useUserProducts();
+  const { getUserProducts } = useProducts();
+  const userProducts = getUserProducts();
 
   const [filters, setFilters] = useState({
     types: [] as string[],

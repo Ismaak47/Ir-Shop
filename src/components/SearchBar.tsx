@@ -2,9 +2,8 @@ import { Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { searchProducts, Product } from "../utils/searchUtils";
+import { useProducts, Product } from "../ProductsContext";
 import { useSearch } from "../SearchContext";
-import productsData from "../data/products.json";
 
 interface SearchBarProps {
   defaultValue?: string;
@@ -19,6 +18,7 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { addRecentSearch } = useSearch();
+  const { searchProducts } = useProducts();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -41,7 +41,7 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
 
     setIsLoading(true);
     debounceTimer.current = setTimeout(() => {
-      const results = searchProducts(productsData as Product[], query);
+      const results = searchProducts(query);
       setSuggestions(results.slice(0, 8));
       setShowSuggestions(true);
       setIsLoading(false);

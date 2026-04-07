@@ -3,8 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { Star, ChevronDown, X } from "lucide-react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { searchProducts, filterByPrice, filterByTags, sortProducts, Product } from "./utils/searchUtils";
-import productsData from "./data/products.json";
+import { useProducts, Product } from "./ProductsContext";
 import { useCart } from "./CartContext";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -17,29 +16,41 @@ export default function SearchResultsPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const { addToCart, setIsCartOpen } = useCart();
+  const { searchProducts, products } = useProducts();
   const navigate = useNavigate();
 
   const searchResults = useMemo(() => {
-    let results = searchProducts(productsData as Product[], query);
+    let results = searchProducts(query);
     
     if (selectedTags.length > 0) {
-      results = filterByTags(results, selectedTags);
+      results = results.filter(p => 
+        selectedTags.some(tag => p.tags.includes(tag.toLowerCase()))
+      );
     }
     
-    results = filterByPrice(results, priceRange[0], priceRange[1]);
+    results = results.filter(p => {
+      const price = parseFloat(p.price);
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
     
-    if (sortBy !== "relevance") {
-      results = sortProducts(results, sortBy);
+    if (sortBy === "price-low") {
+      results = [...results].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    } else if (sortBy === "price-high") {
+      results = [...results].sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    } else if (sortBy === "rating") {
+      results = [...results].sort((a, b) => b.rating - a.rating);
+    } else if (sortBy === "name") {
+      results = [...results].sort((a, b) => a.name.localeCompare(b.name));
     }
     
     return results;
-  }, [query, selectedTags, priceRange, sortBy]);
+  }, [query, selectedTags, priceRange, sortBy, searchProducts]);
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    searchResults.forEach(p => p.tags.forEach(t => tags.add(t)));
+    products.forEach(p => p.tags.forEach(t => tags.add(t)));
     return Array.from(tags);
-  }, [searchResults]);
+  }, [products]);
 
   const handleProductClick = (product: Product) => {
     const slug = encodeURIComponent(product.name.substring(0, 30).replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase());
