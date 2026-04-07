@@ -115,17 +115,24 @@ const SignupPage = () => {
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
                 </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#1a5c5c] focus:border-transparent transition-all duration-200 text-sm"
-                  placeholder="+255 7XX XXX XXX (M-Pesa/Airtel)"
-                />
-                <p className="text-xs text-gray-500 mt-1.5">For order confirmations and M-Pesa/Airtel payments</p>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value="+255"
+                    disabled
+                    className="w-20 px-4 py-3 border border-gray-300 rounded-md bg-gray-100 text-gray-600 text-sm font-medium"
+                  />
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#1a5c5c] focus:border-transparent transition-all duration-200 text-sm"
+                    placeholder="7XX XXX XXX"
+                  />
+                </div>
               </div>
 
               <div>
