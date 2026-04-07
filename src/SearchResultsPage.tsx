@@ -53,17 +53,11 @@ export default function SearchResultsPage() {
   }, [products]);
 
   const handleProductClick = (product: Product) => {
-    const slug = encodeURIComponent(product.name.substring(0, 30).replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase());
-    navigate(`/product/${slug}`, { state: { product: { 
-      title: product.name, 
-      img: product.image, 
-      rating: product.rating, 
-      reviews: product.reviews, 
-      price: product.price, 
-      delivery: product.delivery,
-      isBestSeller: product.isBestSeller,
-      isOverallPick: product.isOverallPick
-    }}});
+    navigate(`/product/${product.id}`, { state: { productId: product.id } });
+  };
+
+  const getDisplayImage = (product: Product) => {
+    return product.images && product.images.length > 0 ? product.images[0] : product.image;
   };
 
   const toggleTag = (tag: string) => {
@@ -207,7 +201,7 @@ export default function SearchResultsPage() {
                     )}
 
                     <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
-                      <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
+                      <img src={getDisplayImage(product)} alt={product.name} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
                     </div>
 
                     <div className="flex-1 flex flex-col">
@@ -230,7 +224,7 @@ export default function SearchResultsPage() {
                           <span className="text-base sm:text-2xl font-bold">{parseFloat(product.price).toLocaleString()}</span>
                         </div>
 
-                        <button onClick={(e) => { e.stopPropagation(); addToCart({ id: product.id, title: product.name, img: product.image, price: product.price }); setIsCartOpen(true); }} className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm">
+                        <button onClick={(e) => { e.stopPropagation(); addToCart({ id: product.id, title: product.name, img: getDisplayImage(product), price: product.price }); setIsCartOpen(true); }} className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium transition-colors shadow-sm">
                           Add to cart
                         </button>
                       </div>

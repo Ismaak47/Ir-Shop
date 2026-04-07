@@ -63,17 +63,11 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
 
   const handleSuggestionClick = (product: Product) => {
     setShowSuggestions(false);
-    const slug = encodeURIComponent(product.name.substring(0, 30).replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase());
-    navigate(`/product/${slug}`, { state: { product: { 
-      title: product.name, 
-      img: product.image, 
-      rating: product.rating, 
-      reviews: product.reviews, 
-      price: product.price, 
-      delivery: product.delivery,
-      isBestSeller: product.isBestSeller,
-      isOverallPick: product.isOverallPick
-    }}});
+    navigate(`/product/${product.id}`, { state: { productId: product.id } });
+  };
+
+  const getDisplayImage = (product: Product) => {
+    return product.images && product.images.length > 0 ? product.images[0] : product.image;
   };
 
   return (
@@ -110,7 +104,7 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
                   className="flex gap-3 p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
                 >
                   <div className="w-16 h-16 flex-shrink-0 bg-gray-50 rounded flex items-center justify-center">
-                    <img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
+                    <img src={getDisplayImage(product)} alt={product.name} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">{product.name}</h4>

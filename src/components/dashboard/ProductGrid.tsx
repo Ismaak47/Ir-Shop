@@ -25,23 +25,13 @@ function ProductCard({ product }: { product: Product }) {
   const { deleteProduct } = useProducts();
   const [showMenu, setShowMenu] = useState(false);
 
+  const displayImage = product.images && product.images.length > 0 
+    ? product.images[0] 
+    : product.image;
+
   const handleProductClick = () => {
-    const slug = encodeURIComponent(
-      product.name.substring(0, 30).replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "-").toLowerCase()
-    );
-    navigate(`/product/${slug}`, {
-      state: {
-        product: {
-          title: product.name,
-          img: product.image,
-          rating: product.rating,
-          reviews: product.reviews,
-          price: product.price,
-          delivery: product.delivery,
-          isBestSeller: product.isBestSeller,
-          isOverallPick: product.isOverallPick
-        }
-      }
+    navigate(`/product/${product.id}`, {
+      state: { productId: product.id }
     });
   };
 
@@ -129,7 +119,7 @@ function ProductCard({ product }: { product: Product }) {
         className="aspect-square bg-gray-50 flex items-center justify-center p-4 cursor-pointer overflow-hidden"
       >
         <img
-          src={product.image}
+          src={displayImage}
           alt={product.name}
           className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
           referrerPolicy="no-referrer"
@@ -166,7 +156,7 @@ function ProductCard({ product }: { product: Product }) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            addToCart({ id: product.id, title: product.name, img: product.image, price: product.price });
+            addToCart({ id: product.id, title: product.name, img: displayImage, price: product.price });
             setIsCartOpen(true);
           }}
           className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"

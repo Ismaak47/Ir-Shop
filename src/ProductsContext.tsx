@@ -10,6 +10,7 @@ export interface Product {
   price: string;
   tags: string[];
   image: string;
+  images: string[];
   rating: number;
   reviews: string;
   delivery: string;
@@ -27,6 +28,7 @@ interface ProductsContextType {
   updateProduct: (productId: string, updates: Partial<Product>) => void;
   searchProducts: (query: string) => Product[];
   getUserProducts: () => Product[];
+  getProductById: (id: string) => Product | undefined;
 }
 
 const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
@@ -52,7 +54,8 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     // Load default products
     const defaultProducts: Product[] = defaultProductsData.map(p => ({
       ...p,
-      isUserProduct: false
+      isUserProduct: false,
+      images: p.images || [p.image]
     }));
 
     // Load user products if logged in
@@ -139,6 +142,10 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     return products.filter(p => p.isUserProduct && p.userId === user.email);
   };
 
+  const getProductById = (id: string): Product | undefined => {
+    return products.find(p => p.id === id);
+  };
+
   return (
     <ProductsContext.Provider value={{
       products,
@@ -146,7 +153,8 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       deleteProduct,
       updateProduct,
       searchProducts,
-      getUserProducts
+      getUserProducts,
+      getProductById
     }}>
       {children}
     </ProductsContext.Provider>
