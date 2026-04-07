@@ -1,12 +1,12 @@
-import { Star, MoreVertical } from "lucide-react";
-import { Product } from "../../utils/searchUtils";
+import { Star, MoreVertical, Trash2, Edit } from "lucide-react";
+import { UserProduct, useUserProducts } from "../../UserProductsContext";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface ProductGridProps {
-  products: Product[];
+  products: UserProduct[];
 }
 
 export default function ProductGrid({ products }: ProductGridProps) {
@@ -19,9 +19,10 @@ export default function ProductGrid({ products }: ProductGridProps) {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product }: { product: UserProduct }) {
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
+  const { deleteProduct } = useUserProducts();
   const [showMenu, setShowMenu] = useState(false);
 
   const handleProductClick = () => {
@@ -42,6 +43,13 @@ function ProductCard({ product }: { product: Product }) {
         }
       }
     });
+  };
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      deleteProduct(product.id);
+      setShowMenu(false);
+    }
   };
 
   return (
@@ -84,9 +92,10 @@ function ProductCard({ product }: { product: Product }) {
                   handleProductClick();
                   setShowMenu(false);
                 }}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
               >
-                View Details
+                <Edit size={14} />
+                Edit Product
               </button>
               <button
                 onClick={(e) => {
@@ -102,10 +111,11 @@ function ProductCard({ product }: { product: Product }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowMenu(false);
+                  handleDelete();
                 }}
-                className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50"
+                className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2"
               >
+                <Trash2 size={14} />
                 Delete
               </button>
             </motion.div>

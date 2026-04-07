@@ -6,6 +6,7 @@ interface DashboardTopbarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onToggleSidebar: () => void;
+  onAddProduct: () => void;
 }
 
 export default function DashboardTopbar({
@@ -13,7 +14,8 @@ export default function DashboardTopbar({
   setActiveTab,
   searchQuery,
   setSearchQuery,
-  onToggleSidebar
+  onToggleSidebar,
+  onAddProduct
 }: DashboardTopbarProps) {
   const tabs = [
     { id: "all", label: "All" },
@@ -64,7 +66,11 @@ export default function DashboardTopbar({
           </button>
 
           {/* New Product Button */}
-          <button className="hidden lg:flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+          <button
+            type="button"
+            onClick={onAddProduct}
+            className="hidden lg:flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors shadow-sm"
+          >
             <Plus size={18} />
             <span>New Product</span>
           </button>

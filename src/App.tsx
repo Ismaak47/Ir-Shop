@@ -14,6 +14,7 @@ import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";
 import { AuthProvider } from "./AuthContext";
 import { SearchProvider } from "./SearchContext";
+import { UserProductsProvider } from "./UserProductsContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 // Reusable Components
@@ -133,20 +134,22 @@ function App() {
   return (
     <AuthProvider>
       <SearchProvider>
-        <CartProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/games" element={<GamesPage />} />
-              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-              <Route path="/search" element={<SearchResultsPage />} />
-              <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
-              <Route path="/product/:id" element={<ProductDetailPage />} />
-            </Routes>
-          </Router>
-        </CartProvider>
+        <UserProductsProvider>
+          <CartProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/games" element={<GamesPage />} />
+                <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+                <Route path="/search" element={<SearchResultsPage />} />
+                <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+                <Route path="/product/:id" element={<ProductDetailPage />} />
+              </Routes>
+            </Router>
+          </CartProvider>
+        </UserProductsProvider>
       </SearchProvider>
     </AuthProvider>
   );
