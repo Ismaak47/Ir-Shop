@@ -83,6 +83,7 @@ export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showSortMenu, setShowSortMenu] = useState(false);
   const [sortBy, setSortBy] = useState("relevance");
   const itemsPerPage = 12;
   const { products } = useProducts();
@@ -118,9 +119,9 @@ export default function GamesPage() {
       <Sidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <MobileBottomNav onMenuOpen={() => setIsMenuOpen(true)} />
 
-      <main className="flex-1 max-w-[1500px] mx-auto w-full px-4 pt-4 pb-20 md:pb-4">
+      <main className="flex-1 max-w-[1500px] mx-auto w-full px-3 pt-3 pb-20 md:pb-4">
         {/* Mobile Topbar: Filter & Sort */}
-        <div className="flex items-center justify-between gap-2 lg:hidden mb-4">
+        <div className="flex items-center justify-between gap-2 lg:hidden mb-3">
           <button
             onClick={() => setShowMobileFilters(true)}
             className="flex-1 flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-xs font-medium bg-white hover:bg-gray-50"
@@ -128,18 +129,40 @@ export default function GamesPage() {
             <SlidersHorizontal size={14} />
             <span>Filter</span>
           </button>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs font-medium outline-none"
+          <button
+            onClick={() => setShowSortMenu(!showSortMenu)}
+            className="flex-1 flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-xs font-medium bg-white hover:bg-gray-50"
           >
-            <option value="relevance">Relevance</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="rating">Customer Rating</option>
-            <option value="name">Name: A-Z</option>
-          </select>
+            <span>Sort By</span>
+            <ChevronDown size={14} className={showSortMenu ? "rotate-180" : ""} />
+          </button>
         </div>
+
+        {/* Sort Menu Dropdown */}
+        {showSortMenu && (
+          <div className="lg:hidden bg-white border border-gray-200 rounded-lg mb-3 overflow-hidden">
+            {[
+              { value: "relevance", label: "Relevance" },
+              { value: "price-low", label: "Price: Low to High" },
+              { value: "price-high", label: "Price: High to Low" },
+              { value: "rating", label: "Customer Rating" },
+              { value: "name", label: "Name: A-Z" }
+            ].map((option) => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setSortBy(option.value);
+                  setShowSortMenu(false);
+                }}
+                className={`w-full text-left px-4 py-2 text-xs hover:bg-gray-50 ${
+                  sortBy === option.value ? "bg-orange-50 text-orange-600 font-medium" : ""
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Mobile Filters Modal */}
         <AnimatePresence>
@@ -311,7 +334,7 @@ export default function GamesPage() {
         </div>
 
         {/* Mobile Grid (below mobile topbar) */}
-        <div className="lg:hidden grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4 mt-4">
+        <div className="lg:hidden grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4 mt-3">
           {currentProducts.map((product) => (
             <GameProductCard
               key={product.id}
@@ -319,6 +342,44 @@ export default function GamesPage() {
             />
           ))}
         </div>
+
+        {/* Mobile Pagination */}
+        {totalPages > 1 && (
+          <div className="lg:hidden flex justify-center items-center gap-2 mt-4">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1 border border-gray-300 rounded text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Prev
+            </button>
+            {[...Array(totalPages)].map((_, i) => {
+              const pageNum = i + 1;
+              if (pageNum <= 3 || pageNum === totalPages) {
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`px-3 py-1 border rounded text-xs ${
+                      currentPage === pageNum ? "bg-gray-200 font-medium" : "hover:bg-gray-100"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              }
+              if (pageNum === 4) return <span key="ellipsis" className="text-xs">...</span>;
+              return null;
+            })}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 border border-gray-300 rounded text-xs hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </main>
 
       <Footer />
