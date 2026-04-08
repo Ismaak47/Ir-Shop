@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/auth.html", "destination": "/auth.html" },
+    { "source": "/dashboard.html", "destination": "/dashboard.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -196,6 +196,13 @@
     </main>
 
     <script>
+        // Global Error Handler for Debugging
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Global Error:', msg, url, lineNo, columnNo, error);
+            alert('System Error: ' + msg);
+            return false;
+        };
+
         const SESSION_KEY = 'ecom_session_v1';
 
         function checkAuth() {
