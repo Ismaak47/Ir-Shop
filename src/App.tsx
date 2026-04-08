@@ -19,7 +19,6 @@ const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, i
               alt={item.label} 
               className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
               referrerPolicy="no-referrer" 
-              loading="lazy"
             />
           </div>
           <span className="text-xs text-gray-700 line-clamp-1">{item.label}</span>
@@ -39,7 +38,6 @@ const SingleCard = ({ title, img, linkText, linkHref = "#" }: { title: string, i
         alt={title} 
         className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
         referrerPolicy="no-referrer" 
-        loading="lazy"
       />
     </div>
     <Link to={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</Link>
@@ -78,7 +76,7 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
         >
           {items.map((img, i) => (
             <div key={i} className="flex-shrink-0 w-[200px] aspect-[3/4] cursor-pointer hover:opacity-90 transition-opacity">
-              <img src={img} alt={`Product ${i}`} className="w-full h-full object-contain" referrerPolicy="no-referrer" loading="lazy" />
+              <img src={img} alt={`Product ${i}`} className="w-full h-full object-contain" referrerPolicy="no-referrer" />
             </div>
           ))}
         </div>
@@ -206,7 +204,6 @@ function HomePage() {
                 transition={{ duration: 0.5 }}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
-                loading="eager"
               />
             </AnimatePresence>
             {/* Gradient overlay to blend with background */}
