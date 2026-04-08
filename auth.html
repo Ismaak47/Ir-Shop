@@ -10,10 +10,14 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: block; /* Ensure it's not hidden */
         }
         .auth-card {
             border: 1px solid #ddd;
             border-radius: 8px;
+            background-color: #fff;
         }
         .amazon-btn {
             background: linear-gradient(to bottom, #f7dfa1, #f0c14b);
@@ -43,13 +47,12 @@
         .toast {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
-        [v-cloak] { display: none; }
     </style>
 </head>
-<body class="bg-white min-h-screen flex flex-col items-center pt-8 px-4">
+<body class="bg-white min-h-screen flex flex-col items-center pt-8 px-4 sm:px-6 lg:px-8">
 
     <!-- Logo Section -->
-    <div class="mb-6">
+    <div class="mb-6 w-full flex justify-center">
         <a href="/" class="flex flex-col items-center group">
             <div class="flex items-baseline leading-none">
                 <span class="text-2xl font-black tracking-tighter text-[#FFD700] drop-shadow-sm">Ir-Shop</span>
@@ -64,8 +67,8 @@
                     <path 
                         d="M10 5C30 15 70 15 90 5" 
                         stroke="#FFD700" 
-                        strokeWidth="4" 
-                        strokeLinecap="round"
+                        stroke-width="4" 
+                        stroke-linecap="round"
                     />
                     <path 
                         d="M85 3L94 6L87 11" 
@@ -76,111 +79,113 @@
         </a>
     </div>
 
-    <!-- Auth Card -->
-    <div class="auth-card w-full max-w-[350px] p-6 mb-6">
-        <h1 id="auth-title" class="text-3xl font-normal mb-4">Sign in</h1>
+    <!-- Auth Card Container -->
+    <div class="w-full max-w-[400px]">
+        <div class="auth-card p-6 sm:p-8 mb-6 shadow-sm">
+            <h1 id="auth-title" class="text-2xl font-medium mb-5">Sign in</h1>
 
-        <!-- Sign In Form -->
-        <form id="signin-form" class="space-y-4">
-            <div>
-                <label for="signin-email" class="block text-sm font-bold mb-1">Email</label>
-                <input type="email" id="signin-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
-                <p id="signin-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
-            </div>
-            <div>
-                <div class="flex justify-between items-center mb-1">
-                    <label for="signin-password" class="block text-sm font-bold">Password</label>
-                    <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline">Forgot your password?</a>
+            <!-- Sign In Form -->
+            <form id="signin-form" class="space-y-4">
+                <div>
+                    <label for="signin-email" class="block text-sm font-bold mb-1">Email</label>
+                    <input type="email" id="signin-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                    <p id="signin-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
                 </div>
-                <div class="relative">
-                    <input type="password" id="signin-password" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
-                    <button type="button" onclick="togglePassword('signin-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
-                        <svg id="eye-icon-signin" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label for="signin-password" class="block text-sm font-bold">Password</label>
+                        <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline">Forgot your password?</a>
+                    </div>
+                    <div class="relative">
+                        <input type="password" id="signin-password" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
+                        <button type="button" onclick="togglePassword('signin-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                            <svg id="eye-icon-signin" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="signin-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
+                </div>
+                <button type="submit" id="signin-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center font-medium">
+                    <span id="signin-btn-text">Sign in</span>
+                    <div id="signin-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
+                </button>
+                <div class="pt-2">
+                    <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                    </button>
+                        Need help?
+                    </a>
                 </div>
-                <p id="signin-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
-            </div>
-            <button type="submit" id="signin-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center">
-                <span id="signin-btn-text">Sign in</span>
-                <div id="signin-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
-            </button>
-            <div class="pt-2">
-                <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                    Need help?
-                </a>
-            </div>
-        </form>
+            </form>
 
-        <!-- Sign Up Form -->
-        <form id="signup-form" class="space-y-4 hidden">
-            <div>
-                <label for="signup-name" class="block text-sm font-bold mb-1">Your name</label>
-                <input type="text" id="signup-name" placeholder="First and last name" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
-                <p id="signup-name-error" class="text-red-600 text-xs mt-1 hidden"></p>
-            </div>
-            <div>
-                <label for="signup-email" class="block text-sm font-bold mb-1">Mobile number or email</label>
-                <input type="email" id="signup-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
-                <p id="signup-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
-            </div>
-            <div>
-                <label for="signup-password" class="block text-sm font-bold mb-1">Password</label>
-                <div class="relative">
-                    <input type="password" id="signup-password" placeholder="At least 6 characters" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
-                    <button type="button" onclick="togglePassword('signup-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
-                        <svg id="eye-icon-signup" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="space-y-4 hidden">
+                <div>
+                    <label for="signup-name" class="block text-sm font-bold mb-1">Your name</label>
+                    <input type="text" id="signup-name" placeholder="First and last name" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                    <p id="signup-name-error" class="text-red-600 text-xs mt-1 hidden"></p>
+                </div>
+                <div>
+                    <label for="signup-email" class="block text-sm font-bold mb-1">Mobile number or email</label>
+                    <input type="email" id="signup-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                    <p id="signup-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
+                </div>
+                <div>
+                    <label for="signup-password" class="block text-sm font-bold mb-1">Password</label>
+                    <div class="relative">
+                        <input type="password" id="signup-password" placeholder="At least 6 characters" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
+                        <button type="button" onclick="togglePassword('signup-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                            <svg id="eye-icon-signup" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="password-strength" class="h-1 w-full bg-gray-200 rounded-full mt-2 overflow-hidden hidden">
+                        <div id="strength-bar" class="h-full w-0 transition-all duration-300"></div>
+                    </div>
+                    <p id="signup-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
+                    <p class="text-[11px] text-gray-600 mt-1 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                    </button>
+                        Passwords must be at least 6 characters.
+                    </p>
                 </div>
-                <div id="password-strength" class="h-1 w-full bg-gray-200 rounded-full mt-2 overflow-hidden hidden">
-                    <div id="strength-bar" class="h-full w-0 transition-all duration-300"></div>
+                <div>
+                    <label for="signup-confirm" class="block text-sm font-bold mb-1">Re-enter password</label>
+                    <input type="password" id="signup-confirm" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                    <p id="signup-confirm-error" class="text-red-600 text-xs mt-1 hidden"></p>
                 </div>
-                <p id="signup-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
-                <p class="text-[11px] text-gray-600 mt-1 flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Passwords must be at least 6 characters.
-                </p>
-            </div>
-            <div>
-                <label for="signup-confirm" class="block text-sm font-bold mb-1">Re-enter password</label>
-                <input type="password" id="signup-confirm" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
-                <p id="signup-confirm-error" class="text-red-600 text-xs mt-1 hidden"></p>
-            </div>
-            <button type="submit" id="signup-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center">
-                <span id="signup-btn-text">Create your Ir-Shop account</span>
-                <div id="signup-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
+                <button type="submit" id="signup-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center font-medium">
+                    <span id="signup-btn-text">Create your Ir-Shop account</span>
+                    <div id="signup-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
+                </button>
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <p class="text-xs text-black">
+                        Already have an account? 
+                        <a href="javascript:void(0)" onclick="toggleMode('signin')" class="text-blue-600 hover:text-orange-600 hover:underline">Sign in</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Divider Section (Only for Sign In) -->
+        <div id="signin-divider" class="w-full flex items-center gap-2 mb-4">
+            <div class="flex-1 h-[1px] bg-gray-200"></div>
+            <span class="text-xs text-gray-500">New to Ir-Shop?</span>
+            <div class="flex-1 h-[1px] bg-gray-200"></div>
+        </div>
+
+        <!-- Create Account Button (Only for Sign In) -->
+        <div id="signup-redirect" class="w-full">
+            <button onclick="toggleMode('signup')" class="w-full secondary-btn py-1.5 rounded-sm text-sm shadow-sm transition-all font-medium">
+                Create your Ir-Shop account
             </button>
-            <div class="border-t border-gray-200 pt-4 mt-4">
-                <p class="text-xs text-black">
-                    Already have an account? 
-                    <a href="javascript:void(0)" onclick="toggleMode('signin')" class="text-blue-600 hover:text-orange-600 hover:underline">Sign in</a>
-                </p>
-            </div>
-        </form>
-    </div>
-
-    <!-- Divider Section (Only for Sign In) -->
-    <div id="signin-divider" class="w-full max-w-[350px] flex items-center gap-2 mb-4">
-        <div class="flex-1 h-[1px] bg-gray-200"></div>
-        <span class="text-xs text-gray-500">New to Ir-Shop?</span>
-        <div class="flex-1 h-[1px] bg-gray-200"></div>
-    </div>
-
-    <!-- Create Account Button (Only for Sign In) -->
-    <div id="signup-redirect" class="w-full max-w-[350px]">
-        <button onclick="toggleMode('signup')" class="w-full secondary-btn py-1.5 rounded-sm text-sm shadow-sm transition-all">
-            Create your Ir-Shop account
-        </button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -197,6 +202,8 @@
     <div id="toast-container" class="fixed top-4 right-4 z-[200] flex flex-col gap-2"></div>
 
     <script>
+        console.log('Auth page initializing...');
+
         // Constants
         const USERS_KEY = 'ecom_users_v1';
         const SESSION_KEY = 'ecom_session_v1';
@@ -213,24 +220,53 @@
 
         // Initial Auth Check
         window.onload = () => {
-            if (checkAuth()) {
-                window.location.href = 'dashboard.html';
+            console.log('Window loaded, checking auth...');
+            try {
+                if (checkAuth()) {
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (e) {
+                console.error('Auth check failed:', e);
             }
         };
 
         // Core Functions
         function getUsers() {
-            const users = localStorage.getItem(USERS_KEY);
-            return users ? JSON.parse(users) : [];
+            try {
+                const users = localStorage.getItem(USERS_KEY);
+                return users ? JSON.parse(users) : [];
+            } catch (e) {
+                console.error('Failed to get users:', e);
+                return [];
+            }
         }
 
         function saveUsers(users) {
-            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+            try {
+                localStorage.setItem(USERS_KEY, JSON.stringify(users));
+            } catch (e) {
+                console.error('Failed to save users:', e);
+                showToast('Storage error: Could not save account', 'error');
+            }
         }
 
         function checkAuth() {
-            const session = localStorage.getItem(SESSION_KEY);
-            return session ? JSON.parse(session) : null;
+            try {
+                const session = localStorage.getItem(SESSION_KEY);
+                return session ? JSON.parse(session) : null;
+            } catch (e) {
+                console.error('Failed to check auth:', e);
+                return null;
+            }
+        }
+
+        function generateId() {
+            try {
+                if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    return crypto.randomUUID();
+                }
+            } catch (e) {}
+            return 'user_' + Math.random().toString(36).substr(2, 9) + Date.now();
         }
 
         function toggleMode(mode) {
@@ -269,29 +305,32 @@
         const strengthBar = document.getElementById('strength-bar');
         const strengthContainer = document.getElementById('password-strength');
 
-        signupPasswordInput.addEventListener('input', (e) => {
-            const val = e.target.value;
-            if (val.length > 0) {
-                strengthContainer.classList.remove('hidden');
-                let strength = 0;
-                if (val.length >= 6) strength += 25;
-                if (/[A-Z]/.test(val)) strength += 25;
-                if (/[0-9]/.test(val)) strength += 25;
-                if (/[^A-Za-z0-9]/.test(val)) strength += 25;
+        if (signupPasswordInput) {
+            signupPasswordInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (val.length > 0) {
+                    strengthContainer.classList.remove('hidden');
+                    let strength = 0;
+                    if (val.length >= 6) strength += 25;
+                    if (/[A-Z]/.test(val)) strength += 25;
+                    if (/[0-9]/.test(val)) strength += 25;
+                    if (/[^A-Za-z0-9]/.test(val)) strength += 25;
 
-                strengthBar.style.width = strength + '%';
-                if (strength <= 25) strengthBar.className = 'h-full bg-red-500 transition-all duration-300';
-                else if (strength <= 50) strengthBar.className = 'h-full bg-orange-500 transition-all duration-300';
-                else if (strength <= 75) strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300';
-                else strengthBar.className = 'h-full bg-green-500 transition-all duration-300';
-            } else {
-                strengthContainer.classList.add('hidden');
-            }
-        });
+                    strengthBar.style.width = strength + '%';
+                    if (strength <= 25) strengthBar.className = 'h-full bg-red-500 transition-all duration-300';
+                    else if (strength <= 50) strengthBar.className = 'h-full bg-orange-500 transition-all duration-300';
+                    else if (strength <= 75) strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300';
+                    else strengthBar.className = 'h-full bg-green-500 transition-all duration-300';
+                } else {
+                    strengthContainer.classList.add('hidden');
+                }
+            });
+        }
 
         // Toast System
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
             toast.className = `toast px-4 py-3 rounded shadow-lg text-white text-sm flex items-center gap-2 transform translate-x-full opacity-0 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
             toast.innerHTML = `
@@ -313,117 +352,125 @@
         }
 
         // Sign Up Logic
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirm = document.getElementById('signup-confirm').value;
-            const btn = document.getElementById('signup-btn');
-            const loader = document.getElementById('signup-loader');
-            const btnText = document.getElementById('signup-btn-text');
+        if (signupForm) {
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirm = document.getElementById('signup-confirm').value;
+                const btn = document.getElementById('signup-btn');
+                const loader = document.getElementById('signup-loader');
+                const btnText = document.getElementById('signup-btn-text');
 
-            // Reset errors
-            document.querySelectorAll('[id^="signup-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
+                // Reset errors
+                document.querySelectorAll('[id^="signup-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
 
-            let hasError = false;
+                let hasError = false;
 
-            if (password.length < 6) {
-                document.getElementById('signup-password-error').textContent = 'Minimum 6 characters required';
-                document.getElementById('signup-password-error').classList.remove('hidden');
-                hasError = true;
-            }
+                if (password.length < 6) {
+                    document.getElementById('signup-password-error').textContent = 'Minimum 6 characters required';
+                    document.getElementById('signup-password-error').classList.remove('hidden');
+                    hasError = true;
+                }
 
-            if (password !== confirm) {
-                document.getElementById('signup-confirm-error').textContent = 'Passwords do not match';
-                document.getElementById('signup-confirm-error').classList.remove('hidden');
-                hasError = true;
-            }
+                if (password !== confirm) {
+                    document.getElementById('signup-confirm-error').textContent = 'Passwords do not match';
+                    document.getElementById('signup-confirm-error').classList.remove('hidden');
+                    hasError = true;
+                }
 
-            const users = getUsers();
-            if (users.find(u => u.email === email)) {
-                document.getElementById('signup-email-error').textContent = 'Email already exists';
-                document.getElementById('signup-email-error').classList.remove('hidden');
-                hasError = true;
-            }
+                const users = getUsers();
+                if (users.find(u => u.email === email)) {
+                    document.getElementById('signup-email-error').textContent = 'Email already exists';
+                    document.getElementById('signup-email-error').classList.remove('hidden');
+                    hasError = true;
+                }
 
-            if (hasError) return;
+                if (hasError) return;
 
-            // Loading state
-            btn.disabled = true;
-            loader.classList.remove('hidden');
-            btnText.classList.add('opacity-50');
+                // Loading state
+                btn.disabled = true;
+                loader.classList.remove('hidden');
+                btnText.classList.add('opacity-50');
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500));
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
 
-            const newUser = {
-                id: crypto.randomUUID(),
-                name,
-                email,
-                password, // In a real app, this would be hashed
-                createdAt: new Date().toISOString()
-            };
+                const newUser = {
+                    id: generateId(),
+                    name,
+                    email,
+                    password, // In a real app, this would be hashed
+                    createdAt: new Date().toISOString()
+                };
 
-            users.push(newUser);
-            saveUsers(users);
+                users.push(newUser);
+                saveUsers(users);
 
-            showToast('Account created successfully!');
-            
-            // Reset form and switch to sign in
-            signupForm.reset();
-            strengthContainer.classList.add('hidden');
-            btn.disabled = false;
-            loader.classList.add('hidden');
-            btnText.classList.remove('opacity-50');
-            
-            setTimeout(() => toggleMode('signin'), 1000);
-        });
-
-        // Sign In Logic
-        signinForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('signin-email').value;
-            const password = document.getElementById('signin-password').value;
-            const btn = document.getElementById('signin-btn');
-            const loader = document.getElementById('signin-loader');
-            const btnText = document.getElementById('signin-btn-text');
-
-            // Reset errors
-            document.querySelectorAll('[id^="signin-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
-
-            // Loading state
-            btn.disabled = true;
-            loader.classList.remove('hidden');
-            btnText.classList.add('opacity-50');
-
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            const users = getUsers();
-            const user = users.find(u => u.email === email && u.password === password);
-
-            if (!user) {
+                showToast('Account created successfully!');
+                
+                // Reset form and switch to sign in
+                signupForm.reset();
+                strengthContainer.classList.add('hidden');
                 btn.disabled = false;
                 loader.classList.add('hidden');
                 btnText.classList.remove('opacity-50');
-                showToast('Invalid email or password', 'error');
-                return;
-            }
+                
+                setTimeout(() => toggleMode('signin'), 1000);
+            });
+        }
 
-            // Save session
-            localStorage.setItem(SESSION_KEY, JSON.stringify({
-                userId: user.id,
-                email: user.email,
-                name: user.name
-            }));
+        // Sign In Logic
+        if (signinForm) {
+            signinForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('signin-email').value;
+                const password = document.getElementById('signin-password').value;
+                const btn = document.getElementById('signin-btn');
+                const loader = document.getElementById('signin-loader');
+                const btnText = document.getElementById('signin-btn-text');
 
-            showToast('Signing in...');
-            
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 800);
-        });
+                // Reset errors
+                document.querySelectorAll('[id^="signin-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
+
+                // Loading state
+                btn.disabled = true;
+                loader.classList.remove('hidden');
+                btnText.classList.add('opacity-50');
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const users = getUsers();
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (!user) {
+                    btn.disabled = false;
+                    loader.classList.add('hidden');
+                    btnText.classList.remove('opacity-50');
+                    showToast('Invalid email or password', 'error');
+                    return;
+                }
+
+                // Save session
+                try {
+                    localStorage.setItem(SESSION_KEY, JSON.stringify({
+                        userId: user.id,
+                        email: user.email,
+                        name: user.name
+                    }));
+                } catch (e) {
+                    console.error('Failed to save session:', e);
+                }
+
+                showToast('Signing in...');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 800);
+            });
+        }
     </script>
 </body>
 </html>

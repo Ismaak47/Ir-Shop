@@ -39,9 +39,13 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
   const [user, setUser] = useState<{ name: string } | null>(null);
 
   useEffect(() => {
-    const session = localStorage.getItem('ecom_session_v1');
-    if (session) {
-      setUser(JSON.parse(session));
+    try {
+      const session = localStorage.getItem('ecom_session_v1');
+      if (session) {
+        setUser(JSON.parse(session));
+      }
+    } catch (e) {
+      console.error('Header auth check failed:', e);
     }
   }, []);
 
@@ -205,7 +209,12 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('ecom_session_v1'));
+    try {
+      setIsLoggedIn(!!localStorage.getItem('ecom_session_v1'));
+    } catch (e) {
+      console.error('Mobile nav auth check failed:', e);
+      setIsLoggedIn(false);
+    }
   }, []);
 
   return (
