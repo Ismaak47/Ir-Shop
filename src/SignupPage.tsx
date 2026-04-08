@@ -43,7 +43,7 @@ const SignupPage = () => {
     setIsLoading(false);
     
     if (result.success) {
-      navigate('/');
+      navigate(from, { replace: true });
     } else {
       setError(result.error || 'Signup failed');
     }

@@ -32,7 +32,7 @@ const LoginPage = () => {
     setIsLoading(false);
     
     if (result.success) {
-      navigate('/');
+      navigate(from, { replace: true });
     } else {
       setError(result.error || 'Login failed');
     }

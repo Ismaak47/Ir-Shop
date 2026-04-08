@@ -11,7 +11,7 @@ const GameProductCard = ({ product }: { product: Product }) => {
   const { addToCart, setIsCartOpen } = useCart();
   const navigate = useNavigate();
 
-  const displayImage = product.images && product.images.length > 0 
+  const displayImage = Array.isArray(product.images) && product.images.length > 0 
     ? product.images[0] 
     : product.image;
 
@@ -23,6 +23,7 @@ const GameProductCard = ({ product }: { product: Product }) => {
 
   return (
     <div
+      key={product.id}
       className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 rounded-[10px] hover:shadow-md transition-all relative cursor-pointer"
       onClick={handleProductClick}
     >
@@ -91,13 +92,13 @@ export default function GamesPage() {
   const itemsPerPage = 12;
   const { searchProducts } = useProducts();
   
-  // Get all merged products (this already includes demo_inventory_storage items)
-  const allGamingProducts = searchProducts("").filter((product) => {
+  // Get all gaming products
+  const gamingProducts = searchProducts("").filter((product) => {
     const normalizedCategory = product.category?.toLowerCase();
     return normalizedCategory === "gaming" || normalizedCategory === "games";
   });
 
-  const filteredProducts = allGamingProducts.filter(p => {
+  const filteredProducts = gamingProducts.filter(p => {
     if (selectedCategories.length > 0) {
       const productCategory = p.category.toLowerCase();
       const hasMatchingTag = p.tags.some(tag => selectedCategories.includes(tag.toLowerCase()));
