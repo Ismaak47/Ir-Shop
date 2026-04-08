@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ir-Shop | Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff;
+        }
+        .auth-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .amazon-btn {
+            background: linear-gradient(to bottom, #f7dfa1, #f0c14b);
+            border: 1px solid #a88734;
+            border-color: #a88734 #9c7e31 #846a29;
+        }
+        .amazon-btn:hover {
+            background: linear-gradient(to bottom, #f5d78e, #eeb933);
+        }
+        .amazon-btn:active {
+            background: #f0c14b;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,.1);
+        }
+        .secondary-btn {
+            background: linear-gradient(to bottom, #f7f8fa, #e7e9ec);
+            border: 1px solid #adb1b8;
+            border-color: #adb1b8 #a2a6ac #8d9096;
+        }
+        .secondary-btn:hover {
+            background: linear-gradient(to bottom, #e7eaf0, #d9dce1);
+        }
+        .input-focus:focus {
+            border-color: #e77600;
+            box-shadow: 0 0 3px 2px rgba(228, 121, 17, .5);
+            outline: 0;
+        }
+        .toast {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        [v-cloak] { display: none; }
+    </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col items-center pt-8 px-4">
+
+    <!-- Logo Section -->
+    <div class="mb-6">
+        <a href="/">
+            <img src="/assets/logo.png" alt="Ir-Shop Logo" class="h-10 mx-auto" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg'">
+        </a>
+    </div>
+
+    <!-- Auth Card -->
+    <div class="auth-card w-full max-w-[350px] p-6 mb-6">
+        <h1 id="auth-title" class="text-3xl font-normal mb-4">Sign in</h1>
+
+        <!-- Sign In Form -->
+        <form id="signin-form" class="space-y-4">
+            <div>
+                <label for="signin-email" class="block text-sm font-bold mb-1">Email</label>
+                <input type="email" id="signin-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                <p id="signin-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
+            </div>
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label for="signin-password" class="block text-sm font-bold">Password</label>
+                    <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline">Forgot your password?</a>
+                </div>
+                <div class="relative">
+                    <input type="password" id="signin-password" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
+                    <button type="button" onclick="togglePassword('signin-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                        <svg id="eye-icon-signin" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+                <p id="signin-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
+            </div>
+            <button type="submit" id="signin-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center">
+                <span id="signin-btn-text">Sign in</span>
+                <div id="signin-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
+            </button>
+            <p class="text-xs text-gray-600 leading-relaxed">
+                By continuing, you agree to Ir-Shop's <a href="#" class="text-blue-600 hover:underline">Conditions of Use</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Notice</a>.
+            </p>
+            <div class="pt-2">
+                <a href="#" class="text-xs text-blue-600 hover:text-orange-600 hover:underline flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                    Need help?
+                </a>
+            </div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signup-form" class="space-y-4 hidden">
+            <div>
+                <label for="signup-name" class="block text-sm font-bold mb-1">Your name</label>
+                <input type="text" id="signup-name" placeholder="First and last name" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                <p id="signup-name-error" class="text-red-600 text-xs mt-1 hidden"></p>
+            </div>
+            <div>
+                <label for="signup-email" class="block text-sm font-bold mb-1">Mobile number or email</label>
+                <input type="email" id="signup-email" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                <p id="signup-email-error" class="text-red-600 text-xs mt-1 hidden"></p>
+            </div>
+            <div>
+                <label for="signup-password" class="block text-sm font-bold mb-1">Password</label>
+                <div class="relative">
+                    <input type="password" id="signup-password" placeholder="At least 6 characters" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus pr-10" required>
+                    <button type="button" onclick="togglePassword('signup-password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                        <svg id="eye-icon-signup" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="password-strength" class="h-1 w-full bg-gray-200 rounded-full mt-2 overflow-hidden hidden">
+                    <div id="strength-bar" class="h-full w-0 transition-all duration-300"></div>
+                </div>
+                <p id="signup-password-error" class="text-red-600 text-xs mt-1 hidden"></p>
+                <p class="text-[11px] text-gray-600 mt-1 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Passwords must be at least 6 characters.
+                </p>
+            </div>
+            <div>
+                <label for="signup-confirm" class="block text-sm font-bold mb-1">Re-enter password</label>
+                <input type="password" id="signup-confirm" class="w-full px-3 py-2 border border-gray-400 rounded-sm text-sm input-focus" required>
+                <p id="signup-confirm-error" class="text-red-600 text-xs mt-1 hidden"></p>
+            </div>
+            <button type="submit" id="signup-btn" class="w-full amazon-btn py-1.5 rounded-sm text-sm shadow-sm transition-all flex items-center justify-center">
+                <span id="signup-btn-text">Create your Ir-Shop account</span>
+                <div id="signup-loader" class="hidden w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin ml-2"></div>
+            </button>
+            <p class="text-xs text-gray-600 leading-relaxed">
+                By creating an account, you agree to Ir-Shop's <a href="#" class="text-blue-600 hover:underline">Conditions of Use</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Notice</a>.
+            </p>
+            <div class="border-t border-gray-200 pt-4 mt-4">
+                <p class="text-xs text-black">
+                    Already have an account? 
+                    <a href="javascript:void(0)" onclick="toggleMode('signin')" class="text-blue-600 hover:text-orange-600 hover:underline">Sign in</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Divider Section (Only for Sign In) -->
+    <div id="signin-divider" class="w-full max-w-[350px] flex items-center gap-2 mb-4">
+        <div class="flex-1 h-[1px] bg-gray-200"></div>
+        <span class="text-xs text-gray-500">New to Ir-Shop?</span>
+        <div class="flex-1 h-[1px] bg-gray-200"></div>
+    </div>
+
+    <!-- Create Account Button (Only for Sign In) -->
+    <div id="signup-redirect" class="w-full max-w-[350px]">
+        <button onclick="toggleMode('signup')" class="w-full secondary-btn py-1.5 rounded-sm text-sm shadow-sm transition-all">
+            Create your Ir-Shop account
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="w-full max-w-[1500px] mt-auto border-t border-gray-200 pt-8 pb-12 flex flex-col items-center bg-gradient-to-t from-gray-50 to-white">
+        <div class="flex gap-8 mb-4">
+            <a href="#" class="text-[11px] text-blue-600 hover:underline">Conditions of Use</a>
+            <a href="#" class="text-[11px] text-blue-600 hover:underline">Privacy Notice</a>
+            <a href="#" class="text-[11px] text-blue-600 hover:underline">Help</a>
+        </div>
+        <p class="text-[11px] text-gray-500">© 1996-2026, Ir-Shop.com, Inc. or its affiliates</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="fixed top-4 right-4 z-[200] flex flex-col gap-2"></div>
+
+    <script>
+        // Constants
+        const USERS_KEY = 'ecom_users_v1';
+        const SESSION_KEY = 'ecom_session_v1';
+
+        // State
+        let currentMode = 'signin';
+
+        // DOM Elements
+        const authTitle = document.getElementById('auth-title');
+        const signinForm = document.getElementById('signin-form');
+        const signupForm = document.getElementById('signup-form');
+        const signinDivider = document.getElementById('signin-divider');
+        const signupRedirect = document.getElementById('signup-redirect');
+
+        // Initial Auth Check
+        window.onload = () => {
+            if (checkAuth()) {
+                window.location.href = 'dashboard.html';
+            }
+        };
+
+        // Core Functions
+        function getUsers() {
+            const users = localStorage.getItem(USERS_KEY);
+            return users ? JSON.parse(users) : [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+
+        function checkAuth() {
+            const session = localStorage.getItem(SESSION_KEY);
+            return session ? JSON.parse(session) : null;
+        }
+
+        function toggleMode(mode) {
+            currentMode = mode;
+            if (mode === 'signup') {
+                authTitle.textContent = 'Create account';
+                signinForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                signinDivider.classList.add('hidden');
+                signupRedirect.classList.add('hidden');
+            } else {
+                authTitle.textContent = 'Sign in';
+                signinForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                signinDivider.classList.remove('hidden');
+                signupRedirect.classList.remove('hidden');
+            }
+            // Clear errors
+            document.querySelectorAll('[id$="-error"]').forEach(el => el.classList.add('hidden'));
+        }
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById(`eye-icon-${id.split('-')[0]}`);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />';
+            } else {
+                input.type = 'password';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />';
+            }
+        }
+
+        // Password Strength Indicator
+        const signupPasswordInput = document.getElementById('signup-password');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthContainer = document.getElementById('password-strength');
+
+        signupPasswordInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (val.length > 0) {
+                strengthContainer.classList.remove('hidden');
+                let strength = 0;
+                if (val.length >= 6) strength += 25;
+                if (/[A-Z]/.test(val)) strength += 25;
+                if (/[0-9]/.test(val)) strength += 25;
+                if (/[^A-Za-z0-9]/.test(val)) strength += 25;
+
+                strengthBar.style.width = strength + '%';
+                if (strength <= 25) strengthBar.className = 'h-full bg-red-500 transition-all duration-300';
+                else if (strength <= 50) strengthBar.className = 'h-full bg-orange-500 transition-all duration-300';
+                else if (strength <= 75) strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300';
+                else strengthBar.className = 'h-full bg-green-500 transition-all duration-300';
+            } else {
+                strengthContainer.classList.add('hidden');
+            }
+        });
+
+        // Toast System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast px-4 py-3 rounded shadow-lg text-white text-sm flex items-center gap-2 transform translate-x-full opacity-0 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+            toast.innerHTML = `
+                ${type === 'success' ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'}
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            }, 10);
+
+            // Remove after 3s
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Sign Up Logic
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            const btn = document.getElementById('signup-btn');
+            const loader = document.getElementById('signup-loader');
+            const btnText = document.getElementById('signup-btn-text');
+
+            // Reset errors
+            document.querySelectorAll('[id^="signup-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
+
+            let hasError = false;
+
+            if (password.length < 6) {
+                document.getElementById('signup-password-error').textContent = 'Minimum 6 characters required';
+                document.getElementById('signup-password-error').classList.remove('hidden');
+                hasError = true;
+            }
+
+            if (password !== confirm) {
+                document.getElementById('signup-confirm-error').textContent = 'Passwords do not match';
+                document.getElementById('signup-confirm-error').classList.remove('hidden');
+                hasError = true;
+            }
+
+            const users = getUsers();
+            if (users.find(u => u.email === email)) {
+                document.getElementById('signup-email-error').textContent = 'Email already exists';
+                document.getElementById('signup-email-error').classList.remove('hidden');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Loading state
+            btn.disabled = true;
+            loader.classList.remove('hidden');
+            btnText.classList.add('opacity-50');
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const newUser = {
+                id: crypto.randomUUID(),
+                name,
+                email,
+                password, // In a real app, this would be hashed
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            saveUsers(users);
+
+            showToast('Account created successfully!');
+            
+            // Reset form and switch to sign in
+            signupForm.reset();
+            strengthContainer.classList.add('hidden');
+            btn.disabled = false;
+            loader.classList.add('hidden');
+            btnText.classList.remove('opacity-50');
+            
+            setTimeout(() => toggleMode('signin'), 1000);
+        });
+
+        // Sign In Logic
+        signinForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            const btn = document.getElementById('signin-btn');
+            const loader = document.getElementById('signin-loader');
+            const btnText = document.getElementById('signin-btn-text');
+
+            // Reset errors
+            document.querySelectorAll('[id^="signin-"][id$="-error"]').forEach(el => el.classList.add('hidden'));
+
+            // Loading state
+            btn.disabled = true;
+            loader.classList.remove('hidden');
+            btnText.classList.add('opacity-50');
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                btn.disabled = false;
+                loader.classList.add('hidden');
+                btnText.classList.remove('opacity-50');
+                showToast('Invalid email or password', 'error');
+                return;
+            }
+
+            // Save session
+            localStorage.setItem(SESSION_KEY, JSON.stringify({
+                userId: user.id,
+                email: user.email,
+                name: user.name
+            }));
+
+            showToast('Signing in...');
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 800);
+        });
+    </script>
+</body>
+</html>

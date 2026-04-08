@@ -1,6 +1,6 @@
-import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home } from "lucide-react";
+import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const Logo = () => (
@@ -36,6 +36,15 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
+  const [user, setUser] = useState<{ name: string } | null>(null);
+
+  useEffect(() => {
+    const session = localStorage.getItem('ecom_session_v1');
+    if (session) {
+      setUser(JSON.parse(session));
+    }
+  }, []);
+
   return (
     <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
       {/* Top Belt */}
@@ -60,6 +69,18 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
 
         {/* Tools */}
         <div className="flex items-center gap-1">
+          {/* Account Link */}
+          <a 
+            href={user ? "/dashboard.html" : "/auth.html"} 
+            className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex flex-col items-start transition-colors"
+          >
+            <span className="text-[11px] leading-tight">Account</span>
+            <div className="flex items-center gap-0.5">
+              <span className="font-bold text-sm">{user ? user.name.split(' ')[0] : 'Sign In'}</span>
+              <ChevronDown size={12} className="text-gray-400" />
+            </div>
+          </a>
+
           <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
             <div className="relative">
               <ShoppingCart size={32} className="text-[#FFD700]" />
@@ -181,16 +202,22 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 };
 
 export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('ecom_session_v1'));
+  }, []);
+
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around py-2 z-[60] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
       <Link to="/" className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
         <Home size={22} className="text-[#FFD700]" />
         <span className="text-[10px] font-medium">Home</span>
       </Link>
-      <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer">
+      <a href={isLoggedIn ? "/dashboard.html" : "/auth.html"} className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer">
         <User size={22} className="text-[#FFD700]" />
         <span className="text-[10px] font-medium">Account</span>
-      </div>
+      </a>
       <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer relative">
         <ShoppingCart size={22} className="text-[#FFD700]" />
         <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-4 h-4 flex items-center justify-center font-bold text-[8px]">0</span>
