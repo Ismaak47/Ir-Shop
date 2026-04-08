@@ -149,15 +149,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             className="fixed top-0 left-0 bottom-0 w-[280px] sm:w-[350px] bg-white z-[101] overflow-y-auto"
           >
             <div className="bg-irshop-teal text-white p-4 flex flex-col sticky top-0 z-10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3 cursor-pointer">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <User size={20} className="text-[#FFD700]" />
-                  </div>
-                  <span className="font-bold text-lg text-[#FFD700]">
-                    Account
-                  </span>
-                </div>
+              <div className="flex items-center justify-end">
                 <button 
                   onClick={onClose}
                   className="text-white hover:text-gray-300"
