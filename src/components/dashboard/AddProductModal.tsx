@@ -79,6 +79,11 @@ const [formData, setFormData] = useState({
     });
 
     // Reset form after successful add
+    const formElement = e.target as HTMLFormElement;
+    if (formElement && formElement.reset) {
+      formElement.reset();
+    }
+
     setFormData({
       name: "",
       price: "",

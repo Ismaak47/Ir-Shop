@@ -106,8 +106,8 @@ export default function DashboardPage() {
         </div>
       </main>
 
-      {/* Floating Add Button (Mobile) */}
-      {userProducts.length > 0 && (
+      {/* Floating Add Button (Mobile & Desktop when empty) */}
+      {(userProducts.length > 0 || true) && (
         <motion.button
           type="button"
           initial={{ scale: 0 }}
