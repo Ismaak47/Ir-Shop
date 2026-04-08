@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
+import { SafeImage } from "./components/SafeImage";
 
 const GameProductCard = ({ 
   title, 
@@ -13,7 +14,7 @@ const GameProductCard = ({
   delivery, 
   isBestSeller = false,
   isOverallPick = false,
-  key
+  priority = false
 }: { 
   title: string, 
   img: string, 
@@ -23,9 +24,10 @@ const GameProductCard = ({
   delivery: string,
   isBestSeller?: boolean,
   isOverallPick?: boolean,
-  key?: number
+  priority?: boolean,
+  key?: any
 }) => (
-  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
+  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative">
     {isBestSeller && (
       <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
         Best Seller
@@ -38,7 +40,12 @@ const GameProductCard = ({
     )}
     
     <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
-      <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" loading="lazy" />
+      <SafeImage 
+        src={img} 
+        alt={title} 
+        className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" 
+        loading={priority ? "eager" : "lazy"}
+      />
     </div>
     
     <div className="flex-1 flex flex-col">
@@ -741,6 +748,7 @@ export default function GamesPage() {
                   delivery={product.delivery}
                   isBestSeller={product.isBestSeller}
                   isOverallPick={product.isOverallPick}
+                  priority={index < 4}
                 />
               ))}
             </div>

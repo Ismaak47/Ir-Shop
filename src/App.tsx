@@ -5,21 +5,21 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { SafeImage } from "./components/SafeImage";
 
 // Reusable Components
-const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string }) => (
+const QuadCard = ({ title, items, linkText, linkHref = "#", priority = false }: { title: string, items: { img: string, label: string }[], linkText: string, linkHref?: string, priority?: boolean }) => (
   <div className="bg-white p-5 flex flex-col h-full shadow-sm">
     <h2 className="text-xl font-bold mb-3 line-clamp-2 h-14">{title}</h2>
     <div className="grid grid-cols-2 gap-x-4 gap-y-6 flex-1 mb-4">
       {items.map((item, i) => (
         <div key={i} className="flex flex-col gap-1 cursor-pointer group">
           <div className="overflow-hidden aspect-square">
-            <img 
+            <SafeImage 
               src={item.img} 
               alt={item.label} 
-              className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
-              referrerPolicy="no-referrer" 
-              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+              loading={priority ? "eager" : "lazy"}
             />
           </div>
           <span className="text-xs text-gray-700 line-clamp-1">{item.label}</span>
@@ -30,16 +30,15 @@ const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, i
   </div>
 );
 
-const SingleCard = ({ title, img, linkText, linkHref = "#" }: { title: string, img: string, linkText: string, linkHref?: string }) => (
+const SingleCard = ({ title, img, linkText, linkHref = "#", priority = false }: { title: string, img: string, linkText: string, linkHref?: string, priority?: boolean }) => (
   <div className="bg-white p-5 flex flex-col h-full shadow-sm">
     <h2 className="text-xl font-bold mb-3 line-clamp-2 h-14">{title}</h2>
     <div className="flex-1 overflow-hidden mb-4 cursor-pointer group">
-      <img 
+      <SafeImage 
         src={img} 
         alt={title} 
-        className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
-        referrerPolicy="no-referrer" 
-        loading="lazy"
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+        loading={priority ? "eager" : "lazy"}
       />
     </div>
     <Link to={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</Link>
@@ -78,7 +77,7 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
         >
           {items.map((img, i) => (
             <div key={i} className="flex-shrink-0 w-[200px] aspect-[3/4] cursor-pointer hover:opacity-90 transition-opacity">
-              <img src={img} alt={`Product ${i}`} className="w-full h-full object-contain" referrerPolicy="no-referrer" loading="lazy" />
+              <SafeImage src={img} alt={`Product ${i}`} className="w-full h-full object-contain" loading="lazy" />
             </div>
           ))}
         </div>
@@ -194,20 +193,23 @@ function HomePage() {
       <main className="flex-1">
         {/* Hero Section */}
         <div className="relative max-w-[1500px] mx-auto">
-          <div className="w-full h-[300px] md:h-[600px] overflow-hidden relative">
+          <div className="w-full h-[300px] md:h-[600px] overflow-hidden relative bg-gray-200">
             <AnimatePresence mode="wait">
-              <motion.img
+              <motion.div
                 key={heroIndex}
-                src={heroImages[heroIndex]}
-                alt={`Hero banner ${heroIndex + 1}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-                loading="eager"
-              />
+                className="w-full h-full"
+              >
+                <SafeImage
+                  src={heroImages[heroIndex]}
+                  alt={`Hero banner ${heroIndex + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+              </motion.div>
             </AnimatePresence>
             {/* Gradient overlay to blend with background */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#e3e6e6]"></div>
@@ -222,6 +224,7 @@ function HomePage() {
                 img="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/Stores-Gaming/FinalGraphics/Fuji_Gaming_store_Dashboard_card_1x_EN._SY600_CB564799420_.jpg" 
                 linkText="Shop gaming" 
                 linkHref="/games"
+                priority={true}
               />
               <QuadCard 
                 title="New home arrivals under $50" 
@@ -232,6 +235,7 @@ function HomePage() {
                   { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_318_HP_NewArrivals_QuadCard_D_04_1x._SY300_CB555960040_.jpg", label: "Bedding & Bath" },
                 ]} 
                 linkText="Shop the latest from Home" 
+                priority={true}
               />
               <QuadCard 
                 title="Easy updates for elevated spaces" 
@@ -242,6 +246,7 @@ function HomePage() {
                   { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_Hallway_D_Quad_186x116._SY300_CB594237035_.jpg", label: "Wallpaper & paint" },
                 ]} 
                 linkText="Shop home products" 
+                priority={true}
               />
               <QuadCard 
                 title="Find gifts for Mom" 
@@ -252,6 +257,7 @@ function HomePage() {
                   { img: "https://images-na.ssl-images-amazon.com/images/G/01/melody/uploads/a251f729-bbcd-402f-8576-dcbb89a22978_MuseDesktop372X232_1X/AIS_MDay26_QC_Exports_MDay26_07_Muse_Prod_melody_homepage_372x232_1X._SY300_CB784418325_.jpg", label: "Handbags" },
                 ]} 
                 linkText="Shop Mother's Day gifts" 
+                priority={true}
               />
             </div>
 
