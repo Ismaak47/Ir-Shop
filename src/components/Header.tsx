@@ -130,7 +130,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     <User size={20} className="text-[#FFD700]" />
                   </div>
                   <span className="font-bold text-lg text-[#FFD700]">
-                    Hello, Sign In to Account
+                    Account
                   </span>
                 </div>
                 <button 
