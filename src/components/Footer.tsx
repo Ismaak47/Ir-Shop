@@ -8,9 +8,9 @@ export const Footer = () => {
   return (
     <>
       {/* Back to Top */}
-        <button 
+      <button 
         onClick={scrollToTop}
-        className="bg-irshop-teal hover:bg-irshop-teal-dark text-white py-4 text-center w-full transition-colors font-medium"
+        className="bg-[#37475a] hover:bg-[#485769] text-white py-4 text-center w-full transition-colors font-medium"
       >
         Back to top
       </button>
