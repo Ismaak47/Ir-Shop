@@ -197,7 +197,7 @@ const [formData, setFormData] = useState({
             </AnimatePresence>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-4 py-4 w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <form id="addProductForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-4 py-4 w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -353,12 +353,7 @@ className={`w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:rin
               >
                 Cancel
               </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-4 py-2 text-sm bg-[#D4AF37] hover:bg-[#B8932E] text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2 flex-1 sm:flex-none"
-              >
+              <button type="submit" disabled={isSubmitting} className="px-4 py-2 text-sm bg-[#D4AF37] hover:bg-[#B8932E] text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2 flex-1 sm:flex-none">
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

@@ -31,6 +31,7 @@ export default function DashboardTopbar({
           {tabs.map(tab => (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
                 activeTab === tab.id
@@ -59,6 +60,7 @@ export default function DashboardTopbar({
 
           {/* Filter Button (Mobile) */}
           <button
+            type="button"
             onClick={onToggleSidebar}
             className="lg:hidden p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >

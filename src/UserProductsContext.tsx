@@ -29,6 +29,7 @@ const UserProductsContext = createContext<UserProductsContextType | undefined>(u
 
 export const UserProductsProvider = ({ children }: { children: ReactNode }) => {
   const [userProducts, setUserProducts] = useState<UserProduct[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -37,14 +38,18 @@ export const UserProductsProvider = ({ children }: { children: ReactNode }) => {
       if (stored) {
         setUserProducts(JSON.parse(stored));
       }
+      setIsInitialized(true);
+    } else {
+      setUserProducts([]);
+      setIsInitialized(false);
     }
   }, [user]);
 
   useEffect(() => {
-    if (user && userProducts.length >= 0) {
+    if (user && isInitialized) {
       localStorage.setItem(`userProducts_${user.email}`, JSON.stringify(userProducts));
     }
-  }, [userProducts, user]);
+  }, [userProducts, user, isInitialized]);
 
   const addProduct = (product: Omit<UserProduct, "id" | "userId" | "createdAt" | "rating" | "reviews" | "delivery" | "isBestSeller" | "isOverallPick">) => {
     if (!user) return;
