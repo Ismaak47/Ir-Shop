@@ -77,7 +77,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
             onClick={onMenuOpen}
             className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
           >
-            <Menu size={20} />
+            <Menu size={20} className="text-[#FFD700]" />
             All
           </div>
           <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
@@ -184,7 +184,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around py-2 z-[60] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
       <Link to="/" className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
-        <Home size={22} />
+        <Home size={22} className="text-[#FFD700]" />
         <span className="text-[10px] font-medium">Home</span>
       </Link>
       <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer">
@@ -197,7 +197,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
         <span className="text-[10px] font-medium">Cart</span>
       </div>
       <button onClick={onMenuOpen} className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors">
-        <Menu size={22} />
+        <Menu size={22} className="text-[#FFD700]" />
         <span className="text-[10px] font-medium">Menu</span>
       </button>
     </div>
