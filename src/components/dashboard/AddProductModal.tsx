@@ -94,7 +94,10 @@ const [formData, setFormData] = useState({
 
     setTimeout(() => {
       setShowSuccess(false);
-      onClose();
+      localStorage.setItem('guest_inventory_storage', localStorage.getItem('guest_inventory_storage') || '[]');
+      setTimeout(() => {
+        onClose();
+      }, 100);
     }, 2000);
   };
 

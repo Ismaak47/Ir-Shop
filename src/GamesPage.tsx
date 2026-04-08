@@ -89,9 +89,13 @@ export default function GamesPage() {
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const itemsPerPage = 12;
-  const { products } = useProducts();
+  const { products, getUserProducts } = useProducts();
+  const userProducts = getUserProducts();
+  const allGamingProducts = [...userProducts, ...products].filter((product, index, self) => 
+    self.findIndex(p => p.id === product.id) === index
+  );
 
-  const gamingProducts = products.filter((product) => {
+  const gamingProducts = allGamingProducts.filter((product) => {
     const normalizedCategory = product.category?.toLowerCase();
     return normalizedCategory === "gaming" || normalizedCategory === "games";
   });

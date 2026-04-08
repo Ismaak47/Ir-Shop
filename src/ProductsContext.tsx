@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { useAuth } from "./AuthContext";
 import defaultProductsData from "./data/products.json";
 
-const USER_PRODUCTS_STORAGE_KEY = "irshop:userProducts:v1";
+const USER_PRODUCTS_STORAGE_KEY = "guest_inventory_storage";
 
 export interface Product {
   id: string;
@@ -101,7 +101,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       isBestSeller: false,
       isOverallPick: false,
       isUserProduct: true,
-      userId: user?.email || "anonymous",
+      userId: "guest",
       createdAt: new Date().toISOString(),
       images: Array.isArray(productData.images)
         ? productData.images.filter(Boolean)
@@ -165,10 +165,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getUserProducts = (): Product[] => {
-    if (!user) {
-      return products.filter((product) => product.isUserProduct && product.userId === "anonymous");
-    }
-    return products.filter((product) => product.isUserProduct && product.userId === user.email);
+    return products.filter((product) => product.isUserProduct);
   };
 
   const getProductById = (id: string): Product | undefined => {
