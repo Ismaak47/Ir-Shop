@@ -19,7 +19,6 @@ const QuadCard = ({ title, items, linkText, linkHref = "#" }: { title: string, i
               alt={item.label} 
               className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
               referrerPolicy="no-referrer" 
-              loading="lazy"
             />
           </div>
           <span className="text-xs text-gray-700 line-clamp-1">{item.label}</span>
@@ -39,7 +38,6 @@ const SingleCard = ({ title, img, linkText, linkHref = "#" }: { title: string, i
         alt={title} 
         className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" 
         referrerPolicy="no-referrer" 
-        loading="lazy"
       />
     </div>
     <Link to={linkHref} className="text-blue-600 hover:text-orange-600 hover:underline text-sm font-medium mt-auto">{linkText}</Link>
@@ -78,7 +76,7 @@ const Shoveler = ({ title, items }: { title: string, items: string[] }) => {
         >
           {items.map((img, i) => (
             <div key={i} className="flex-shrink-0 w-[200px] aspect-[3/4] cursor-pointer hover:opacity-90 transition-opacity">
-              <img src={img} alt={`Product ${i}`} className="w-full h-full object-contain" referrerPolicy="no-referrer" loading="lazy" />
+              <img src={img} alt={`Product ${i}`} className="w-full h-full object-contain" referrerPolicy="no-referrer" />
             </div>
           ))}
         </div>
@@ -138,10 +136,10 @@ function HomePage() {
 
   const heroImages = [
     "https://m.media-amazon.com/images/I/61Yx5-N155L._SX1500_.jpg",
-    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg",
-    "https://i.ebayimg.com/images/g/9nwAAOSwfX5n1EXY/s-l1600.jpg",
-    "https://i.ebayimg.com/images/g/t1cAAeSwjwRpusMM/s-l1600.webp",
-    "https://ke.jumia.is/cms/2026/W03/KE_ONS_FlashSales_Generic_1225_S.jpg"
+    "https://m.media-amazon.com/images/I/71U-9u4S-XL._SX1500_.jpg",
+    "https://m.media-amazon.com/images/I/81Kq84S20WL._SX1500_.jpg",
+    "https://m.media-amazon.com/images/I/61zAjw4bqPL._SX1500_.jpg",
+    "https://m.media-amazon.com/images/I/71Ie3JXGfVL._SX1500_.jpg"
   ];
 
   useEffect(() => {
@@ -206,7 +204,6 @@ function HomePage() {
                 transition={{ duration: 0.5 }}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
-                loading="eager"
               />
             </AnimatePresence>
             {/* Gradient overlay to blend with background */}
@@ -226,30 +223,30 @@ function HomePage() {
               <QuadCard 
                 title="New home arrivals under $50" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_315_HP_NewArrivals_QuadCard_D_01_1x._SY300_CB555960040_.jpg", label: "Kitchen & Dining" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_316_HP_NewArrivals_QuadCard_D_02_1x._SY300_CB555960040_.jpg", label: "Home Improvement" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_317_HP_NewArrivals_QuadCard_D_03_1x._SY300_CB555960040_.jpg", label: "Décor" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_318_HP_NewArrivals_QuadCard_D_04_1x._SY300_CB555960040_.jpg", label: "Bedding & Bath" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_315_HP_NewArrivals_QuadCard_D_01_1x._SY600_CB555960040_.jpg", label: "Kitchen & Dining" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_316_HP_NewArrivals_QuadCard_D_02_1x._SY600_CB555960040_.jpg", label: "Home Improvement" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_317_HP_NewArrivals_QuadCard_D_03_1x._SY600_CB555960040_.jpg", label: "Décor" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/HomeLifestyle/HomeSummerFlip/Homepage/QuadCards/Home_Flip_Summer_2024_318_HP_NewArrivals_QuadCard_D_04_1x._SY600_CB555960040_.jpg", label: "Bedding & Bath" },
                 ]} 
                 linkText="Shop the latest from Home" 
               />
               <QuadCard 
                 title="Easy updates for elevated spaces" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_LaundryLuxe_D_Quad_186x116._SY300_CB594237035_.jpg", label: "Baskets & hampers" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_Kitchen_D_Quad_186x116._SY300_CB594237035_.jpg", label: "Hardware" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_AccentFurniture_D_Quad_186x116._SY300_CB594237035_.jpg", label: "Accent furniture" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_Hallway_D_Quad_186x116._SY300_CB594237035_.jpg", label: "Wallpaper & paint" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_LaundryLuxe_D_Quad_186x116._SY600_CB594237035_.jpg", label: "Baskets & hampers" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_Kitchen_D_Quad_186x116._SY600_CB594237035_.jpg", label: "Hardware" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_AccentFurniture_D_Quad_186x116._SY600_CB594237035_.jpg", label: "Accent furniture" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/img18/home/2023/Q2/Homepage/2023Q2_GW_EE_Hallway_D_Quad_186x116._SY600_CB594237035_.jpg", label: "Wallpaper & paint" },
                 ]} 
                 linkText="Shop home products" 
               />
               <QuadCard 
                 title="Find gifts for Mom" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/melody/uploads/df3cb7be-6ce1-47db-8526-7b703e0981bc_MuseDesktop372X232_1X/AIS_MDay26_QC_Exports_MDay26_09_Muse_Prod_melody_homepage_372x232_1X._SY300_CB784418306_.jpg", label: "Apparel" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/melody/uploads/8de64d94-c889-405e-b822-129dedae2732_MuseDesktop372X232_1X/AIS_MDay26_QC_Exports_MDay26_03_Muse_Prod_melody_homepage_372x232_1X._SY300_CB784418335_.jpg", label: "Shoes" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/melody/uploads/374dfcfa-1630-4d89-ad31-7f7cabdee889_MuseDesktop372X232_1X/AIS_MDay26_QC_Exports_MDay26_05_Muse_Prod_melody_homepage_372x232_1X._SY300_CB784418326_.jpg", label: "Jewelry" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/melody/uploads/a251f729-bbcd-402f-8576-dcbb89a22978_MuseDesktop372X232_1X/AIS_MDay26_QC_Exports_MDay26_07_Muse_Prod_melody_homepage_372x232_1X._SY300_CB784418325_.jpg", label: "Handbags" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/WomenWatches_1x._SY600_CB564394432_.jpg", label: "Watches" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Handbags_1x._SY600_CB566100767_.jpg", label: "Handbags" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Make-up._SY600_CB558654384_.jpg", label: "Beauty" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/WomenWatches_1x._SY600_CB564394432_.jpg", label: "Jewelry" },
                 ]} 
                 linkText="Shop Mother's Day gifts" 
               />
@@ -259,14 +256,14 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Clothing, Shoes & Jewelry" 
               items={[
-                "https://m.media-amazon.com/images/I/81GbVZK+4yL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61C-skMeafL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/81TR8F0H-FL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71IFE6W6THL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71hiGloiqJL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/51rkKPruYvL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/613+lFVMnEL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61xO2Bu9oJL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81GbVZK+4yL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61C-skMeafL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81TR8F0H-FL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71IFE6W6THL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71hiGloiqJL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/51rkKPruYvL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/613+lFVMnEL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61xO2Bu9oJL._AC_SY600_.jpg",
               ]} 
             />
 
@@ -274,14 +271,14 @@ function HomePage() {
             <Shoveler 
               title="International top sellers in Kitchen" 
               items={[
-                "https://m.media-amazon.com/images/I/411VuaxGFsL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/715a83Wv22L._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71EvhT3odHL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71wUZfLtoPL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/719XNYJEcZL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61-5sfLKOgL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61+6E0F49gL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/41lEE-pCRgL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/411VuaxGFsL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/715a83Wv22L._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71EvhT3odHL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71wUZfLtoPL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/719XNYJEcZL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61-5sfLKOgL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61+6E0F49gL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/41lEE-pCRgL._AC_SY600_.jpg",
               ]} 
             />
 
@@ -290,40 +287,40 @@ function HomePage() {
               <QuadCard 
                 title="Have more fun with family" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Playground_sets._SY300_CB558654384_.jpg", label: "Outdoor Play Sets" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_STEM_toys_or_learning_toys._SY300_CB558654384_.jpg", label: "Learning Toys" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Action_figure._SY300_CB558654384_.jpg", label: "Action Figures" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Pretend_Play_Toys._SY300_CB558654384_.jpg", label: "Pretend Play Toys" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Playground_sets._SY600_CB558654384_.jpg", label: "Outdoor Play Sets" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_STEM_toys_or_learning_toys._SY600_CB558654384_.jpg", label: "Learning Toys" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Action_figure._SY600_CB558654384_.jpg", label: "Action Figures" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Pretend_Play_Toys._SY600_CB558654384_.jpg", label: "Pretend Play Toys" },
                 ]} 
                 linkText="See more" 
               />
               <QuadCard 
                 title="Gear up to get fit" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Clothing._SY300_CB549022351_.jpg", label: "Clothing" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Trackers._SY300_CB549022351_.jpg", label: "Trackers" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Equipment._SY300_CB549022351_.jpg", label: "Equipment" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Deals_Fitness._SY300_CB549022351_.jpg", label: "Deals" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Clothing._SY600_CB549022351_.jpg", label: "Clothing" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Trackers._SY600_CB549022351_.jpg", label: "Trackers" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Equipment._SY600_CB549022351_.jpg", label: "Equipment" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Deals_Fitness._SY600_CB549022351_.jpg", label: "Deals" },
                 ]} 
                 linkText="Discover more" 
               />
               <QuadCard 
                 title="Most-loved travel essentials" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Backpack_1x._SY300_CB566100767_.jpg", label: "Backpacks" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/TravelBag_1x._SY300_CB566100767_.jpg", label: "Suitcases" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Accessories_1x._SY300_CB566100767_.jpg", label: "Accessories" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Handbags_1x._SY300_CB566100767_.jpg", label: "Handbags" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Backpack_1x._SY600_CB566100767_.jpg", label: "Backpacks" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/TravelBag_1x._SY600_CB566100767_.jpg", label: "Suitcases" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Accessories_1x._SY600_CB566100767_.jpg", label: "Accessories" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/Handbags_1x._SY600_CB566100767_.jpg", label: "Handbags" },
                 ]} 
                 linkText="Discover more" 
               />
               <QuadCard 
                 title="Level up your gaming" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_NW_GamingWeek_PC_v2_1x._SY300_CB558844445_.jpg", label: "PC gaming" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_NE_GamingWeek_Xbox_v2_1x._SY300_CB558844445_.jpg", label: "Xbox" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_SW_GamingWeek_Sony_v2_1x._SY300_CB558844445_.jpg", label: "PlayStation" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_SE_GamingWeek_Nintendo_v2_1x._SY300_CB558844445_.jpg", label: "Nintendo Switch" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_NW_GamingWeek_PC_v2_1x._SY600_CB558844445_.jpg", label: "PC gaming" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_NE_GamingWeek_Xbox_v2_1x._SY600_CB558844445_.jpg", label: "Xbox" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_SW_GamingWeek_Sony_v2_1x._SY600_CB558844445_.jpg", label: "PlayStation" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/DiscoTec/2024/CE/GamingWeek24/Homepage/DQC/CE24_SUM_GW_DQC_SE_GamingWeek_Nintendo_v2_1x._SY600_CB558844445_.jpg", label: "Nintendo Switch" },
                 ]} 
                 linkText="Shop the latest in gaming" 
               />
@@ -333,13 +330,13 @@ function HomePage() {
             <Shoveler 
               title="Top picks for Tanzania, United Republic of" 
               items={[
-                "https://m.media-amazon.com/images/I/51lP01--ejL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61TcjJ4qDZL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/714VRmqcVmL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61qCeGkiTXL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/817WrflosJL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/81Lg7Hp2Y0L._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/81i5KcFKysL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/51lP01--ejL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61TcjJ4qDZL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/714VRmqcVmL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61qCeGkiTXL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/817WrflosJL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81Lg7Hp2Y0L._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81i5KcFKysL._AC_SY600_.jpg",
               ]} 
             />
 
@@ -347,13 +344,13 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Computers & Accessories" 
               items={[
-                "https://m.media-amazon.com/images/I/71nVIiWEcgL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71K30PIVQmL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71CRaMOcDvL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71K00r5z4iL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/81Q9vMNUOyL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71nVIiWEcgL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71K30PIVQmL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71CRaMOcDvL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71K00r5z4iL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81Q9vMNUOyL._AC_SY600_.jpg",
               ]} 
             />
 
@@ -362,40 +359,40 @@ function HomePage() {
               <QuadCard 
                 title="Level up your beauty routine" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Make-up._SY300_CB558654384_.jpg", label: "Makeup" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Brushes._SY300_CB558654384_.jpg", label: "Brushes" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Sponges._SY300_CB558654384_.jpg", label: "Sponges" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Mirrors._SY300_CB558654384_.jpg", label: "Mirrors" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Make-up._SY600_CB558654384_.jpg", label: "Makeup" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Brushes._SY600_CB558654384_.jpg", label: "Brushes" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Sponges._SY600_CB558654384_.jpg", label: "Sponges" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Mirrors._SY600_CB558654384_.jpg", label: "Mirrors" },
                 ]} 
                 linkText="See more" 
               />
               <QuadCard 
                 title="Level up your PC here" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Laptop._SY300_CB549022351_.jpg", label: "Laptops" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_PC._SY300_CB549022351_.jpg", label: "PCs" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Hard_Drives._SY300_CB549022351_.jpg", label: "Hard Drives" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Monitors._SY300_CB549022351_.jpg", label: "Monitors" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Laptop._SY600_CB549022351_.jpg", label: "Laptops" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_PC._SY600_CB549022351_.jpg", label: "PCs" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Hard_Drives._SY600_CB549022351_.jpg", label: "Hard Drives" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2025/Q1DefectReduction/Fuji_Defect_Reduction_1x_Monitors._SY600_CB549022351_.jpg", label: "Monitors" },
                 ]} 
                 linkText="Discover more" 
               />
               <QuadCard 
                 title="Most-loved watches" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/WomenWatches_1x._SY300_CB564394432_.jpg", label: "Women" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/MenWatches_1x._SY300_CB564394432_.jpg", label: "Men" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/GirlWatches_1x._SY300_CB564394432_.jpg", label: "Girls" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/BoyWatches_1x._SY300_CB564394432_.jpg", label: "Boys" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/WomenWatches_1x._SY600_CB564394432_.jpg", label: "Women" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/MenWatches_1x._SY600_CB564394432_.jpg", label: "Men" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/GirlWatches_1x._SY600_CB564394432_.jpg", label: "Girls" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Aug/BoyWatches_1x._SY600_CB564394432_.jpg", label: "Boys" },
                 ]} 
                 linkText="Discover more" 
               />
               <QuadCard 
                 title="Gaming merchandise" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Apparel_1x._SY300_CB667159060_.jpg", label: "Apparel" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Hat_1x._SY300_CB667159060_.jpg", label: "Hats" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Figure_1x._SY300_CB667159060_.jpg", label: "Action figures" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Mug_1x._SY300_CB667159063_.jpg", label: "Mugs" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Apparel_1x._SY600_CB667159060_.jpg", label: "Apparel" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Hat_1x._SY600_CB667159060_.jpg", label: "Hats" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Figure_1x._SY600_CB667159060_.jpg", label: "Action figures" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2021/June/Fuji_Quad_Mug_1x._SY600_CB667159063_.jpg", label: "Mugs" },
                 ]} 
                 linkText="See more" 
               />
@@ -405,13 +402,13 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Kitchen & Dining" 
               items={[
-                "https://m.media-amazon.com/images/I/81Ubo+JAyxL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/61sS-XIvEXL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/81GimKZfzDL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71v-pTar1AL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71Y4-ItMNBL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/718Tr1uB1OL._AC_SY400_.jpg",
-                "https://m.media-amazon.com/images/I/71cHyyOt7YL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81Ubo+JAyxL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/61sS-XIvEXL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81GimKZfzDL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71v-pTar1AL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71Y4-ItMNBL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/718Tr1uB1OL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71cHyyOt7YL._AC_SY600_.jpg",
               ]} 
             />
 
@@ -419,63 +416,73 @@ function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
               <div className="lg:col-span-1">
                 <QuadCard 
-                  title="Get ready for Easter" 
+                  title="Get ready for Spring" 
                   items={[
-                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2026/Easter_26/AIS_Easter_Muse_QuadCards_2026_Exports_Easter26_05_Muse_Prod_melody_homepage_372x232_1X._SY300_CB786813666_.jpg", label: "Easter bunny" },
-                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2026/Easter_26/AIS_Easter_Muse_QuadCards_2026_Exports_Easter26_07_Muse_Prod_melody_homepage_372x232_1X._SY300_CB786813666_.jpg", label: "Easter baskets" },
-                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2026/Easter_26/AIS_Easter_Muse_QuadCards_2026_Exports_Easter26_15_Muse_Prod_melody_homepage_372x232_1X._SY300_CB786813666_.jpg", label: "Easter decor" },
-                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2026/Easter_26/AIS_Easter_Muse_QuadCards_2026_Exports_Easter26_13_Muse_Prod_melody_homepage_372x232_1X._SY300_CB786813666_.jpg", label: "Easter baking" },
+                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Kitchen._SY600_CB558654384_.jpg", label: "Kitchen" },
+                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Home_decor._SY600_CB558654384_.jpg", label: "Home Decor" },
+                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/ExerciseAndFitness_1X._SY600_CB563192628_.jpg", label: "Fitness" },
+                    { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Cycling_1X._SY600_CB563192628_.jpg", label: "Outdoor" },
                   ]} 
-                  linkText="Shop for Easter" 
+                  linkText="Shop Spring arrivals" 
                 />
               </div>
               <div className="lg:col-span-3">
                 <Shoveler 
                   title="Best Sellers in Beauty & Personal Care" 
                   items={[
-                    "https://m.media-amazon.com/images/I/51ubxqzNGIL._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/61t087PwecL._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/71eFYqXRGoL._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/61occWCJN-L._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/71MQo8pHmBL._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/61V2Tp2pJKL._AC_SY400_.jpg",
-                    "https://m.media-amazon.com/images/I/61aDluwKSxL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/51ubxqzNGIL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/61t087PwecL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/71eFYqXRGoL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/61occWCJN-L._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/71MQo8pHmBL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/61V2Tp2pJKL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/61aDluwKSxL._AC_SY600_.jpg",
                   ]} 
                 />
               </div>
             </div>
 
-            {/* Row 5: BTF Grids 10-12 */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+            {/* Row 5: BTF Grids 10-13 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
               <QuadCard 
                 title="Finds for Home" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Kitchen._SY300_CB558654384_.jpg", label: "Kitchen" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Home_decor._SY300_CB558654384_.jpg", label: "Home Decor" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Dining._SY300_CB558654384_.jpg", label: "Dining" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Smart_home._SY300_CB558654384_.jpg", label: "Smart Home" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Kitchen._SY600_CB558654384_.jpg", label: "Kitchen" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Home_decor._SY600_CB558654384_.jpg", label: "Home Decor" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Dining._SY600_CB558654384_.jpg", label: "Dining" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Smart_home._SY600_CB558654384_.jpg", label: "Smart Home" },
                 ]} 
                 linkText="See more" 
               />
               <QuadCard 
                 title="Score the top PCs & Accessories" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Desktops._SY300_CB558654384_.jpg", label: "Desktops" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_laptop._SY300_CB558654384_.jpg", label: "Laptops" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Hard_Drives._SY300_CB558654384_.jpg", label: "Hard Drives" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Accessories._SY300_CB558654384_.jpg", label: "PC Accessories" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Desktops._SY600_CB558654384_.jpg", label: "Desktops" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_laptop._SY600_CB558654384_.jpg", label: "Laptops" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Hard_Drives._SY600_CB558654384_.jpg", label: "Hard Drives" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/DskBTFQuadCards/Fuji_BTF_Quad_Cards_1x_Accessories._SY600_CB558654384_.jpg", label: "PC Accessories" },
                 ]} 
                 linkText="See more" 
               />
               <QuadCard 
                 title="Explore more in Sports" 
                 items={[
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Cycling_1X._SY300_CB563192628_.jpg", label: "Cycling" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Running_1X._SY300_CB563192628_.jpg", label: "Running" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/ExerciseAndFitness_1X._SY300_CB563192628_.jpg", label: "Exercise & Fitness" },
-                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Golf_1X._SY300_CB563192628_.jpg", label: "Golf" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Cycling_1X._SY600_CB563192628_.jpg", label: "Cycling" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Running_1X._SY600_CB563192628_.jpg", label: "Running" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/ExerciseAndFitness_1X._SY600_CB563192628_.jpg", label: "Exercise & Fitness" },
+                  { img: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/BAU2024Sept/Golf_1X._SY600_CB563192628_.jpg", label: "Golf" },
                 ]} 
                 linkText="Explore more" 
+              />
+              <QuadCard 
+                title="Shop deals in Electronics" 
+                items={[
+                  { img: "https://m.media-amazon.com/images/I/71nVIiWEcgL._AC_SY600_.jpg", label: "Laptops" },
+                  { img: "https://m.media-amazon.com/images/I/71K30PIVQmL._AC_SY600_.jpg", label: "Tablets" },
+                  { img: "https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY600_.jpg", label: "Monitors" },
+                  { img: "https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY600_.jpg", label: "Accessories" },
+                ]} 
+                linkText="See all deals" 
               />
             </div>
 
@@ -484,14 +491,14 @@ function HomePage() {
               <Shoveler 
                 title="Best Sellers in Books" 
                 items={[
-                  "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY400_.jpg",
-                  "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY600_.jpg",
                 ]} 
               />
             </div>

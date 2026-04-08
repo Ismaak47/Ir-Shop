@@ -62,7 +62,7 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
         <div className="flex items-center gap-1">
           <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
             <div className="relative">
-              <ShoppingCart size={32} />
+              <ShoppingCart size={32} className="text-[#FFD700]" />
               <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">0</span>
             </div>
             <span className="font-bold mt-3 hidden md:inline">Cart</span>
@@ -127,10 +127,10 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 cursor-pointer">
                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <User size={20} className="text-irshop-teal" />
+                    <User size={20} className="text-[#FFD700]" />
                   </div>
                   <span className="font-bold text-lg text-[#FFD700]">
-                    Hello, Sign In
+                    Hello, Sign In to Account
                   </span>
                 </div>
                 <button 
@@ -188,11 +188,11 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
         <span className="text-[10px] font-medium">Home</span>
       </Link>
       <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer">
-        <User size={22} />
+        <User size={22} className="text-[#FFD700]" />
         <span className="text-[10px] font-medium">Account</span>
       </div>
       <div className="flex flex-col items-center gap-1 text-gray-600 hover:text-irshop-teal transition-colors cursor-pointer relative">
-        <ShoppingCart size={22} />
+        <ShoppingCart size={22} className="text-[#FFD700]" />
         <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-4 h-4 flex items-center justify-center font-bold text-[8px]">0</span>
         <span className="text-[10px] font-medium">Cart</span>
       </div>
