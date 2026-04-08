@@ -8,12 +8,14 @@ export const Footer = () => {
   return (
     <>
       {/* Back to Top */}
-      <button 
-        onClick={scrollToTop}
-        className="bg-[#37475a] hover:bg-[#485769] text-white py-4 text-center w-full transition-colors font-medium"
-      >
-        Back to top
-      </button>
+      <div className="bg-irshop-teal w-full py-4 flex justify-center border-b border-white/10">
+        <button 
+          onClick={scrollToTop}
+          className="text-white py-2 px-12 border-2 border-white/40 hover:border-white hover:bg-white/10 rounded-md transition-all font-medium"
+        >
+          Back to top
+        </button>
+      </div>
 
       {/* Modern Footer */}
       <footer className="irshop-footer">
