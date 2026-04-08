@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { useAuth } from "./AuthContext";
 import defaultProductsData from "./data/products.json";
 
-const USER_PRODUCTS_STORAGE_KEY = "guest_inventory_storage";
+const USER_PRODUCTS_STORAGE_KEY = "demo_inventory_storage";
 
 export interface Product {
   id: string;

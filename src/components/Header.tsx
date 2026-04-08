@@ -111,6 +111,20 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                       </>
                     ) : (
                       <>
+                        <div className="px-3 py-2 border-b border-gray-100 mb-1">
+                          <p className="text-xs text-gray-500">Welcome</p>
+                          <p className="text-sm font-semibold text-gray-900 truncate">Guest User</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setShowAccountDropdown(false);
+                            navigate('/dashboard');
+                          }}
+                          className="w-full px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2 mb-2"
+                        >
+                          <LayoutDashboard size={16} />
+                          My Dashboard
+                        </button>
                         <Link 
                           to="/login"
                           className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
@@ -281,11 +295,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   const navigate = useNavigate();
 
   const handleAccountClick = () => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    } else {
-      navigate('/login');
-    }
+    navigate('/dashboard');
   };
 
   return (

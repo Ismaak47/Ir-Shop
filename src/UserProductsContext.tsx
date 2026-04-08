@@ -27,37 +27,31 @@ interface UserProductsContextType {
 
 const UserProductsContext = createContext<UserProductsContextType | undefined>(undefined);
 
+const USER_PRODUCTS_STORAGE_KEY = "demo_inventory_storage";
+
 export const UserProductsProvider = ({ children }: { children: ReactNode }) => {
   const [userProducts, setUserProducts] = useState<UserProduct[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
-  const { user } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      const stored = localStorage.getItem(`userProducts_${user.email}`);
-      if (stored) {
-        setUserProducts(JSON.parse(stored));
-      }
-      setIsInitialized(true);
-    } else {
-      setUserProducts([]);
-      setIsInitialized(false);
+    const stored = localStorage.getItem(USER_PRODUCTS_STORAGE_KEY);
+    if (stored) {
+      setUserProducts(JSON.parse(stored));
     }
-  }, [user]);
+    setIsInitialized(true);
+  }, []);
 
   useEffect(() => {
-    if (user && isInitialized) {
-      localStorage.setItem(`userProducts_${user.email}`, JSON.stringify(userProducts));
+    if (isInitialized) {
+      localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(userProducts));
     }
-  }, [userProducts, user, isInitialized]);
+  }, [userProducts, isInitialized]);
 
   const addProduct = (product: Omit<UserProduct, "id" | "userId" | "createdAt" | "rating" | "reviews" | "delivery" | "isBestSeller" | "isOverallPick">) => {
-    if (!user) return;
-
     const newProduct: UserProduct = {
       ...product,
       id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      userId: user.email,
+      userId: "demo",
       rating: 0,
       reviews: "New",
       delivery: "TZS 50,000 delivery within 3-5 days",
@@ -66,15 +60,27 @@ export const UserProductsProvider = ({ children }: { children: ReactNode }) => {
       createdAt: new Date().toISOString()
     };
 
-    setUserProducts(prev => [newProduct, ...prev]);
+    setUserProducts(prev => {
+      const updated = [newProduct, ...prev];
+      localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const deleteProduct = (productId: string) => {
-    setUserProducts(prev => prev.filter(p => p.id !== productId));
+    setUserProducts(prev => {
+      const updated = prev.filter(p => p.id !== productId);
+      localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const updateProduct = (productId: string, updates: Partial<UserProduct>) => {
-    setUserProducts(prev => prev.map(p => p.id === productId ? { ...p, ...updates } : p));
+    setUserProducts(prev => {
+      const updated = prev.map(p => p.id === productId ? { ...p, ...updates } : p);
+      localStorage.setItem(USER_PRODUCTS_STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (
