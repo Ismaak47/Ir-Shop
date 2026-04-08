@@ -1,10 +1,21 @@
 import { Star, Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { motion, AnimatePresence } from "motion/react";
 
-const GameProductCard = ({ 
+interface GameProductCardProps {
+  title: string;
+  img: string;
+  rating: number;
+  reviews: string;
+  price: string;
+  delivery: string;
+  isBestSeller?: boolean;
+  isOverallPick?: boolean;
+}
+
+const GameProductCard: React.FC<GameProductCardProps> = ({ 
   title, 
   img, 
   rating, 
@@ -12,20 +23,9 @@ const GameProductCard = ({
   price, 
   delivery, 
   isBestSeller = false,
-  isOverallPick = false,
-  key
-}: { 
-  title: string, 
-  img: string, 
-  rating: number, 
-  reviews: string, 
-  price: string, 
-  delivery: string,
-  isBestSeller?: boolean,
-  isOverallPick?: boolean,
-  key?: number
+  isOverallPick = false
 }) => (
-  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative" key={key}>
+  <div className="bg-white p-2 sm:p-4 flex flex-col h-full shadow-sm border border-gray-200 rounded-sm hover:shadow-md transition-shadow relative">
     {isBestSeller && (
       <div className="absolute top-0 left-0 bg-orange-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-br-sm z-10">
         Best Seller
