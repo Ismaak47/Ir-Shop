@@ -1,60 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
 
 interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  src?: string;
-  alt?: string;
-  className?: string;
-  loading?: "lazy" | "eager";
   fallbackSrc?: string;
 }
 
-export const SafeImage = ({ 
+const SafeImage: React.FC<SafeImageProps> = ({ 
   src, 
   alt, 
-  className, 
-  fallbackSrc = "https://placehold.co/400x400/e2e8f0/64748b?text=Product+Image",
-  loading = "lazy",
+  fallbackSrc = "https://picsum.photos/seed/placeholder/400/400", 
+  className,
   ...props 
-}: SafeImageProps) => {
-  const [imgSrc, setImgSrc] = useState<string | undefined>(src);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setImgSrc(src);
-    setIsError(false);
-    setIsLoading(true);
-  }, [src]);
+}) => {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [hasError, setHasError] = useState(false);
 
   const handleError = () => {
-    if (!isError) {
+    if (!hasError) {
       setImgSrc(fallbackSrc);
-      setIsError(true);
+      setHasError(true);
     }
-    setIsLoading(false);
-  };
-
-  const handleLoad = () => {
-    setIsLoading(false);
   };
 
   return (
-    <div className={`relative overflow-hidden flex items-center justify-center bg-gray-50 ${className}`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-gray-300 border-t-irshop-teal rounded-full animate-spin"></div>
-        </div>
-      )}
-      <img
-        src={imgSrc}
-        alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 w-full h-full object-contain`}
-        onLoad={handleLoad}
-        onError={handleError}
-        loading={loading}
-        referrerPolicy="no-referrer"
-        {...props}
-      />
-    </div>
+    <img
+      src={imgSrc}
+      alt={alt}
+      onError={handleError}
+      className={className}
+      referrerPolicy="no-referrer"
+      loading="lazy"
+      {...props}
+    />
   );
 };
+
+export default SafeImage;

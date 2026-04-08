@@ -2,6 +2,7 @@ import { Star, Menu, X, ChevronDown } from "lucide-react";
 import React, { useState } from "react";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
+import SafeImage from "./components/SafeImage";
 import { motion, AnimatePresence } from "motion/react";
 
 interface GameProductCardProps {
@@ -38,7 +39,7 @@ const GameProductCard: React.FC<GameProductCardProps> = ({
     )}
     
     <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
-      <img src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" loading="lazy" />
+      <SafeImage src={img} alt={title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
     </div>
     
     <div className="flex-1 flex flex-col">
