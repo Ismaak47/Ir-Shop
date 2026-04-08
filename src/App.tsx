@@ -135,9 +135,9 @@ function HomePage() {
   const [heroIndex, setHeroIndex] = useState(0);
 
   const heroImages = [
-    "https://m.media-amazon.com/images/I/61Yx5-N155L._SX3000_.jpg",
-    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX3000_.jpg",
-    "https://i.ebayimg.com/images/g/9nwAAOSwfX5n1EXY/s-l2400.jpg",
+    "https://m.media-amazon.com/images/I/61Yx5-N155L._SX1500_.jpg",
+    "https://m.media-amazon.com/images/I/51XbQM8KUnL._SX1500_.jpg",
+    "https://i.ebayimg.com/images/g/9nwAAOSwfX5n1EXY/s-l1600.jpg",
     "https://i.ebayimg.com/images/g/t1cAAeSwjwRpusMM/s-l1600.webp",
     "https://ke.jumia.is/cms/2026/W03/KE_ONS_FlashSales_Generic_1225_S.jpg"
   ];
@@ -145,7 +145,7 @@ function HomePage() {
   useEffect(() => {
     const timer = setInterval(() => {
       setHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -256,14 +256,14 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Clothing, Shoes & Jewelry" 
               items={[
-                "https://m.media-amazon.com/images/I/81GbVZK+4yL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61C-skMeafL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/81TR8F0H-FL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71IFE6W6THL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71hiGloiqJL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/51rkKPruYvL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/613+lFVMnEL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61xO2Bu9oJL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81GbVZK+4yL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61C-skMeafL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81TR8F0H-FL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71IFE6W6THL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71hiGloiqJL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/51rkKPruYvL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/613+lFVMnEL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61xO2Bu9oJL._AC_SY400_.jpg",
               ]} 
             />
 
@@ -271,14 +271,14 @@ function HomePage() {
             <Shoveler 
               title="International top sellers in Kitchen" 
               items={[
-                "https://m.media-amazon.com/images/I/411VuaxGFsL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/715a83Wv22L._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71EvhT3odHL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71wUZfLtoPL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/719XNYJEcZL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61-5sfLKOgL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61+6E0F49gL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/41lEE-pCRgL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/411VuaxGFsL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/715a83Wv22L._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71EvhT3odHL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71wUZfLtoPL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/719XNYJEcZL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61-5sfLKOgL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61+6E0F49gL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/41lEE-pCRgL._AC_SY400_.jpg",
               ]} 
             />
 
@@ -330,13 +330,13 @@ function HomePage() {
             <Shoveler 
               title="Top picks for Tanzania, United Republic of" 
               items={[
-                "https://m.media-amazon.com/images/I/51lP01--ejL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61TcjJ4qDZL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/714VRmqcVmL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61qCeGkiTXL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/817WrflosJL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/81Lg7Hp2Y0L._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/81i5KcFKysL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/51lP01--ejL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61TcjJ4qDZL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/714VRmqcVmL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61qCeGkiTXL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/817WrflosJL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81Lg7Hp2Y0L._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81i5KcFKysL._AC_SY400_.jpg",
               ]} 
             />
 
@@ -344,13 +344,13 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Computers & Accessories" 
               items={[
-                "https://m.media-amazon.com/images/I/71nVIiWEcgL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71K30PIVQmL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71CRaMOcDvL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71K00r5z4iL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/81Q9vMNUOyL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/71nVIiWEcgL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71K30PIVQmL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71CRaMOcDvL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71K00r5z4iL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81Q9vMNUOyL._AC_SY400_.jpg",
               ]} 
             />
 
@@ -402,13 +402,13 @@ function HomePage() {
             <Shoveler 
               title="Best Sellers in Kitchen & Dining" 
               items={[
-                "https://m.media-amazon.com/images/I/81Ubo+JAyxL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/61sS-XIvEXL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/81GimKZfzDL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71v-pTar1AL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71Y4-ItMNBL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/718Tr1uB1OL._AC_SY600_.jpg",
-                "https://m.media-amazon.com/images/I/71cHyyOt7YL._AC_SY600_.jpg",
+                "https://m.media-amazon.com/images/I/81Ubo+JAyxL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/61sS-XIvEXL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/81GimKZfzDL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71v-pTar1AL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71Y4-ItMNBL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/718Tr1uB1OL._AC_SY400_.jpg",
+                "https://m.media-amazon.com/images/I/71cHyyOt7YL._AC_SY400_.jpg",
               ]} 
             />
 
@@ -430,13 +430,13 @@ function HomePage() {
                 <Shoveler 
                   title="Best Sellers in Beauty & Personal Care" 
                   items={[
-                    "https://m.media-amazon.com/images/I/51ubxqzNGIL._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/61t087PwecL._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/71eFYqXRGoL._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/61occWCJN-L._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/71MQo8pHmBL._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/61V2Tp2pJKL._AC_SY600_.jpg",
-                    "https://m.media-amazon.com/images/I/61aDluwKSxL._AC_SY600_.jpg",
+                    "https://m.media-amazon.com/images/I/51ubxqzNGIL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/61t087PwecL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/71eFYqXRGoL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/61occWCJN-L._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/71MQo8pHmBL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/61V2Tp2pJKL._AC_SY400_.jpg",
+                    "https://m.media-amazon.com/images/I/61aDluwKSxL._AC_SY400_.jpg",
                   ]} 
                 />
               </div>
@@ -481,14 +481,14 @@ function HomePage() {
               <Shoveler 
                 title="Best Sellers in Books" 
                 items={[
-                  "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY600_.jpg",
-                  "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY600_.jpg",
+                  "https://m.media-amazon.com/images/I/71LtTkRdVzL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/71PjIDe6FLL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/81RY2q1HcGL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/91ENQs2KLAL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/71ihGxMQEBL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/81mIz5vLAfL._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/81uv7QtqJ0L._AC_SY400_.jpg",
+                  "https://m.media-amazon.com/images/I/41XZlhQ+5NL._AC_SY400_.jpg",
                 ]} 
               />
             </div>

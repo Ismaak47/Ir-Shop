@@ -72,6 +72,8 @@ const GameProductCard = ({
 export default function GamesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [sortBy, setSortBy] = useState("Featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   
@@ -678,15 +680,52 @@ export default function GamesPage() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 relative">
                 <span className="text-xs text-gray-600">Sort by:</span>
-                <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-irshop-teal">
-                  <option>Featured</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Avg. Customer Review</option>
-                  <option>Newest Arrivals</option>
-                </select>
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsSortOpen(!isSortOpen)}
+                    className="flex items-center gap-1.5 px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-xs font-medium hover:bg-gray-50 transition-colors min-w-[120px] justify-between"
+                  >
+                    <span>{sortBy}</span>
+                    <ChevronDown size={14} className={`transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isSortOpen && (
+                      <>
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          onClick={() => setIsSortOpen(false)}
+                          className="fixed inset-0 z-[60]"
+                        />
+                        <motion.div 
+                          initial={{ y: -10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -10, opacity: 0 }}
+                          className="absolute top-full right-0 w-48 bg-white shadow-xl border border-gray-200 rounded-md mt-1 z-[70] overflow-hidden"
+                        >
+                          <ul className="py-1">
+                            {["Featured", "Price: Low to High", "Price: High to Low", "Avg. Customer Review", "Newest Arrivals"].map((option) => (
+                              <li 
+                                key={option}
+                                onClick={() => {
+                                  setSortBy(option);
+                                  setIsSortOpen(false);
+                                }}
+                                className={`px-4 py-2 text-xs cursor-pointer hover:bg-gray-100 transition-colors ${sortBy === option ? 'bg-gray-50 font-bold text-irshop-teal' : 'text-gray-700'}`}
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
 
