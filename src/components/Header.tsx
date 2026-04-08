@@ -92,16 +92,6 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                           <p className="text-sm font-semibold text-gray-900 truncate">{user?.email}</p>
                         </div>
                         <button
-                          onClick={() => {
-                            setShowAccountDropdown(false);
-                            navigate('/dashboard');
-                          }}
-                          className="w-full px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2"
-                        >
-                          <LayoutDashboard size={16} />
-                          My Dashboard
-                        </button>
-                        <button
                           onClick={handleLogout}
                           className="w-full px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2"
                         >
@@ -115,19 +105,9 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                           <p className="text-xs text-gray-500">Welcome</p>
                           <p className="text-sm font-semibold text-gray-900 truncate">Guest User</p>
                         </div>
-                        <button
-                          onClick={() => {
-                            setShowAccountDropdown(false);
-                            navigate('/dashboard');
-                          }}
-                          className="w-full px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded font-bold text-sm transition-colors flex items-center justify-center gap-2 mb-2"
-                        >
-                          <LayoutDashboard size={16} />
-                          My Dashboard
-                        </button>
                         <Link 
                           to="/login"
-                          className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block"
+                          className="w-full px-4 py-2 bg-[#FFD700] text-black hover:bg-[#e6c200] rounded font-bold text-sm transition-colors text-center block mb-2"
                           onClick={() => setShowAccountDropdown(false)}
                         >
                           Sign in
@@ -195,9 +175,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
   const handleAccountClick = () => {
     onClose();
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    } else {
+    if (!isAuthenticated) {
       navigate('/login');
     }
   };
@@ -295,7 +273,7 @@ export const MobileBottomNav = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   const navigate = useNavigate();
 
   const handleAccountClick = () => {
-    navigate('/dashboard');
+    navigate(isAuthenticated ? '/' : '/login');
   };
 
   return (

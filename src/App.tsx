@@ -8,7 +8,6 @@ import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
 import ProductDetailPage from "./ProductDetailPage";
 import SearchResultsPage from "./SearchResultsPage";
-import DashboardPage from "./DashboardPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartProvider } from "./CartContext";

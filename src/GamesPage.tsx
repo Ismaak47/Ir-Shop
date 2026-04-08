@@ -97,7 +97,7 @@ export default function GamesPage() {
     return normalizedCategory === "gaming" || normalizedCategory === "games";
   });
 
-  const filteredProducts = gamingProducts.filter(p => {
+  const filteredProducts = allGamingProducts.filter(p => {
     if (selectedCategories.length > 0) {
       const productCategory = p.category.toLowerCase();
       const hasMatchingTag = p.tags.some(tag => selectedCategories.includes(tag.toLowerCase()));
