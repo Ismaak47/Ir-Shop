@@ -28,7 +28,7 @@ export const Footer = () => {
                 <li><a href="#">Careers</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">Investor Relations</a></li>
-                <li><a href="#">Ir-Shop Devices</a></li>
+                <li><a href="/admin.html">Ir-Shop Devices</a></li>
                 <li><a href="#">Ir-Shop Science</a></li>
               </ul>
             </div>

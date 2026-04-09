@@ -21,6 +21,7 @@ export default defineConfig(({mode}) => {
           main: path.resolve(__dirname, 'index.html'),
           auth: path.resolve(__dirname, 'auth.html'),
           dashboard: path.resolve(__dirname, 'dashboard.html'),
+          admin: path.resolve(__dirname, 'admin.html'),
         },
       },
     },
