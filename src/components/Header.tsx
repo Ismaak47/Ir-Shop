@@ -1,7 +1,8 @@
-import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, LogOut } from "lucide-react";
+import { Search, ShoppingCart, Menu, User, ChevronDown, X, ChevronRight, Home, LogOut, Plus, Minus, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { getCart, removeFromCart, updateCartQuantity, CartItem } from "../lib/store";
 
 export const Logo = () => (
   <div className="flex flex-col items-start justify-center px-1 group">
@@ -37,6 +38,17 @@ interface HeaderProps {
 
 export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
   const [user, setUser] = useState<{ name: string } | null>(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [searchInput, setSearchInput] = useState(searchTerm);
+  const navigate = useNavigate();
+
+  const updateCartState = () => {
+    const items = getCart();
+    setCartItems(items);
+    setCartCount(items.reduce((acc, item) => acc + item.quantity, 0));
+  };
 
   useEffect(() => {
     try {
@@ -47,75 +59,178 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
     } catch (e) {
       console.error('Header auth check failed:', e);
     }
+    
+    updateCartState();
+    window.addEventListener('cart_updated', updateCartState);
+    return () => window.removeEventListener('cart_updated', updateCartState);
   }, []);
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      navigate(`/games?q=${encodeURIComponent(searchInput.trim())}`);
+    } else {
+      navigate(`/games`);
+    }
+  };
+
+  const cartTotal = cartItems.reduce((acc, item) => {
+    const priceNum = parseFloat(item.price.replace(/,/g, ''));
+    return acc + (priceNum * item.quantity);
+  }, 0);
+
   return (
-    <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
-      {/* Top Belt */}
-      <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
-        {/* Logo */}
-        <Link to="/" className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
-          <Logo />
-        </Link>
+    <>
+      <header className="bg-irshop-teal text-white sticky top-0 z-50 shadow-md">
+        {/* Top Belt */}
+        <div className="max-w-[1500px] mx-auto flex items-center gap-4 p-2">
+          {/* Logo */}
+          <Link to="/" className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">
+            <Logo />
+          </Link>
 
-        {/* Search Bar */}
-        <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
-          <input
-            type="text"
-            placeholder="Search Ir-Shop"
-            className="flex-1 px-3 py-2 text-black outline-none bg-white min-w-0"
-            defaultValue={searchTerm}
-          />
-          <button className="bg-irshop-accent hover:bg-irshop-accent-hover px-4 flex items-center justify-center text-black transition-colors">
-            <Search size={20} />
-          </button>
-        </div>
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-irshop-accent transition-shadow relative">
+            <input
+              type="text"
+              placeholder="Search Ir-Shop"
+              className="flex-1 px-3 py-2 text-black outline-none bg-white min-w-0"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <button type="submit" className="bg-irshop-accent hover:bg-irshop-accent-hover px-4 flex items-center justify-center text-black transition-colors">
+              <Search size={20} />
+            </button>
+          </form>
 
-        {/* Tools */}
-        <div className="flex items-center gap-1">
-          {/* Account Link */}
-          <a 
-            href={user ? "/dashboard.html" : "/auth.html"} 
-            className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex flex-col items-start transition-colors"
-          >
-            <span className="text-[11px] leading-tight">Account</span>
-            <div className="flex items-center gap-0.5">
-              <span className="font-bold text-sm">{user ? user.name.split(' ')[0] : 'Sign In'}</span>
-              <ChevronDown size={12} className="text-gray-400" />
+          {/* Tools */}
+          <div className="flex items-center gap-1">
+            {/* Account Link */}
+            <a 
+              href={user ? "/dashboard.html" : "/auth.html"} 
+              className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex flex-col items-start transition-colors"
+            >
+              <span className="text-[11px] leading-tight">Account</span>
+              <div className="flex items-center gap-0.5">
+                <span className="font-bold text-sm">{user ? user.name.split(' ')[0] : 'Sign In'}</span>
+                <ChevronDown size={12} className="text-gray-400" />
+              </div>
+            </a>
+
+            <div onClick={() => setIsCartOpen(true)} className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
+              <div className="relative">
+                <ShoppingCart size={32} className="text-[#FFD700]" />
+                <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">{cartCount}</span>
+              </div>
+              <span className="font-bold mt-3 hidden md:inline">Cart</span>
             </div>
-          </a>
-
-          <div className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer flex items-center gap-1 transition-colors">
-            <div className="relative">
-              <ShoppingCart size={32} className="text-[#FFD700]" />
-              <span className="absolute -top-1 -right-1 bg-irshop-teal text-irshop-accent rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs border-2 border-irshop-teal">0</span>
-            </div>
-            <span className="font-bold mt-3 hidden md:inline">Cart</span>
           </div>
         </div>
-      </div>
 
-      {/* Main Nav */}
-      <div className="bg-irshop-teal-light relative">
-        <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
-          <div 
-            onClick={onMenuOpen}
-            className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
-          >
-            <Menu size={20} className="text-[#FFD700]" />
-            All
+        {/* Main Nav */}
+        <div className="bg-irshop-teal-light relative">
+          <div className="max-w-[1500px] mx-auto flex items-center px-2 py-1 gap-4 overflow-x-auto no-scrollbar">
+            <div 
+              onClick={onMenuOpen}
+              className="flex items-center gap-1 px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer font-bold whitespace-nowrap transition-colors"
+            >
+              <Menu size={20} className="text-[#FFD700]" />
+              All
+            </div>
+            <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Today's Deals</li>
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Gift Cards</li>
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Sell</li>
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Registry</li>
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Prime Video</li>
+              <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Customer Service</li>
+            </ul>
           </div>
-          <ul className="flex items-center gap-4 text-sm font-medium whitespace-nowrap">
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Today's Deals</li>
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Gift Cards</li>
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Sell</li>
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Registry</li>
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Prime Video</li>
-            <li className="px-2 py-1 border border-transparent hover:border-white rounded cursor-pointer transition-colors">Customer Service</li>
-          </ul>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Cart Slide-out Panel */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsCartOpen(false)}
+              className="fixed inset-0 bg-black/50 z-[100]"
+            />
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-[320px] sm:w-[400px] bg-white z-[101] flex flex-col shadow-2xl"
+            >
+              <div className="bg-gray-50 border-b border-gray-200 p-4 flex items-center justify-between">
+                <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                  <ShoppingCart size={20} />
+                  Your Cart ({cartCount})
+                </h2>
+                <button onClick={() => setIsCartOpen(false)} className="text-gray-500 hover:text-gray-800 transition-colors">
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+                {cartItems.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                    <ShoppingCart size={48} className="mb-4 text-gray-300" />
+                    <p className="text-sm font-medium">Your cart is empty.</p>
+                    <button onClick={() => { setIsCartOpen(false); navigate('/games'); }} className="mt-4 text-blue-600 hover:underline text-sm">
+                      Continue Shopping
+                    </button>
+                  </div>
+                ) : (
+                  cartItems.map(item => (
+                    <div key={item.id} className="flex gap-3 border-b border-gray-100 pb-4">
+                      <div className="w-20 h-20 flex-shrink-0 bg-gray-50 rounded-md overflow-hidden flex items-center justify-center">
+                        <img src={item.img} alt={item.title} className="max-w-full max-h-full object-contain mix-blend-multiply" />
+                      </div>
+                      <div className="flex-1 flex flex-col">
+                        <h3 className="text-xs font-medium text-gray-900 line-clamp-2 mb-1">{item.title}</h3>
+                        <span className="text-sm font-bold text-gray-900 mb-2">TZS {item.price}</span>
+                        <div className="flex items-center justify-between mt-auto">
+                          <div className="flex items-center border border-gray-300 rounded-md">
+                            <button onClick={() => updateCartQuantity(item.id, item.quantity - 1)} className="px-2 py-1 text-gray-600 hover:bg-gray-100 transition-colors">
+                              <Minus size={12} />
+                            </button>
+                            <span className="px-3 py-1 text-xs font-medium border-x border-gray-300">{item.quantity}</span>
+                            <button onClick={() => updateCartQuantity(item.id, item.quantity + 1)} className="px-2 py-1 text-gray-600 hover:bg-gray-100 transition-colors">
+                              <Plus size={12} />
+                            </button>
+                          </div>
+                          <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 p-1 transition-colors">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {cartItems.length > 0 && (
+                <div className="border-t border-gray-200 p-4 bg-gray-50">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-sm font-medium text-gray-700">Subtotal</span>
+                    <span className="text-lg font-bold text-gray-900">TZS {cartTotal.toLocaleString()}</span>
+                  </div>
+                  <button className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-3 rounded-md text-sm font-bold transition-colors shadow-sm">
+                    Proceed to Checkout
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
