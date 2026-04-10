@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
 import CheckoutPage from "./CheckoutPage";
+import ProductDetailsPage from "./ProductDetailsPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import SafeImage from "./components/SafeImage";
@@ -126,6 +127,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
       </Routes>
     </Router>
   );

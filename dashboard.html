@@ -636,7 +636,9 @@
                 } else {
                     productsTbody.innerHTML = userProducts.map(p => `
                         <tr>
-                            <td class="px-3 py-3 sm:px-6 sm:py-4 font-medium text-gray-900 max-w-[200px] truncate" title="${p.title}">${p.title}</td>
+                            <td class="px-3 py-3 sm:px-6 sm:py-4 font-medium text-gray-900 max-w-[200px] truncate" title="${p.title}">
+                                <a href="/product/${p.id}" class="hover:text-orange-600 hover:underline">${p.title}</a>
+                            </td>
                             <td class="px-3 py-3 sm:px-6 sm:py-4 text-gray-500">${p.category}</td>
                             <td class="px-3 py-3 sm:px-6 sm:py-4">TZS ${p.price}</td>
                             <td class="px-3 py-3 sm:px-6 sm:py-4"><span class="text-green-600 font-medium">In Stock</span></td>
@@ -656,10 +658,12 @@
                 if (wishlistItems.length > 0) {
                     wishlistContainer.innerHTML = wishlistItems.map(p => `
                         <div class="amazon-card p-4 flex flex-col items-center text-center">
-                            <div class="w-24 h-24 bg-gray-100 rounded-md mb-3 flex items-center justify-center overflow-hidden">
-                                <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover">
-                            </div>
-                            <h4 class="font-bold text-sm text-gray-900 mb-1 line-clamp-1" title="${p.title}">${p.title}</h4>
+                            <a href="/product/${p.id}" class="w-full flex flex-col items-center">
+                                <div class="w-24 h-24 bg-gray-100 rounded-md mb-3 flex items-center justify-center overflow-hidden">
+                                    <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-bold text-sm text-gray-900 mb-1 line-clamp-1 hover:text-orange-600" title="${p.title}">${p.title}</h4>
+                            </a>
                             <p class="text-xs text-gray-500 mb-2">${p.category}</p>
                             <p class="text-sm font-bold text-irshop-teal mb-3">TZS ${p.price}</p>
                             <button class="w-full bg-[#FFD700] text-[#131921] py-1.5 rounded text-xs font-bold hover:bg-[#F7CA00] transition" onclick="addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', '${p.price}', '${p.img}')">Add to Cart</button>

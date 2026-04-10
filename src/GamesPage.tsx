@@ -1,6 +1,6 @@
 import { Star, Menu, X, ChevronDown } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import SafeImage from "./components/SafeImage";
@@ -25,11 +25,15 @@ const GameProductCard: React.FC<GameProductCardProps> = ({ product }) => (
     )}
     
     <div className="aspect-square mb-2 sm:mb-3 overflow-hidden flex items-center justify-center">
-      <SafeImage src={product.img} alt={product.title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
+      <Link to={`/product/${product.id}`} className="w-full h-full flex items-center justify-center">
+        <SafeImage src={product.img} alt={product.title} className="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
+      </Link>
     </div>
     
     <div className="flex-1 flex flex-col">
-      <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{product.title}</h3>
+      <Link to={`/product/${product.id}`}>
+        <h3 className="text-[11px] sm:text-sm font-medium line-clamp-2 sm:line-clamp-3 mb-1 hover:text-orange-600 cursor-pointer leading-tight sm:leading-normal">{product.title}</h3>
+      </Link>
       
       <div className="flex items-center gap-1 mb-1">
         <div className="flex text-orange-400">
