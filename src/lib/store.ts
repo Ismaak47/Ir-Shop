@@ -231,6 +231,81 @@ export const updateCartQuantity = (productId: string, quantity: number) => {
   window.dispatchEvent(new Event('cart_updated'));
 };
 
+export interface Order {
+  id: string;
+  userId: string;
+  items: CartItem[];
+  total: number;
+  status: 'Pending' | 'Paid' | 'Shipped' | 'Delivered';
+  date: string;
+  shippingAddress?: any;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  joinDate: string;
+}
+
+export const getOrders = (): Order[] => {
+  const stored = localStorage.getItem('irshop_orders');
+  return stored ? JSON.parse(stored) : [];
+};
+
+export const addOrder = (order: Omit<Order, 'id' | 'date'>) => {
+  const orders = getOrders();
+  const newOrder: Order = {
+    ...order,
+    id: 'ORD-' + Math.floor(Math.random() * 1000000),
+    date: new Date().toISOString().split('T')[0]
+  };
+  orders.push(newOrder);
+  localStorage.setItem('irshop_orders', JSON.stringify(orders));
+  return newOrder;
+};
+
+export const updateOrderStatus = (orderId: string, status: Order['status']) => {
+  const orders = getOrders();
+  const order = orders.find(o => o.id === orderId);
+  if (order) {
+    order.status = status;
+    localStorage.setItem('irshop_orders', JSON.stringify(orders));
+  }
+};
+
+export const getUsers = (): User[] => {
+  const stored = localStorage.getItem('irshop_users');
+  if (stored) return JSON.parse(stored);
+  
+  // Default users
+  const defaultUsers: User[] = [
+    { id: 'u1', name: 'Admin User', email: 'admin@irshop.com', role: 'admin', joinDate: '2023-01-15' },
+    { id: 'u2', name: 'Test User', email: 'user@example.com', role: 'user', joinDate: '2023-05-20' }
+  ];
+  localStorage.setItem('irshop_users', JSON.stringify(defaultUsers));
+  return defaultUsers;
+};
+
+export const deleteProduct = (productId: string) => {
+  let products = getProducts();
+  products = products.filter(p => p.id !== productId);
+  localStorage.setItem('irshop_products', JSON.stringify(products));
+};
+
+export const deleteOrder = (orderId: string) => {
+  let orders = getOrders();
+  orders = orders.filter(o => o.id !== orderId);
+  localStorage.setItem('irshop_orders', JSON.stringify(orders));
+};
+
+export const deleteUser = (userId: string) => {
+  let users = getUsers();
+  users = users.filter(u => u.id !== userId);
+  localStorage.setItem('irshop_users', JSON.stringify(users));
+};
+
 export const clearCart = () => {
   localStorage.setItem('irshop_cart', JSON.stringify([]));
   window.dispatchEvent(new Event('cart_updated'));

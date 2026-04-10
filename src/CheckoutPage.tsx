@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getCart, CartItem, clearCart } from "./lib/store";
+import { getCart, CartItem, clearCart, addOrder } from "./lib/store";
 import { ChevronLeft, Lock, CreditCard, Smartphone, CheckCircle, ShieldCheck } from "lucide-react";
 import { Logo } from "./components/Header";
 import { motion } from "motion/react";
@@ -31,6 +31,17 @@ export default function CheckoutPage() {
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
     setIsPlacingOrder(true);
+    
+    // Save order
+    const newOrder = addOrder({
+      userId: 'u2', // Default user for now
+      items: cartItems,
+      total: finalTotal,
+      status: 'Pending',
+      shippingAddress: {
+        // Collect from form if needed, but for now just save
+      }
+    });
     
     // Simulate API call
     setTimeout(() => {
@@ -171,7 +182,11 @@ export default function CheckoutPage() {
                         <span className="block text-sm font-medium text-gray-900">Mobile Money</span>
                         <span className="block text-xs text-gray-500">M-Pesa, Tigo Pesa, Airtel Money</span>
                       </div>
-                      <Smartphone className="text-gray-400" size={24} />
+                      <div className="flex items-center gap-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/512px-M-PESA_LOGO-01.svg.png" alt="M-Pesa" className="h-4 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tigo_logo.svg/512px-Tigo_logo.svg.png" alt="Tigo Pesa" className="h-4 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Airtel_logo.svg/512px-Airtel_logo.svg.png" alt="Airtel Money" className="h-4 object-contain" />
+                      </div>
                     </div>
                   </label>
 
@@ -189,7 +204,10 @@ export default function CheckoutPage() {
                         <span className="block text-sm font-medium text-gray-900">Credit / Debit Card</span>
                         <span className="block text-xs text-gray-500">Visa, Mastercard</span>
                       </div>
-                      <CreditCard className="text-gray-400" size={24} />
+                      <div className="flex items-center gap-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/512px-Visa_Inc._logo.svg.png" alt="Visa" className="h-3 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/512px-Mastercard-logo.svg.png" alt="Mastercard" className="h-4 object-contain" />
+                      </div>
                     </div>
                   </label>
                 </div>
