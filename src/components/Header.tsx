@@ -221,7 +221,10 @@ export const Header = ({ onMenuOpen, searchTerm = "" }: HeaderProps) => {
                     <span className="text-sm font-medium text-gray-700">Subtotal</span>
                     <span className="text-lg font-bold text-gray-900">TZS {cartTotal.toLocaleString()}</span>
                   </div>
-                  <button className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-3 rounded-md text-sm font-bold transition-colors shadow-sm">
+                  <button 
+                    onClick={() => { setIsCartOpen(false); navigate('/checkout'); }}
+                    className="w-full bg-irshop-accent hover:bg-irshop-accent-hover text-black py-3 rounded-md text-sm font-bold transition-colors shadow-sm"
+                  >
                     Proceed to Checkout
                   </button>
                 </div>

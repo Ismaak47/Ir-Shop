@@ -230,3 +230,8 @@ export const updateCartQuantity = (productId: string, quantity: number) => {
   localStorage.setItem('irshop_cart', JSON.stringify(cart));
   window.dispatchEvent(new Event('cart_updated'));
 };
+
+export const clearCart = () => {
+  localStorage.setItem('irshop_cart', JSON.stringify([]));
+  window.dispatchEvent(new Event('cart_updated'));
+};

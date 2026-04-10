@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GamesPage from "./GamesPage";
+import CheckoutPage from "./CheckoutPage";
 import { Header, Sidebar, MobileBottomNav } from "./components/Header";
 import { Footer } from "./components/Footer";
 import SafeImage from "./components/SafeImage";
@@ -124,6 +125,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </Router>
   );
