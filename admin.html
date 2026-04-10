@@ -160,7 +160,7 @@
                         <div class="amazon-card p-4 sm:p-6">
                             <p class="text-xs sm:text-sm text-gray-500 font-medium mb-1">Low Stock Items</p>
                             <h3 class="text-xl sm:text-2xl font-bold text-red-600">18</h3>
-                            <p class="text-[10px] sm:text-xs text-blue-600 mt-1 sm:mt-2 cursor-pointer hover:underline">View inventory</p>
+                            <p class="text-[10px] sm:text-xs text-blue-600 mt-1 sm:mt-2 cursor-pointer hover:underline" onclick="switchSection('products', document.querySelector('nav a:nth-child(2)')); return false;">View inventory</p>
                         </div>
                     </div>
 
@@ -538,6 +538,27 @@
                 let items = JSON.parse(localStorage.getItem(`irshop_${type}s`) || '[]');
                 items = items.filter(item => item.id !== id);
                 localStorage.setItem(`irshop_${type}s`, JSON.stringify(items));
+                
+                // Cascade delete for users
+                if (type === 'user') {
+                    // Delete user's products
+                    let products = JSON.parse(localStorage.getItem('irshop_products') || '[]');
+                    products = products.filter(p => p.userId !== id);
+                    localStorage.setItem('irshop_products', JSON.stringify(products));
+                    
+                    // Delete user's orders
+                    let orders = JSON.parse(localStorage.getItem('irshop_orders') || '[]');
+                    orders = orders.filter(o => o.userId !== id);
+                    localStorage.setItem('irshop_orders', JSON.stringify(orders));
+                }
+                
+                // Cascade delete for products (remove from cart)
+                if (type === 'product') {
+                    let cart = JSON.parse(localStorage.getItem('irshop_cart') || '[]');
+                    cart = cart.filter(c => c.id !== id);
+                    localStorage.setItem('irshop_cart', JSON.stringify(cart));
+                }
+                
                 loadAdminData();
             }
         }
@@ -561,13 +582,16 @@
             }
 
             // Load Users
-            let users = JSON.parse(localStorage.getItem('irshop_users') || '[]');
-            if (users.length === 0) {
+            let usersStr = localStorage.getItem('irshop_users');
+            let users = [];
+            if (!usersStr) {
                 users = [
                     { id: 'u1', name: 'Admin User', email: 'admin@irshop.com', role: 'admin', joinDate: '2023-01-15' },
                     { id: 'u2', name: 'Test User', email: 'user@example.com', role: 'user', joinDate: '2023-05-20' }
                 ];
                 localStorage.setItem('irshop_users', JSON.stringify(users));
+            } else {
+                users = JSON.parse(usersStr);
             }
             const usersTbody = document.getElementById('admin-users-tbody');
             if (usersTbody) {
@@ -599,6 +623,7 @@
                     </td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right font-bold">TZS ${o.total.toLocaleString()}</td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right">
+                        <button class="text-blue-600 hover:underline mr-3" onclick="alert('Viewing details for order ${o.id}')">View</button>
                         <button class="text-red-600 hover:underline" onclick="deleteItem('order', '${o.id}')">Delete</button>
                     </td>
                 </tr>
@@ -618,7 +643,7 @@
                     </td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right font-bold">TZS ${o.total.toLocaleString()}</td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right">
-                        <button class="text-blue-600 hover:underline mr-3">View</button>
+                        <button class="text-blue-600 hover:underline mr-3" onclick="alert('Viewing details for order ${o.id}')">View</button>
                         <button class="text-red-600 hover:underline" onclick="deleteItem('order', '${o.id}')">Delete</button>
                     </td>
                 </tr>

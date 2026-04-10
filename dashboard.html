@@ -532,6 +532,14 @@
                 
                 items = items.filter(item => item.id !== id);
                 localStorage.setItem(`irshop_${type}s`, JSON.stringify(items));
+                
+                // Cascade delete for products (remove from cart)
+                if (type === 'product') {
+                    let cart = JSON.parse(localStorage.getItem('irshop_cart') || '[]');
+                    cart = cart.filter(c => c.id !== id);
+                    localStorage.setItem('irshop_cart', JSON.stringify(cart));
+                }
+                
                 loadUserData();
             }
         }
@@ -558,6 +566,26 @@
             }
         }
 
+        function addToCart(id, title, price, img) {
+            let cart = JSON.parse(localStorage.getItem('irshop_cart') || '[]');
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    title: title,
+                    price: price,
+                    img: img,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('irshop_cart', JSON.stringify(cart));
+            alert(title + ' has been added to your cart!');
+        }
+
         function loadUserData() {
             // Load User's Orders (for now, load all orders or filter by u2)
             const orders = JSON.parse(localStorage.getItem('irshop_orders') || '[]');
@@ -575,7 +603,7 @@
                         <span class="px-2 py-0.5 sm:py-1 ${o.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} rounded-full text-[9px] sm:text-[10px] font-bold uppercase">${o.status}</span>
                     </td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right font-bold">TZS ${o.total.toLocaleString()}</td>
-                    <td class="px-3 py-3 sm:px-6 sm:py-4 text-right"><button class="text-blue-600 hover:underline">Track</button></td>
+                    <td class="px-3 py-3 sm:px-6 sm:py-4 text-right"><button class="text-blue-600 hover:underline" onclick="alert('Tracking information for order ${o.id} will be available soon.')">Track</button></td>
                 </tr>
             `).join('');
 
@@ -591,6 +619,7 @@
                         <span class="px-2 py-0.5 sm:py-1 ${o.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} rounded-full text-[9px] sm:text-[10px] font-bold uppercase">${o.status}</span>
                     </td>
                     <td class="px-3 py-3 sm:px-6 sm:py-4 text-right font-bold">TZS ${o.total.toLocaleString()}</td>
+                    <td class="px-3 py-3 sm:px-6 sm:py-4 text-right"><button class="text-blue-600 hover:underline" onclick="alert('Tracking information for order ${o.id} will be available soon.')">Track</button></td>
                 </tr>
                 `).join('');
             }
@@ -623,7 +652,7 @@
             const wishlistContainer = document.getElementById('user-wishlist-container');
             if (wishlistContainer) {
                 // For now, just show a few products as wishlist items if available
-                const wishlistItems = products.slice(0, 3);
+                const wishlistItems = allProducts.slice(0, 3);
                 if (wishlistItems.length > 0) {
                     wishlistContainer.innerHTML = wishlistItems.map(p => `
                         <div class="amazon-card p-4 flex flex-col items-center text-center">
@@ -633,7 +662,7 @@
                             <h4 class="font-bold text-sm text-gray-900 mb-1 line-clamp-1" title="${p.title}">${p.title}</h4>
                             <p class="text-xs text-gray-500 mb-2">${p.category}</p>
                             <p class="text-sm font-bold text-irshop-teal mb-3">TZS ${p.price}</p>
-                            <button class="w-full bg-[#FFD700] text-[#131921] py-1.5 rounded text-xs font-bold hover:bg-[#F7CA00] transition">Add to Cart</button>
+                            <button class="w-full bg-[#FFD700] text-[#131921] py-1.5 rounded text-xs font-bold hover:bg-[#F7CA00] transition" onclick="addToCart('${p.id}', '${p.title.replace(/'/g, "\\'")}', '${p.price}', '${p.img}')">Add to Cart</button>
                         </div>
                     `).join('');
                 } else {
