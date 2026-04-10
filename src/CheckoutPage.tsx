@@ -183,53 +183,13 @@ export default function CheckoutPage() {
                         <span className="block text-xs text-gray-500">M-Pesa, Tigo Pesa, Airtel Money</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/512px-M-PESA_LOGO-01.svg.png" alt="M-Pesa" className="h-4 object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tigo_logo.svg/512px-Tigo_logo.svg.png" alt="Tigo Pesa" className="h-4 object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Airtel_logo.svg/512px-Airtel_logo.svg.png" alt="Airtel Money" className="h-4 object-contain" />
-                      </div>
-                    </div>
-                  </label>
-
-                  <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'card' ? 'border-irshop-teal bg-irshop-teal/5' : 'border-gray-200 hover:border-gray-300'}`}>
-                    <input 
-                      type="radio" 
-                      name="payment" 
-                      value="card" 
-                      checked={paymentMethod === 'card'}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                      className="w-4 h-4 text-irshop-teal focus:ring-irshop-teal border-gray-300"
-                    />
-                    <div className="ml-3 flex-1 flex items-center justify-between">
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Credit / Debit Card</span>
-                        <span className="block text-xs text-gray-500">Visa, Mastercard</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/512px-Visa_Inc._logo.svg.png" alt="Visa" className="h-3 object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/512px-Mastercard-logo.svg.png" alt="Mastercard" className="h-4 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/512px-M-PESA_LOGO-01.svg.png" alt="M-Pesa" className="h-4 object-contain" referrerPolicy="no-referrer" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Tigo_logo.svg/512px-Tigo_logo.svg.png" alt="Tigo Pesa" className="h-4 object-contain" referrerPolicy="no-referrer" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Airtel_logo.svg/512px-Airtel_logo.svg.png" alt="Airtel Money" className="h-4 object-contain" referrerPolicy="no-referrer" />
                       </div>
                     </div>
                   </label>
                 </div>
-
-                {paymentMethod === 'card' && (
-                  <div className="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200 space-y-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Card Number</label>
-                      <input type="text" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irshop-teal/50 focus:border-irshop-teal transition-shadow" placeholder="0000 0000 0000 0000" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-medium text-gray-700 mb-1">Expiry Date</label>
-                        <input type="text" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irshop-teal/50 focus:border-irshop-teal transition-shadow" placeholder="MM/YY" />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-gray-700 mb-1">CVC</label>
-                        <input type="text" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irshop-teal/50 focus:border-irshop-teal transition-shadow" placeholder="123" />
-                      </div>
-                    </div>
-                  </div>
-                )}
               </section>
             </form>
           </div>
